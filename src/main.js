@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './routes/index.js'
-//import DashBoard from './components/DashBoard.vue'
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap"
 
-createApp(App).use(router).mount('#app')
+
+import router from './router'  // <-- 설치한 라우터를 가져와서
+
+createApp(App).mount('#app')
+createApp(App).use(router).mount('#app') 

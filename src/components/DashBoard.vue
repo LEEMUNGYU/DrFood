@@ -1,106 +1,180 @@
 <template>
- <!--타이틀바-->
- <nav class="navbar fixed-top bg-body-tertiary">
-    <div class="container-fluid" id="brand-title">
-      <div class="row flex-nowrap justify-content-btween align-items-center">
-        <div class="col-4 justify-content-center"><a href="#"><img id="back" src="img/back.svg"></a></div>
-      </div>
-      <div class="row flex-nowrap justify-content-btween align-items-center">
-        <div class="col-4 text-center"><h1 id="brand">Dr.Foody</h1></div>
-      </div>
-      <div class="row flex-nowrap justify-content-btween align-items-center">
-        <div class="col-4 justify-content-center"><a href="#"><img id="home" src="img/Home.svg"></a></div>
-      </div>
-    </div>
-  </nav>
-<!--타이틀바 끝-->
-<!-- 내용 기입은 여기서 부터-->
-<div id="scroll">
-  <div class="grid text-center" id="content-main" style="--bs-rows: 2; --bs-columns: 2;">
-    <div><h2>님의 건강정보</h2></div>
-    <div class="g-start-2" style="grid-row: 2">
-      <ul class="p-2 list-group list-group-horizontal justify-content-center">
-        <li class="col-3 list-group-item" id="fix-name">질환</li>
-        <li class="col-8 list-group-item" id="some-item">A second item</li>
-      </ul>
-      <ul class="p-2 list-group list-group-horizontal justify-content-center">
-        <li class="col-3 list-group-item" id="fix-name">알레르기</li>
-        <li class="col-8 list-group-item" id="some-item">A second item</li>
-      </ul>
+  <FoodyHeader link='FoodyHeader.vue' />
+  <h2>{{ nickNm }}님의 건강정보</h2>
+  <div class="box_zip">
+    <div id="n_box">질환</div>
+    <div id="i_box">질환</div>
+  </div>
+  <div class="box_zip">
+    <div id="n_box">알레르기</div>
+    <div id="i_box">{{ allergieNm }}</div>
+  </div>
+  <div class="dash_contents">
+    <div id="diet_icon"> deit_img </div>
+    <div id="dash_diet">
+      <div>{{ currentDate }}</div>
+      <div>추천식단</div>
     </div>
   </div>
-  <div class="card border-0 text-center mx-auto p-2" style="width: 20rem;">
-    <div class="card-header border-0"  id="diet-list-title">
-      <table class="col-12">
-          <tr>
-            <td class="text-center" rowspan="2" width="40%"><img src="img/dietList.svg"></td>
-            <td class="text-start" width="60%">date</td>
-          </tr>
-          <tr>
-            <td class="text-start" id="diet-list-main" width="60%">추천식단</td>
-          </tr>
-      </table>
-    </div>
-    <ul class="list-group list-group-flush" id="dash-list-tbt"  style="margin-top: 10px;">
-      <li class="list-group-item" id="dash-list-table">A item</li>
-      <li class="list-group-item" id="dash-list-table">A item</li>
-      <li class="list-group-item" id="dash-list-table">A item</li>
-      <li class="list-group-item" id="dash-list-table">A item</li>
-      <li class="list-group-item" id="dash-list-table">A item</li>
-      <li class="list-group-item" id="dash-list-table">A item</li>
-    </ul>
-  </div>
-</div>
-<!--내용 기입 마지막은 여기-->
+  <div class="dash_dietList">
+    <div id="mealTime">{{ mealTime }}</div>
+    <div>{{ food1 }}</div>
+    <div>{{ food2 }}</div>
+    <div>{{ food3 }}</div>
+    <div>{{ food4 }}</div>
+    <div>{{ food5 }}</div>
+  </div> 
 
-<!--메뉴바-->
-<nav class="navbar fixed-bottom bg-body-tertiary">
-  <div class="container-fluid" id="nav-style">
-    <div class="col-3 d-flex flex-column mb-2" id="icon-box">
-          <div class="d-flex justify-content-evenly">식단추천</div>
-          <div class="d-flex justify-content-evenly"><img id="icon1" src="img/dietList.svg" href="#"></div>
-    </div>
-    <div class="col-3 d-flex flex-column mb-2" id="icon-box">
-      <div class="d-flex justify-content-evenly">식단관리</div>
-      <div class="d-flex justify-content-evenly"><img id="icon2" src="img/dietManage.svg" href="#"></div>
-    </div>
-    <div class="col-3 d-flex flex-column mb-2" id="icon-box">
-      <div class="d-flex justify-content-evenly">회원정보</div>
-      <div class="d-flex justify-content-evenly"><img id="icon3" src="img/info.svg" href="#"></div>
-    </div>
-    <div class="col-3 d-flex flex-column mb-2" id="icon-box">
-      <div class="d-flex justify-content-evenly">로그아웃</div>
-      <div class="d-flex justify-content-evenly"><img id="icon4" src="img/logout.svg" href="#"></div>
-    </div>
-  </div>
-</nav>
-<!--메뉴바 끝-->
-
+  <FoodyNav link="FoodyNav.vue"  />
 </template>
 
 <script>
+import login from '@/components/FoodyLogin.vue';
+import FoodyHeader from '@/layout/FoodyHeader.vue';
+import FoodyNav from '@/layout/FoodyNav.vue';
+
 export default {
-  name: 'DashBoard',
-  props: {
-    msg: String
+    name: "DashBoard",
+    data() {
+        return {
+          currentDate: '',
+          mealTime: '',
+          nickNm: '',
+          allergieNm: '',
+          food1:'',
+          food2:'',
+          food3:'',
+          food4:'',
+          food5:'',
+       //data, 변수들 여기에 담기 object형식으로
+        }
+    },
+    mounted() {
+    this.getCurrentDate();
+    this.updateMealTime(); // 초기에 한 번 호출
+    setInterval(() => {
+      this.updateMealTime(); // 1초마다 갱신
+    }, 1000);
+   },
+    methods: {
+    getCurrentDate() {
+      const today = new Date();
+      
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+
+      this.currentDate = `${year}년 ${month}월 ${day}일`;
+    },
+    updateMealTime() {
+      const currentTime = new Date();
+      const currentHour = currentTime.getHours();
+      const currentMinute = currentTime.getMinutes();
+      const currentSecond = currentTime.getSeconds();
+
+      if (currentHour >= 6 && currentHour <= 10 && currentMinute <= 59 && currentSecond <= 59) {
+        this.mealTime = '아침';
+      } else if (currentHour >= 11 && currentHour <= 16 && currentMinute <= 59 && currentSecond <= 59) {
+        this.mealTime = '점심';
+      } else if (currentHour >= 17 && currentHour <= 22 && currentMinute <= 59 && currentSecond <= 59) {
+        this.mealTime = '저녁';
+      } else {
+        this.mealTime = '다른 시간대';
+      }
+    },
+    getUserInfo(){ 
+      console.log(login.params.nickNm);
+    }
+    },
+    props: {
+        msg: String,
+    },
+    components: { FoodyHeader, FoodyNav },
   }
-}
 </script>
+
+
+
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
+h2 {
+  color: #023059;
+  margin-top: 10%;
+  margin-bottom: 5%;
 }
 a {
-  color: #42b983;
+  color: #3F72AF;
+  text-decoration: none;
+}
+
+.dash_contents{
+  color:#3F72AF;
+  display: flex;
+  justify-content: center;
+  margin-top: 10%;
+  margin-bottom: 5%;
+  gap:5%
+}
+#diet_icon{
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+}
+#dash_diet{
+  font-weight: bold;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.box_zip{
+  display: flex;
+  justify-content: center;
+  margin-top:2%;
+}
+#n_box{
+  color:#3F72AF;
+  justify-content: center;
+  justify-items: center;
+  width: 25vw;
+  height: 5vh;
+  line-height:5vh;
+  background: #DBE2EF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px 0px 0px 5px;
+
+}
+#i_box{
+  color:#3F72AF;
+  font-weight: bold;
+  justify-content: center;
+  justify-items: center;
+  width: 50vw;
+  height: 5vh;
+  line-height:5vh;
+  background: #F0F0F0;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 0px 5px 5px 0px;
+}
+
+.dash_dietList{
+  position: flex;
+  justify-content: center;
+  justify-items: center;
+  width: 60vw;
+  height: auto;
+  min-height: 25vh;
+  margin:auto;
+  padding:2%;
+  background: #DBE2EF;
+  filter: drop-shadow(3px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 30px;
+}
+
+#mealTime{
+  color: #3F72AF;
+  font-weight:  bolder;
+  font-size: 1.5rem;
 }
 </style>
