@@ -17,6 +17,7 @@ export default{
 <style scoped>
 .nav{
   display:flex;
+  margin:0;
   padding: 0;
 }
 
@@ -27,8 +28,8 @@ export default{
     justify-content: center;
     justify-items: center;
     width:25vw;
-    height: 10vh;
-    box-shadow: 3px 2px 3px #bbb;
+    height: 100%;
+    padding: 2%;
 }
 #s_effect2{
     flex:1;
@@ -37,8 +38,8 @@ export default{
     justify-content: center;
     justify-items: center;
     width:25vw;
-    height: 10vh;
-    box-shadow: 3px 2px 3px #bbb;
+    height: 100%;
+    padding: 2%;
 }
 #s_effect3{
     flex:1;
@@ -47,8 +48,8 @@ export default{
     justify-content: center;
     justify-items: center;
     width:25vw;
-    height: 10vh;
-    box-shadow: 3px 2px 3px #bbb;
+    height: 100%;
+    padding: 2%;
 }
 #s_effect4{
     flex:1;
@@ -57,8 +58,8 @@ export default{
     justify-content: center;
     justify-items: center;
     width:25vw;
-    height: 10vh;
-    box-shadow: 3px 2px 3px #bbb;
+    height: 100%;
+    padding: 2%;
 }
 
 
