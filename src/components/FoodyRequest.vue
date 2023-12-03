@@ -2,20 +2,21 @@
 <FoodyHeader link='FoodyHeader.vue' />
 <h3>문의하기</h3><hr id="first_line">
 
-<div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon1">E-mail</span>
-  <input type="text" class="form-control" placeholder="이메일" aria-label="이메일" aria-describedby="basic-addon1">
+<div>
+  <span>E-mail</span>
+  <input type="text" placeholder="이메일" aria-label="이메일" v-model="email">
 </div>
 
-<input class="form-control" type="text" placeholder="제목" aria-label="default input example">
+<input type="text" placeholder="제목" aria-label="default input example" v-model="titleText">
 
-<div class="input-group">
-    <span class="input-group-text">내용</span>
-    <textarea class="form-control h-25" rows="8" aria-label="내용"></textarea>
+<div>
+    <span>내용</span>
+    <textarea rows="8" aria-label="내용" v-model="contentText"></textarea>
 </div>
 
-
-<router-link to="/RequestComp" class="request_btn">문의 전송</router-link>
+<footer>
+    <div><button type="submit" class="btn" id="requestSend" v-on:click="requestSend()">문의 전송</button></div>
+</footer>
 </template>
 
 <script>
@@ -24,6 +25,25 @@ import FoodyHeader from '@/layout/FoodyHeader.vue';
 export default {
     name:'FoodyRequest',
     components: { FoodyHeader,},
+    data() {
+        return {
+        email: '',
+        titleText: '',
+        contentText: '',
+        } 
+    },
+    methods: {
+        requestSend(){
+        const email=this.email;
+        const titleText=this.titleText;
+        const contentText=this.contentText;
+        const requestComp = () => this.$router.push({path:'/RequestComp', name:'RequestComp',});
+
+        if(email!='' && titleText!='' && contentText!=''){
+            requestComp();
+        }
+        }
+    },
 }
 </script>
 
@@ -42,7 +62,8 @@ h3{
     margin: 3%;
 }
 
-.request_btn{
+
+footer {
     display: flex;
     flex-direction: column; 
     justify-content: center;
@@ -53,12 +74,16 @@ h3{
     color: #3f72af;
     width: 100vw;
     bottom: 0vh;
-    text-decoration: none;
     padding-top: 2%;
     padding-bottom: 2%;
+}
+
+.btn{
+    font-family: 'NPSfontBold';
     background-color: #dbe2ef;
     color: #3F72AF;
     font-size: 30px;
+    border: none;
 }
 
 </style>

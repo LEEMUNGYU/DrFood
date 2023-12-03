@@ -215,8 +215,7 @@ footer {
     padding-bottom: 2%;
 }
 
-.btn{/*로그인 글자*/
-    font-family: 'NPSfontBold';
+.btn{
     background-color: #dbe2ef;
     color: #3F72AF;
     font-size: 30px;

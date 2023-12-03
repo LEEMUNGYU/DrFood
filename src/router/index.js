@@ -43,6 +43,16 @@ name: 'RequestComp',
 component: () => import('../components/RequestComp.vue'),
 },
 {
+path: "/rule",
+name: 'UserRule',
+component: () => import('../components/UserRule.vue'),
+},
+{
+path: "/change",
+name: 'ChangeInfo',
+component: () => import('../components/ChangeInfo.vue'),
+},
+{
 path: "/UserInfo",
 name: 'UserInfo',
 component: () => import('../components/UserInfo.vue'),

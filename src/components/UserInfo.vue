@@ -3,9 +3,9 @@
   <h3>회원정보</h3><hr id="first_line">
 <div class="h3">  <p>무엇을 도와드릴까요?</p></div>
 <div class="Info-list">
-  <router-link to="#" class="Info-btn"><img />회원 정보 변경</router-link>
+  <router-link to="/change" class="Info-btn"><img />회원 정보 변경</router-link>
   <router-link to="/request" class="Info-btn"><img />문의하기</router-link>
-  <router-link to="#" class="Info-btn"><img />개인정보처리방침</router-link>
+  <router-link to="/rule" class="Info-btn"><img />개인정보처리방침</router-link>
   <router-link to="/quit" class="Info-btn"><img />회원탈퇴</router-link>
 </div>
 <FoodyNav link="FoodyNav.vue"  />
