@@ -33,6 +33,11 @@ name: 'SignInComp',
 component: () => import('../components/SignInComp.vue'),
 },
 {
+path: "/request",
+name: 'FoodyRequest',
+component: () => import('../components/FoodyRequest.vue'),
+},
+{
 path: "/RequestComp",
 name: 'RequestComp',
 component: () => import('../components/RequestComp.vue'),
