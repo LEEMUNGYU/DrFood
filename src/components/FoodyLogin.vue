@@ -60,7 +60,7 @@ export default {
     fnLogin() {
       const email = this.user_id;
       const pwd = this.user_pw;
-       axios({
+        axios({
         method: 'get',
         //url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/login?email=abcd123@gmail.com&pwd=123123',
         url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/login',
@@ -70,7 +70,7 @@ export default {
         }
       })
       .then((res) => {
-      const goMain = () => this.$router.push({path:'/board'});
+      const goMain = () => this.$router.push({path:'/board', name:'DashBoard',});
       const result = res.data;
             
         // 4. 로그인이 성공하면 다른 페이지로 이동한다.
@@ -79,11 +79,13 @@ export default {
             break;
           case '-2': console.log(result);//"비밀번호가 틀렸습니다."
             break;
-          case '200': goMain();
+          case '200': this.$store.commit('setUserName', result.nickNm);
+                      this.$store.commit('setAllergieNm', result.allergieNm);
+                      goMain();
             break;
           default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
             break;
-       }
+        }
     })
       .catch(err => {
       console.log('에러!!!');

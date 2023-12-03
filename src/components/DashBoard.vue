@@ -1,13 +1,13 @@
 <template>
   <FoodyHeader link='FoodyHeader.vue' />
-  <h2>{{ nickNm }}님의 건강정보</h2>
+  <h2>{{ $store.state.nickNm }}님의 건강정보</h2>
   <div class="box_zip">
     <div id="n_box">질환</div>
     <div id="i_box">질환</div>
   </div>
   <div class="box_zip">
     <div id="n_box">알레르기</div>
-    <div id="i_box">{{ allergieNm }}</div>
+    <div id="i_box">{{ $store.state.allergieNm }}</div>
   </div>
   <div class="dash_contents">
     <div id="diet_icon"> deit_img </div>
@@ -55,7 +55,7 @@ export default {
     setInterval(() => {
       this.updateMealTime(); // 1초마다 갱신
     }, 1000);
-   },
+    },
     methods: {
     getCurrentDate() {
       const today = new Date();
@@ -82,7 +82,7 @@ export default {
         this.mealTime = '다른 시간대';
       }
     },
-    getUserInfo(){ 
+    getUser(){ 
       console.log(login.params.nickNm);
     }
     },

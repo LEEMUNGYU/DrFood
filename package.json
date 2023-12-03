@@ -12,6 +12,7 @@
     "bootstrap": "^5.2.3",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.8.3",
+    "es6-promise": "^4.2.8",
     "template-compiler": "^1.2.1",
     "vue": "^3.3.8",
     "vue-loader": "^17.3.1",

@@ -115,8 +115,8 @@ import FoodyNav from '@/layout/FoodyNav.vue';
 export default {
     name: 'DietList',
     data() {
-      return {
-      };
+        return {
+        };
     },
     methods: {
     },

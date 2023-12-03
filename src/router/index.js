@@ -6,7 +6,6 @@ const routes = [
 path: "/",
 name: 'FoodyLogin',
 component: () => import('../components/FoodyLogin.vue'),
-props:true,
 },
 {
 path: "/board",
