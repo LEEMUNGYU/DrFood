@@ -37,6 +37,16 @@ path: "/RequestComp",
 name: 'RequestComp',
 component: () => import('../components/RequestComp.vue'),
 },
+{
+path: "/UserInfo",
+name: 'UserInfo',
+component: () => import('../components/UserInfo.vue'),
+},
+{
+path: "/manage",
+name: 'DietManage',
+component: () => import('../components/DietManage.vue'),
+},
 ];
 
 const router = createRouter({

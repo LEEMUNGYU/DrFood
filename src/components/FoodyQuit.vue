@@ -2,7 +2,7 @@
   <foody-header></foody-header>
     <div>
     <h3>회원탈퇴</h3>
-    <hr id="frist_line">
+    <hr id="first_line">
     <div id="sorry">
         <p id="main_text"><span id="accent">죄송합니다</span><br><br>
         저희와 함께하신 시간동안 만족스러운<br>
@@ -59,7 +59,12 @@ h3{
     margin-left: 3%;
     margin-top: 8%;
 }
-#frist_line{
+
+.sorry{
+    text-align: center;
+}
+
+#first_line{
     border: solid 0.4vh;
     color:#3F72AF;
     border-radius: 5px;

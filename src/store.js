@@ -21,7 +21,11 @@ const store = createStore({
     },
     setAllergieNm(state, allergieNm){
       state.allergieNm = '#' + allergieNm.replace(/#/g, ' #');
-    }
+    },
+    resetState(state) {
+      state.nickNm = '';
+      state.allergieNm = '';
+    },
   }
 });
 

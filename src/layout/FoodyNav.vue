@@ -1,15 +1,21 @@
 <template>
     <div class="nav">  
       <div id="s_effect1"><a href="/dietlist">식단추천</a></div>
-      <div id="s_effect2"><a href="#">식단관리</a></div>
-      <div id="s_effect3"><a href="#">회원정보</a></div>
-      <div id="s_effect4"><a href="/">로그아웃</a></div>
+      <div id="s_effect2"><a href="/manage">식단관리</a></div>
+      <div id="s_effect3"><a href="/UserInfo">회원정보</a></div>
+      <div id="s_effect4"><a v-on:click="resetState()">로그아웃</a></div>
   </div>
 </template>
 
 <script>
 export default{
    name:'FoodyNav',
+   methods: {
+    resetState() {
+      this.$store.commit('resetState');
+      this.$router.replace({path:'/', name:'FoodyLogin'});
+    },
+   },
 }
 
 </script>
