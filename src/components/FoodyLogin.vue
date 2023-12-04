@@ -23,19 +23,8 @@
 
   <label for="autologin"><input type="checkbox" id="autologin">자동 로그인</label>
 
-  <table>
-    <tr>
-      <td>
-        <div class="a"><a href="">회원가입</a></div><!--회원가입 주소 href에 입력-->
-      </td>
-    </tr>
-    <br><br>
-    <tr>
-      <td>
-        <div class="a"><a href="">아이디 찾기</a></div><!--아이디 찾기 주소 href에 입력-->
-      </td>
-    </tr>
-  </table>
+        <router-link to='/SignInUserData' class="alink">회원가입</router-link><!--회원가입 주소 href에 입력-->
+        <div class="alink"><a href="">아이디 찾기</a></div><!--아이디 찾기 주소 href에 입력-->
   <footer>
       <div><button type="submit" class="btn" id="loginGo" v-on:click="fnLogin()">로그인</button></div>
   </footer>
@@ -145,6 +134,7 @@ p {
     justify-content: space-between;
 }
 a{
+  color:#3f72af;
   text-decoration : none;
 }
 
@@ -193,7 +183,7 @@ table { /*회원가입, 아이디 찾기*/
     color: #3F72AF;
 }
 
-.a { /*회원가입, 아이디 찾기*/
+.alink { /*회원가입, 아이디 찾기*/
     text-align: center;
     gap: 10%;
     text-decoration: none;
