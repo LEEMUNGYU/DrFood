@@ -72,7 +72,7 @@ footer {
     transform : translateY(0vh);
     background-color: #dbe2ef;
     color: #3f72af;
-    width: 100vw;
+    width: 100%;
     bottom: 0vh;
     padding-top: 2%;
     padding-bottom: 2%;

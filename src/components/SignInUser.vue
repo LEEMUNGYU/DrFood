@@ -30,7 +30,7 @@
 </div>
 </form>
 <footer>
-    <div><button type="submit" class="btn" id="nextPage" v-on:click="nextPage()">다음</button></div>
+    <div><router-link v-bind:to="'/checkda'" class="btn" id="nextPage">다음</router-link></div>
 </footer>
 </template>
 
@@ -150,6 +150,7 @@ footer {
     color: #3F72AF;
     font-size: 30px;
     border: none;
+    text-decoration: none;
     }
 
 </style>
