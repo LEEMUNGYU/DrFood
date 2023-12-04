@@ -1,4 +1,4 @@
-<template>
+<template><!--좀 더 진행-->
   <foody-header></foody-header>
   <main>
     <form>
