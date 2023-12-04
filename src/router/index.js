@@ -58,6 +58,11 @@ name: 'ChangeInfo',
 component: () => import('../components/ChangeInfo.vue'),
 },
 {
+path: "/changePW",
+name: 'changePW',
+component: () => import('../components/ChangePW.vue'),
+},
+{
 path: "/UserInfo",
 name: 'UserInfo',
 component: () => import('../components/UserInfo.vue'),
