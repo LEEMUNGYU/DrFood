@@ -8,6 +8,11 @@ name: 'FoodyLogin',
 component: () => import('../components/FoodyLogin.vue'),
 },
 {
+path: "/checkda",
+name: 'checkDA',
+component: () => import('../components/SignInDAcheck.vue'),
+},
+{
 path: "/board",
 name: 'DashBoard',
 component: () => import('../components/DashBoard.vue'),

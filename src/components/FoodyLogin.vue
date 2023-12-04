@@ -106,7 +106,6 @@ export default {
 }
 
 template{
-    font-family: 'NPSfontBold';
     margin: 0;
     padding: 0; 
 }
