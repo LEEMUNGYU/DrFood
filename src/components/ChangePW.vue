@@ -2,10 +2,15 @@
   <foody-header></foody-header>
   <main>
     <form>
-      <div><select v-model="pw_question">비밀번호 질문 선택</select></div>
+      <div><select v-model="pw_question">
+            <option selected>질문 유형 선택</option>
+            <option value="1">본인의 어린시절 별명은?</option><!--인증질문 1-->
+            <option value="2">본인의 어린시절 장래 희망은?</option><!--인증질문 2-->
+            <option value="3">본인의 어린 시절에 존경 했던 인물은?</option><!--인증질문 3-->
+            <!--추가 질문은 여기부터 추가하여 사용-->
+      </select></div>
       <div>
-        <input type="password" class="form-control" placeholder="질문에 대한 답변" aria-label="기존 비밀번호"
-          aria-describedby="basic-addon1" v-model="pw_answer">
+        <input class="answer" placeholder="질문에 대한 답변" aria-label="기존 비밀번호" v-model="pw_answer">
       </div>
       <div class="changeForm">
       <div>
@@ -83,9 +88,8 @@ form{
   margin-top: 0.4rem;
   margin-right: -0.6rem;
 }
-
-input[type="password"] {
-    /*비밀번호*/
+select{
+    box-sizing:border-box;
     width: 70vw;
     padding: 10px;
     border: 1px solid #3f72af;
@@ -94,8 +98,31 @@ input[type="password"] {
     margin-inline: auto;
     margin: 0.6rem;
 }
+.answer {
+    box-sizing:border-box;
+    width: 70vw;
+    padding: 10px;
+    border: 1px solid #3f72af;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-inline: auto;
+    margin: 0.6rem;
+}
+
+
+input[type="password"] {
+    /*비밀번호*/
+    box-sizing:border-box;
+    width: 70vw;
+    padding: 10px;
+    border: 1px solid #3f72af;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-inline: auto;
+}
 input[type="password1"] {
     /*비밀번호*/
+    box-sizing:border-box;
     width: 70vw;
     padding: 10px;
     border: 1px solid #3f72af;
