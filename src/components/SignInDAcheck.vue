@@ -1,6 +1,5 @@
 <template>
-        <!-- 수정 필요 수정 필요 수정 필요 -->
-    <foody-header></foody-header>
+    <FoodyHeader></FoodyHeader>
     <div class="main">
     <div>
         <h3>보유 질환</h3>
@@ -57,6 +56,9 @@ export default {
         selectedDiseases: [],
         diseasesSelected: false,
     }
+  },
+  components:{
+    FoodyHeader
   },
   methods:{
     updateSelectedDiseases() {
