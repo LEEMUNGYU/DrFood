@@ -18,6 +18,11 @@ name: 'checkDA',
 component: () => import('../components/SignInDAcheck.vue'),
 },
 {
+path : "/SignLast",
+name: 'SignLast',
+component: () => import('../components/SignInLast.vue'),
+},
+{
 path: "/board",
 name: 'DashBoard',
 component: () => import('../components/DashBoard.vue'),

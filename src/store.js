@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import createPersistedState from 'vuex-persistedstate';
 
 const store = createStore({
   state () {
@@ -26,7 +27,8 @@ const store = createStore({
       state.nickNm = '';
       state.allergieNm = '';
     },
-  }
+  },
+  plugins: [createPersistedState()],
 });
 
 export default store;

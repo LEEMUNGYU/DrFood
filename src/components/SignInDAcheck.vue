@@ -44,7 +44,7 @@
     </div>
 </div>
 </div>
-<footer id="footer"><router-link v-bind:to="'#'"  id="registerBtn" class="btn-signGo" style="display: none; text-align: center;">회원가입하기</router-link></footer>
+<footer id="footer"><router-link v-bind:to="'SignLast'"  id="registerBtn" class="btn-signGo" style="display: none; text-align: center;">회원가입하기</router-link></footer>
 </template>
 
 <script>
@@ -130,16 +130,23 @@ export default {
             footer.style.display = 'flex';
         },
         addSelectedAllergy(allergy) {
-    const selectedAllergiesElement = document.getElementById('selectedAllergies');
-    const selectedAllergies = selectedAllergiesElement.textContent.split(' ');
-
-    if (!selectedAllergies.includes("#" + allergy)) {
-        if (selectedAllergiesElement.textContent === '#""') {
-            selectedAllergiesElement.textContent = '';
-            }
+            const selectedAllergiesElement = document.getElementById('selectedAllergies');
+        // 현재 선택된 알레르기 목록을 가져오기
+            let selectedAllergies = selectedAllergiesElement.textContent.split(' ');
+        // 이미 선택된 알레르기인지 확인
+        if (selectedAllergies.includes("#" + allergy)) {
+            // 이미 선택된 알레르기를 배열에서 제거
+            selectedAllergies = selectedAllergies.filter(item => item !== "#" + allergy);
+            // 선택된 알레르기 업데이트
+            selectedAllergiesElement.textContent = selectedAllergies.join(' ');
+            } else {
+            // 중복 확인 없이 추가
+                if (selectedAllergiesElement.textContent === '#""') {
+                    selectedAllergiesElement.textContent = '';
+                }
             selectedAllergiesElement.textContent += "#" + allergy + " ";
-        }
-    },
+            }
+        },
     },
 }
 </script>
