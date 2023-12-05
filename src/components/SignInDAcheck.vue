@@ -129,13 +129,17 @@ export default {
             const footer = document.getElementById('footer');
             footer.style.display = 'flex';
         },
-    addSelectedAllergy(allergy) {
-            const selectedAllergiesElement = document.getElementById('selectedAllergies');
-            if (selectedAllergiesElement.textContent === '#""') {
-                selectedAllergiesElement.textContent = '';
+        addSelectedAllergy(allergy) {
+    const selectedAllergiesElement = document.getElementById('selectedAllergies');
+    const selectedAllergies = selectedAllergiesElement.textContent.split(' ');
+
+    if (!selectedAllergies.includes("#" + allergy)) {
+        if (selectedAllergiesElement.textContent === '#""') {
+            selectedAllergiesElement.textContent = '';
             }
             selectedAllergiesElement.textContent += "#" + allergy + " ";
-        },
+        }
+    },
     },
 }
 </script>
