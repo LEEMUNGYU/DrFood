@@ -1,672 +1,331 @@
 <template>
-  <!-- 수정 필요 수정 필요 수정 필요 -->
-  <div class="header">
-        <h1>Dr.Foody</h1>
+        <!-- 수정 필요 수정 필요 수정 필요 -->
+    <foody-header></foody-header>
+    <div class="main">
+    <div>
+        <h3>보유 질환</h3>
+        <p id="selectedDiseases"></p>
     </div>
-  <h3>보유 질환</h3>
-    <p id="selectedDiseases">#""</p>
-    <br><br>
-    <div class="container">
-        <a href="#" id="obesityBtn" class="btn-gradient blue" v-on:click="addSelectedDisease('비만')">비만</a>
-        <a href="#" id="hypertensionBtn" class="btn-gradient red" v-on:click="addSelectedDisease('고혈압')">고혈압</a>
-        <a href="#" id="diabetesBtn" class="btn-gradient green" v-on:click="addSelectedDisease('당뇨')">당뇨</a>
-        <a href="#" id="gastritisBtn" class="btn-gradient orange" v-on:click="addSelectedDisease('위염')">위염</a>
+    <div id="Disease-container">
+        <div id="btn-Ob" class="DiseaseBtn" v-on:click="addSelectedDisease('비만')">비만</div>
+        <div id="btn-Hyper" class="DiseaseBtn" v-on:click="addSelectedDisease('고혈압')">고혈압</div>
+        <div id="btn-Dia" class="DiseaseBtn" v-on:click="addSelectedDisease('당뇨')">당뇨</div>
+        <div id="btn-Gas" class="DiseaseBtn" v-on:click="addSelectedDisease('위염')">위염</div>
     </div>
-    <button id="completeBtn" class="btn" style="display: none; text-align: center;" v-on:click="showAllergyContainer()">선택 완료</button>
+    <button id="completeBtn1" class="btn" style="display: none; text-align: center;" v-on:click="showAllergyContainer()">선택 완료</button>
     
     <div id="allergyContainer" style="display: none;">
     <h3>알레르기 선택</h3>
-    <p id="selectedAllergies">#""</p>
+    <p id="selectedAllergies"></p>
     <br>
-    <div class="container">
-        <a href="#" class="btn green rounded allergy-btn" v-on:click="addSelectedAllergy('달걀')">달걀</a>
-        <a href="#" class="btn blue rounded allergy-btn" v-on:click="addSelectedAllergy('유제품')">유제품</a>
-        <a href="#" class="btn red rounded allergy-btn" v-on:click="addSelectedAllergy('콩')">콩</a>
-        <a href="#" class="btn purple rounded allergy-btn" v-on:click="addSelectedAllergy('메밀')">메밀</a>
-        <a href="#" class="btn cyan rounded allergy-btn" v-on:click="addSelectedAllergy('밀')">밀</a>
-        <a href="#" class="btn yellow rounded allergy-btn" v-on:click="addSelectedAllergy('새우')">새우</a>
-        <a href="#" class="btn green rounded allergy-btn" v-on:click="addSelectedAllergy('게')">게</a>
-        <a href="#" class="btn blue rounded allergy-btn" v-on:click="addSelectedAllergy('땅콩')">땅콩</a>
-        <a href="#" class="btn red rounded allergy-btn" v-on:click="addSelectedAllergy('호두')">호두</a>
-        <a href="#" class="btn purple rounded allergy-btn" v-on:click="addSelectedAllergy('잣')">잣</a>
+    <div id="Allergy-container">
+        <div id="egg" class="allergy-btn" v-on:click="addSelectedAllergy('달걀')">달걀</div>
+        <div id="milk" class="allergy-btn" v-on:click="addSelectedAllergy('유제품')">유제품</div>
+        <div id="bean" class="allergy-btn" v-on:click="addSelectedAllergy('콩')">콩</div>
+        <div id="buckwheat" class="allergy-btn" v-on:click="addSelectedAllergy('메밀')">메밀</div>
+        <div id="wheat" class="allergy-btn" v-on:click="addSelectedAllergy('밀')">밀</div>
+        <div id="shrimp" class="allergy-btn" v-on:click="addSelectedAllergy('새우')">새우</div>
+        <div id="crab" class="allergy-btn" v-on:click="addSelectedAllergy('게')">게</div>
+        <div id="peanut" class="allergy-btn" v-on:click="addSelectedAllergy('땅콩')">땅콩</div>
+        <div id="walnut" class="allergy-btn" v-on:click="addSelectedAllergy('호두')">호두</div>
+        <div id="pinenut" class="allergy-btn" v-on:click="addSelectedAllergy('잣')">잣</div>
+        <div id="mackerel" class="allergy-btn" v-on:click="addSelectedAllergy('고등어')">고등어</div>
+        <div id="fish" class="allergy-btn" v-on:click="addSelectedAllergy('그 외 생선')">그 외 생선</div>
+        <div id="abalone" class="allergy-btn" v-on:click="addSelectedAllergy('전복')">전복</div>
+        <div id="oyster" class="allergy-btn" v-on:click="addSelectedAllergy('굴')">굴</div>
+        <div id="clam" class="allergy-btn" v-on:click="addSelectedAllergy('조개')">조개</div>
+        <div id="chicken" class="allergy-btn" v-on:click="addSelectedAllergy('닭고기')">닭고기</div>
+        <div id="pig" class="allergy-btn" v-on:click="addSelectedAllergy('돼지고기')">돼지고기</div>
+        <div id="cow" class="allergy-btn" v-on:click="addSelectedAllergy('쇠고기')">쇠고기</div>
+        <div id="smalloctopus" class="allergy-btn" v-on:click="addSelectedAllergy('낙지')">낙지</div>
+        <div id="octopus" class="allergy-btn" v-on:click="addSelectedAllergy('문어')">문어</div>
+        <div id="squid" class="allergy-btn" v-on:click="addSelectedAllergy('오징어')">오징어</div>
+        <div id="sesame" class="allergy-btn" v-on:click="addSelectedAllergy('깨')">깨</div>
     </div>
-    <button id="completeBtn" class="btn" style="display: none; text-align: center;" v-on:click="showAllergyContainer()">선택 완료</button>
 </div>
-<button id="registerBtn" class="btn" style="display: none; text-align: center;" link="#">회원가입하기</button>
+</div>
+<footer id="footer"><router-link v-bind:to="'#'"  id="registerBtn" class="btn-signGo" style="display: none; text-align: center;">회원가입하기</router-link></footer>
 </template>
 
 <script>
+import FoodyHeader from '@/layout/FoodyHeader.vue';
 
 export default {
-  name:'checkDA',
-  data(){
+    name:'checkDA',
+    data(){
     return{
-      selectedDiseases: [],
-      diseasesSelected: false,
+        selectedDiseases: [],
+        diseasesSelected: false,
     }
   },
   methods:{
+    updateSelectedDiseases() {
+            const selectedDiseasesElement = document.getElementById('selectedDiseases');
+            selectedDiseasesElement.textContent = '#'+ this.selectedDiseases.join(' #');
+        },
+    addSelectedDisease(disease){
+            if (!this.diseasesSelected) {
+                if (!this.selectedDiseases.includes(disease)) {
+                    this.selectedDiseases.push(disease);
+                }
+            this.updateSelectedDiseases();
+                // 질환 선택을 마치면 선택완료 버튼 블록
+            const completeBtn = document.getElementById('completeBtn');
+            completeBtn.style.display = 'block';
+            }
+        },
+    showAllergyContainer() {
+            // 선택 완료 버튼을 클릭하면 알레르기 선택 창을 표시
+            const allergyContainer = document.getElementById('allergyContainer');
+            allergyContainer.style.display = 'block';
+
+            // 질환 선택 완료되면 더 이상 수정할 수 없도록 플래그 설정
+            this.diseasesSelected = true;
+
+            // 선택 완료 버튼 비활성화
+            const completeBtn = document.getElementById('completeBtn');
+            completeBtn.disabled = true;
+
+            // 질병 선택 버튼들 비활성화
+            document.getElementById('obesityBtn').disabled = true;
+            document.getElementById('hypertensionBtn').disabled = true;
+            document.getElementById('diabetesBtn').disabled = true;
+            document.getElementById('gastritisBtn').disabled = true;
+
+            // "회원가입하기" 버튼 표시
+            const registerBtn = document.getElementById('registerBtn');
+            registerBtn.style.display = 'block';
+        },
+    addSelectedAllergy(allergy) {
+            const selectedAllergiesElement = document.getElementById('selectedAllergies');
+            if (selectedAllergiesElement.textContent === '#""') {
+                selectedAllergiesElement.textContent = '';
+            }
+            selectedAllergiesElement.textContent += "#" + allergy + " ";
+        },
   },
 }
 </script>
 
 <style>
-
-.header{ 
+.main{
     display: flex;
-    position: relative;
+    flex-direction: column;
     justify-content: center;
+}
+
+h3 {
+    color: #3F72AF;
+    text-align: left;
+    margin-left: 8%;
+    margin-top: 8%;
+}
+
+p {
+    box-sizing:border-box;
+    width: 80vw;
+    height: 5vh;
+    line-height: 5vh;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #ccc;
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    color: #3f72af;
+    text-align: center;
+    margin-left: 3%;
+    margin-inline: auto;
+}
+
+form {
+    width: 100%;
+    margin: auto;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20vw;
     background-color: #dbe2ef;
     color: #3f72af;
-    width: 100vw;
+    line-height: 20px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.btn {
+    background-color: #dbe2ef;
+    color: #3F72AF;
+    font-size: 1em;
+    border: none;
+    text-align: center;
+}
+
+/*버튼들*/
+#Disease-container {
+    display: flex;
+    height: 40vh;
+    width: 80vw;
+    padding: auto;
+    background-color: white;
+    border: 1px solid none;
+    border-radius: 5px;
+    box-shadow: inset 3px 3px 3px #ccc;
+    flex-direction: column;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-inline: auto;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.DiseaseBtn{
+    background: #fff;
+    width: 15vh;
+    height: 15vh;
+    line-height: 8vh;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 2px #ccc;
+    border-radius: 5px;
+    margin: auto;
+    text-align: center;
+    align-content: center;
+}
+#btn-Ob{
+    color:#FF8B49;
+    background: #fff;
+}
+#btn-Hyper{
+    color:#FF5454;
+    background: #fff;
+}
+#btn-Dia{
+    color:#9AB200;
+    background: #fff;
+}
+#btn-Ob{
+    color:#630707;
+    background: #fff;
+}
+
+
+#Allergy-container {
+    overflow: scroll;
+    display: flex;
+    height: 30vh;
+    width: 80vw;
+    padding: auto;
+    background-color: white;
+    border: 1px solid none;
+    border-radius: 5px;
+    box-shadow: inset 3px 3px 3px #ccc;
+    flex-direction: row;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-inline: auto;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.allergy-btn{
+    background: #fff;
+    width: 15vh;
+    height: 5vh;
+    line-height: 5vh;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 2px #ccc;
+    border-radius: 5px;
+    margin: 2%;
+    text-align: center;
+    align-content: center;
+}
+#egg{
+    color:#FF8B49;
+}
+#milk{
+    color:#02601C;
+}
+#bean{
+    color:#000000;
+}
+#buckwheat{
+    color:#722A01;
+}
+#wheat{
+    color:#BC9300;
+}
+#shrimp{
+    color:#FF5454;
+}
+#crab{
+    color:#C60000;
+}
+#peanut{
+    color:#AC6F28;
+}
+#walnut{
+    color:#AB501D;
+}
+#pinenut{
+    color:#CD916F;
+}
+#mackerel{
+    color:#475985;
+}
+#fish{
+    color:#2E9CDB;
+}
+#abalone{
+    color:#52B96F;
+}
+#oyster{
+    color:#7D7977;
+}
+#clam{
+    color:#FFB68C;
+}
+#chicken{
+    color:#FF9393;
+}
+#pig{
+    color:#FF5C00;
+}
+#cow{
+    color:#FF0202;
+}
+#smalloctopus{
+    color:#E649FF;
+}
+#octopus{
+    color:#AD0087;
+}
+#squid{
+    color:#AE7CFF;
+}
+#sesame{
+    color:#C57123;
+}
+
+footer{
+    display: none;
+    flex-direction: column; 
+    justify-content: center;
     height: 8vh;
-    line-height:100%;
-}
-
-h3 {
-    text-align: left;
-    color: #3F72AF;
-}
-
-p {
-    font-size: 20px;
-    color: #3f72af;
-    text-align: left;
-    font-weight: bold;
-}
-
-form {
-    width: 100%;
-    margin: auto;
-}
-
-a {
-    font-family: 'NPSfontBold';
-    background-color: #dbe2ef;
-    color: #3F72AF;
-    font-size: 2rem;
-    text-align: center;
-}
-
-/*다음*/
-footer {
     position: relative;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 20vw;
+    transform : translateY(0vh);
     background-color: #dbe2ef;
     color: #3f72af;
-    line-height: 20px;
-    text-align: center;
-    margin: 0 auto;
+    width: 100%;
+    bottom: 0vh;
+    margin-top:3%;
+    padding-top: 2%;
+    padding-bottom: 2%;
 }
-
-.btn {
-    font-family: 'NPSfontBold';
+.btn-signGo{
     background-color: #dbe2ef;
     color: #3F72AF;
-    font-size: 1em;
+    font-size: 30px;
     border: none;
-    text-align: center;
-}
-
-/*버튼들*/
-.container {
-    background-color: white;
-    border-radius: 4px;
-    text-align: center;
-    margin-bottom: 40px;
-    flex-direction: column;
-    padding: 20px 40px;
-    font-size: 1em;
-}
-
-.btn-gradient {
-    margin: 5px;
-}
-
-a[class*="btn"] {
     text-decoration: none;
-}
-
-input[class*="btn"],
-button[class*="btn"] {
-    border: 0;
-}
-
-body {
-	margin: 0;
-	background: #eaedf1;
-	font-family: 'Lato', sans-serif;
-}
-
-h2 {
-	color: #89867e;
-	text-align: center;
-	font-weight: 300;
-}
-.color {
-	width: 350px;
-	margin: 0 auto;
-}
-.color li {
-	margin: 0 15px 0 0;
-	width: 30px;
-	height: 30px;
-	display: inline-block;
-	border-radius: 100%;
-}
-.color .red    {background: #fa5a5a;}
-.color .yellow {background: #f0d264;}
-.color .green  {background: #82c8a0;}
-.color .cyan   {background: #7fccde;}
-.color .blue   {background: #6698cb;}
-.color .purple {background: #cb99c5;}
-
-.content, 
-.content-gradient, 
-.content-3d {
-  margin: 40px auto;
-}
-.content {
-  width: 80%;
-  max-width: 700px;
-}
-.content-3d {
-  width: 50%;
-  max-width: 300px;
-}
-pre {
-	width: 100%;
-	padding: 30px;
-	background-color: rgba(0, 0, 0, 0.72);
-	color: #f8f8f2;
-	border-radius: 0 0 4px 4px;
-	margin-top: 20px;
-  white-space: pre-wrap; /* css-3 */
-  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-  white-space: -pre-wrap; /* Opera 4-6 */
-  white-space: -o-pre-wrap; /* Opera 7 */
-  word-wrap: break-word; /* Internet Explorer 5.5+ */
-}
-pre .bt  {color: #f8f8f2;} /* <> */
-pre .anc {color: #f92672;} /* anchor tag */
-pre .att {color: #a6a926;} /* attribute */
-pre .val {color: #e6db74;} /* value */
-
-.btn-container, .container {
-	background-color: white;
-	border-radius: 4px;
-	text-align: center;
-	margin-bottom: 40px;
-}
-.container h2 {
-	padding-top: 30px;
-	font-weight: 300;
-}
-.btn, .btn-two {
-	margin: 9px;
-}
-.btn-gradient {
-	margin: 5px;
-}
-a[class*="btn"] {text-decoration: none;}
-input[class*="btn"], 
-button[class*="btn"] {border: 0;}
-
-/* Here you can change the button sizes */
-.btn.large, 
-.btn-two.large, 
-.btn-effect.large {
-  padding: 20px 40px; 
-  font-size: 22px;
-}
-.btn.small, 
-.btn-two.small, 
-.btn-gradient.small, 
-.btn-effect.small {
-  padding: 8px 18px;  
-  font-size: 14px;
-}
-.btn.mini, 
-.btn-two.mini, 
-.btn-gradient.mini, 
-.btn-effect.mini {
-  padding: 4px 12px;  
-  font-size: 12px;
-}
-.btn.block, 
-.btn-two.block, 
-.btn-gradient.block, 
-.btn-effect.block {
-  display: block;
-  width: 60%;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-.btn-gradient.large {
-  padding: 15px 45px; 
-  font-size: 22px;
-}
-
-/* Colors for .btn and .btn-two */
-.btn.blue, .btn-two.blue     {background-color: #7fb1bf;}
-.btn.green, .btn-two.green   {background-color: #9abf7f;}
-.btn.red, .btn-two.red       {background-color: #fa5a5a;}
-.btn.purple, .btn-two.purple {background-color: #cb99c5;}
-.btn.cyan, .btn-two.cyan     {background-color: #7fccde;}
-.btn.yellow, .btn-two.yellow {background-color: #f0d264;}
-
-.rounded {
-  border-radius: 10px;
-}
-
-/* default button style */
-.btn {
-	position: relative;
-	border: 0;
-	padding: 15px 25px;
-	display: inline-block;
-	text-align: center;
-	color: white;
-}
-.btn:active {
-	top: 4px;	
-}
-
-/* color classes for .btn */
-.btn.blue {box-shadow: 0px 4px #74a3b0;}
-.btn.blue:active {box-shadow: 0 0 #74a3b0; background-color: #709CA8;}
-
-.btn.green {box-shadow: 0px 4px 0px #87a86f;}
-.btn.green:active {box-shadow: 0 0 #87a86f; background-color: #87a86f;}
-
-.btn.red {box-shadow:0px 4px 0px #E04342;}
-.btn.red:active {box-shadow: 0 0 #ff4c4b; background-color: #ff4c4b;}
-
-.btn.purple {box-shadow:0px 4px 0px #AD83A8;}
-.btn.purple:active {box-shadow: 0 0 #BA8CB5; background-color: #BA8CB5;}
-
-.btn.cyan {box-shadow:0px 4px 0px #73B9C9;}
-.btn.cyan:active {box-shadow: 0 0 #73B9C9; background-color: #70B4C4;}
-
-.btn.yellow {box-shadow:0px 4px 0px #D1B757;}
-.btn.yellow:active {box-shadow: 0 0 #ff4c4b; background-color: #D6BB59;}
-
-/* Button two - I have no creativity for names */
-.btn-two {
-	color: white;	
-	padding: 15px 25px;
-	display: inline-block;
-	border: 1px solid rgba(0,0,0,0.21);
-	border-bottom-color: rgba(0,0,0,0.34);
-	text-shadow:0 1px 0 rgba(0,0,0,0.15);
-	box-shadow: 0 1px 0 rgba(255,255,255,0.34) inset;
-}
-.btn-two:active {
-	top: 1px;
-	border-color: rgba(0,0,0,0.34) rgba(0,0,0,0.21) rgba(0,0,0,0.21);
-	box-shadow: 0 1px 0 rgba(255,255,255,0.89),0 1px rgba(0,0,0,0.05) inset;
-	position: relative;
-}
-/* 3D Button */
-.btn-3d {
-	position: relative;
-	display: inline-block;
-	font-size: 22px;
-	padding: 20px 60px;
-	color: white;
-	margin: 20px 10px 10px;
-	border-radius: 6px;
-	text-align: center;
-	transition: top .01s linear;
-	text-shadow: 0 1px 0 rgba(0,0,0,0.15);
-}
-.btn-3d.red:hover    {background-color: #e74c3c;}
-.btn-3d.blue:hover   {background-color: #699DD1;}
-.btn-3d.green:hover  {background-color: #80C49D;}
-.btn-3d.purple:hover {background-color: #D19ECB;}
-.btn-3d.yellow:hover {background-color: #F0D264;}
-.btn-3d.cyan:hover   {background-color: #82D1E3;}
-
-.btn-3d:active {
-	top: 9px;
-}
-
-/* 3D button colors */
-.btn-3d.red {
-	background-color: #e74c3c;
-	box-shadow: 0 0 0 1px #c63702 inset,
-        0 0 0 2px rgba(255,255,255,0.15) inset,
-        0 8px 0 0 #C24032,
-        0 8px 0 1px rgba(0,0,0,0.4),
-				0 8px 8px 1px rgba(0,0,0,0.5);
-}
-.btn-3d.red:active {
-	box-shadow: 0 0 0 1px #c63702 inset,
-				0 0 0 2px rgba(255,255,255,0.15) inset,
-				0 0 0 1px rgba(0,0,0,0.4);
-}
-
-.btn-3d.blue {
-	background-color: #6DA2D9;
-	box-shadow: 0 0 0 1px #6698cb inset,
-				0 0 0 2px rgba(255,255,255,0.15) inset,
-				0 8px 0 0 rgba(110, 164, 219, .7),
-				0 8px 0 1px rgba(0,0,0,.4),
-				0 8px 8px 1px rgba(0,0,0,0.5);
-}
-.btn-3d.blue:active {
-	box-shadow: 0 0 0 1px #6191C2 inset,
-				0 0 0 2px rgba(255,255,255,0.15) inset,
-				0 0 0 1px rgba(0,0,0,0.4);
-}
-
-.btn-3d.green {
-	background-color: #82c8a0;
-	box-shadow: 0 0 0 1px #82c8a0 inset,
-				0 0 0 2px rgba(255,255,255,0.15) inset,
-				0 8px 0 0 rgba(126, 194, 155, .7),
-				0 8px 0 1px rgba(0,0,0,.4),
-				0 8px 8px 1px rgba(0,0,0,0.5);
-}
-.btn-3d.green:active {
-	box-shadow: 0 0 0 1px #82c8a0 inset,
-				0 0 0 2px rgba(255,255,255,0.15) inset,
-				0 0 0 1px rgba(0,0,0,0.4);
-}
-
-.btn-3d.purple {
-	background-color: #cb99c5;
-	box-shadow: 0 0 0 1px #cb99c5 inset,
-				0 0 0 2px rgba(255,255,255,0.15) inset,
-				0 8px 0 0 rgba(189, 142, 183, .7),
-				0 8px 0 1px rgba(0,0,0,.4),
-				0 8px 8px 1px rgba(0,0,0,0.5);
-}
-.btn-3d.purple:active {
-	box-shadow: 0 0 0 1px #cb99c5 inset,
-				0 0 0 2px rgba(255,255,255,0.15) inset,
-				0 0 0 1px rgba(0,0,0,0.4);
-}
-
-.btn-3d.cyan {
-	background-color: #7fccde;
-	box-shadow: 0 0 0 1px #7fccde inset,
-				0 0 0 2px rgba(255,255,255,0.15) inset,
-				0 8px 0 0 rgba(102, 164, 178, .6),
-				0 8px 0 1px rgba(0,0,0,.4),
-				0 8px 8px 1px rgba(0,0,0,0.5);
-}
-.btn-3d.cyan:active {
-	box-shadow: 0 0 0 1px #7fccde inset,
-				0 0 0 2px rgba(255,255,255,0.15) inset,
-				0 0 0 1px rgba(0,0,0,0.4);
-}
-
-.btn-3d.yellow {
-	background-color: #F0D264;
-	box-shadow: 0 0 0 1px #F0D264 inset,
-				0 0 0 2px rgba(255,255,255,0.15) inset,
-				0 8px 0 0 rgba(196, 172, 83, .7),
-				0 8px 0 1px rgba(0,0,0,.4),
-				0 8px 8px 1px rgba(0,0,0,0.5);
-}
-.btn-3d.yellow:active {
-	box-shadow: 0 0 0 1px #F0D264 inset,
-				0 0 0 2px rgba(255,255,255,0.15) inset,
-				0 0 0 1px rgba(0,0,0,0.4);
-}
-
-/* Gradient buttons */
-.btn-gradient {
-	text-decoration: none;
-	color: white;
-	padding: 10px 30px;
-	display: inline-block;
-	position: relative;
-	border: 1px solid rgba(0,0,0,0.21);
-	border-bottom: 4px solid rgba(0,0,0,0.21);
-	border-radius: 4px;
-	text-shadow: 0 1px 0 rgba(0,0,0,0.15);
-}
-/* Gradient - ugly css is ugly */
-.btn-gradient.cyan {
-	background: rgba(27,188,194,1);
-	background: -webkit-linear-gradient(rgba(27,188,194,1) 0%, rgba(24,163,168,1) 100%);
-	background: -moz-linear-gradient(rgba(27,188,194,1) 0%, rgba(24,163,168,1) 100%);
-	background: -o-linear-gradient(rgba(27,188,194,1) 0%, rgba(24,163,168,1) 100%);
-	background: linear-gradient(rgba(27,188,194,1) 0%, rgba(24,163,168,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1bbcc2', endColorstr='#18a3a8', GradientType=0);
-}
-
-.btn-gradient.red{ 
-	background: rgba(250,90,90,1);
-	background: -webkit-linear-gradient(rgba(250,90,90,1) 0%, rgba(232,81,81,1) 100%);
-	background: -moz-linear-gradient(rgba(250,90,90,1) 0%, rgba(232,81,81,1) 100%);
-	background: -o-linear-gradient(rgba(250,90,90,1) 0%, rgba(232,81,81,1) 100%);
-	background: linear-gradient(rgba(250,90,90,1) 0%, rgba(232,81,81,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fa5a5a', endColorstr='#e85151', GradientType=0 );
-}
-.btn-gradient.orange {
-	background: rgba(255,105,30,1);
-	background: -webkit-linear-gradient(rgba(255,105,30,1) 0%, rgba(230,95,28,1) 100%);
-	background: -moz-linear-gradient(rgba(255,105,30,1) 0%, rgba(230,95,28,1) 100%);
-	background: -o-linear-gradient(rgba(255,105,30,1) 0%, rgba(230,95,28,1) 100%);
-	background: linear-gradient(rgba(255,105,30,1) 0%, rgba(230,95,28,1) 100%);
-}
-.btn-gradient.blue {
-	background: rgba(102,152,203,1);
-	background: -moz-linear-gradient(top, rgba(102,152,203,1) 0%, rgba(92,138,184,1) 100%);
-	background: -webkit-linear-gradient(top, rgba(102,152,203,1) 0%, rgba(92,138,184,1) 100%);
-	background: -o-linear-gradient(top, rgba(102,152,203,1) 0%, rgba(92,138,184,1) 100%);
-	background: -ms-linear-gradient(top, rgba(102,152,203,1) 0%, rgba(92,138,184,1) 100%);
-	background: linear-gradient(to bottom, rgba(102,152,203,1) 0%, rgba(92,138,184,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6698cb', endColorstr='#5c8ab8', GradientType=0 );
-}
-.btn-gradient.purple { 
-	background: rgba(203,153,197,1);
-	background: -moz-linear-gradient(top, rgba(203,153,197,1) 0%, rgba(181,134,176,1) 100%);
-	background: -webkit-linear-gradient(top, rgba(203,153,197,1) 0%, rgba(181,134,176,1) 100%);
-	background: -o-linear-gradient(top, rgba(203,153,197,1) 0%, rgba(181,134,176,1) 100%);
-	background: -ms-linear-gradient(top, rgba(203,153,197,1) 0%, rgba(181,134,176,1) 100%);
-	background: linear-gradient(to bottom, rgba(203,153,197,1) 0%, rgba(181,134,176,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cb99c5', endColorstr='#b586b0', GradientType=0 );
-}
-.btn-gradient.yellow {
-	background: rgba(240,210,100,1);
-	background: -webkit-linear-gradient(rgba(240,210,100,1) 0%, rgba(229,201,96,1) 100%);
-	background: -moz-linear-gradient(rgba(240,210,100,1) 0%, rgba(229,201,96,1) 100%);
-	background: -o-linear-gradient(rgba(240,210,100,1) 0%, rgba(229,201,96,1) 100%);
-	background: linear-gradient(rgba(240,210,100,1) 0%, rgba(229,201,96,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0d264', endColorstr='#e5c960', GradientType=0 );
-}
-.btn-gradient.green {
-	background: rgba(130,200,160,1);
-	background: -moz-linear-gradient(top, rgba(130,200,160,1) 0%, rgba(130,199,158,1) 100%);
-	background: -webkit-linear-gradient(top, rgba(130,200,160,1) 0%, rgba(130,199,158,1) 100%);
-	background: -o-linear-gradient(top, rgba(130,200,160,1) 0%, rgba(130,199,158,1) 100%);
-	background: -ms-linear-gradient(top, rgba(130,200,160,1) 0%, rgba(130,199,158,1) 100%);
-	background: linear-gradient(to bottom, rgba(130,200,160,1) 0%, rgba(124, 185, 149, 1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#82c8a0', endColorstr='#82c79e', GradientType=0 );
-}
-
-.btn-gradient.red:active 	  {background: #E35252;}
-.btn-gradient.orange:active {background: #E8601B;}
-.btn-gradient.cyan:active 	{background: #169499;}
-.btn-gradient.blue:active 	{background: #608FBF;}
-.btn-gradient.purple:active {background: #BD8EB7;}
-.btn-gradient.yellow:active {background: #DBC05B;}
-.btn-gradient.green:active  {background: #72B08E;}
-
-
-h3 {
-    text-align: left;
-    color: #3F72AF;
-}
-
-
-p {
-    font-size: 20px;
-    color: #3f72af;
-    text-align: left;
-    font-weight: bold;
-}
-
-form {
-    width: 100%;
-    margin: auto;
-}
-
-a {
-    font-family: 'NPSfontBold';
-    background-color: #dbe2ef;
-    color: #3F72AF;
-    font-size: 2rem;
-    text-align: center;
-}
-
-/*다음*/
-footer {
-    position: relative;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 20vw;
-    background-color: #dbe2ef;
-    color: #3f72af;
-    line-height: 20px;
-    text-align: center;
-    margin: 0 auto;
-}
-
-.btn {
-    font-family: 'NPSfontBold';
-    background-color: #dbe2ef;
-    color: #3F72AF;
-    font-size: 50%;
-    border: none;
-    text-align: center;
-}
-
-
-.color .red {
-    background: #fa5a5a;
-}
-
-.color .yellow {
-    background: #f0d264;
-}
-
-.color .green {
-    background: #82c8a0;
-}
-
-.color .cyan {
-    background: #7fccde;
-}
-
-.color .blue {
-    background: #6698cb;
-}
-
-.SD {}
-
-.color .purple {
-    background: #cb99c5;
-}
-
-
-/*버튼들*/
-.container {
-    background-color: white;
-    border-radius: 4px;
-    text-align: center;
-    margin-bottom: 40px;
-    flex-direction: column;
-}
-
-.btn-gradient {
-    margin: 5px;
-}
-
-a[class*="btn"] {
-    text-decoration: none;
-}
-
-input[class*="btn"],
-button[class*="btn"] {
-    border: 0;
-}
-
-
-/* Gradient buttons */
-.btn-gradient {
-    text-decoration: none;
-    color: white;
-    padding: 40px 60px;
-    display: inline-block;
-    position: relative;
-    border: 1px solid rgba(0, 0, 0, 0.21);
-    border-bottom: 4px solid rgba(0, 0, 0, 0.21);
-    border-radius: 4px;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-}
-
-
-.btn-gradient.red {
-    background: rgba(250, 90, 90, 1);
-    background: -webkit-linear-gradient(rgba(250, 90, 90, 1) 0%, rgba(232, 81, 81, 1) 100%);
-    background: -moz-linear-gradient(rgba(250, 90, 90, 1) 0%, rgba(232, 81, 81, 1) 100%);
-    background: -o-linear-gradient(rgba(250, 90, 90, 1) 0%, rgba(232, 81, 81, 1) 100%);
-    background: linear-gradient(rgba(250, 90, 90, 1) 0%, rgba(232, 81, 81, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fa5a5a', endColorstr='#e85151', GradientType=0);
-}
-
-.btn-gradient.orange {
-    background: rgba(255, 105, 30, 1);
-    background: -webkit-linear-gradient(rgba(255, 105, 30, 1) 0%, rgba(230, 95, 28, 1) 100%);
-    background: -moz-linear-gradient(rgba(255, 105, 30, 1) 0%, rgba(230, 95, 28, 1) 100%);
-    background: -o-linear-gradient(rgba(255, 105, 30, 1) 0%, rgba(230, 95, 28, 1) 100%);
-    background: linear-gradient(rgba(255, 105, 30, 1) 0%, rgba(230, 95, 28, 1) 100%);
-}
-
-.btn-gradient.blue {
-    background: rgba(102, 152, 203, 1);
-    background: -moz-linear-gradient(top, rgba(102, 152, 203, 1) 0%, rgba(92, 138, 184, 1) 100%);
-    background: -webkit-linear-gradient(top, rgba(102, 152, 203, 1) 0%, rgba(92, 138, 184, 1) 100%);
-    background: -o-linear-gradient(top, rgba(102, 152, 203, 1) 0%, rgba(92, 138, 184, 1) 100%);
-    background: -ms-linear-gradient(top, rgba(102, 152, 203, 1) 0%, rgba(92, 138, 184, 1) 100%);
-    background: linear-gradient(to bottom, rgba(102, 152, 203, 1) 0%, rgba(92, 138, 184, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6698cb', endColorstr='#5c8ab8', GradientType=0);
-}
-
-
-.btn-gradient.green {
-    background: rgba(130, 200, 160, 1);
-    background: -moz-linear-gradient(top, rgba(130, 200, 160, 1) 0%, rgba(130, 199, 158, 1) 100%);
-    background: -webkit-linear-gradient(top, rgba(130, 200, 160, 1) 0%, rgba(130, 199, 158, 1) 100%);
-    background: -o-linear-gradient(top, rgba(130, 200, 160, 1) 0%, rgba(130, 199, 158, 1) 100%);
-    background: -ms-linear-gradient(top, rgba(130, 200, 160, 1) 0%, rgba(130, 199, 158, 1) 100%);
-    background: linear-gradient(to bottom, rgba(130, 200, 160, 1) 0%, rgba(124, 185, 149, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#82c8a0', endColorstr='#82c79e', GradientType=0);
-}
-
-.btn-gradient.red:active {
-    background: #E35252;
-}
-
-.btn-gradient.orange:active {
-    background: #E8601B;
-}
-
-.btn-gradient.blue:active {
-    background: #608FBF;
-}
-
-.btn-gradient.green:active {
-    background: #72B08E;
 }
 </style>

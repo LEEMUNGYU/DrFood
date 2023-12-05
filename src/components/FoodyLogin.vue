@@ -146,6 +146,7 @@ form {
 
 input[type="text"] {
     /*아이디*/
+    box-sizing:border-box;
     width: 70vw;
     padding: 10px;
     border: 1px solid #3f72af;
@@ -156,6 +157,7 @@ input[type="text"] {
 
 input[type="password"] {
     /*비밀번호*/
+    box-sizing:border-box;
     width: 70vw;
     padding: 10px;
     border: 1px solid #3f72af;
@@ -184,6 +186,8 @@ table { /*회원가입, 아이디 찾기*/
 }
 
 .alink { /*회원가입, 아이디 찾기*/
+    display: flex;
+    justify-content: center;
     text-align: center;
     gap: 10%;
     text-decoration: none;
