@@ -1,6 +1,5 @@
 <template>
-        <!-- 수정 필요 수정 필요 수정 필요 -->
-    <foody-header></foody-header>
+    <FoodyHeader></FoodyHeader>
     <div class="main">
     <div>
         <h3>보유 질환</h3>
@@ -57,50 +56,23 @@ export default {
         selectedDiseases: [],
         diseasesSelected: false,
     }
-    },
-    components:{ FoodyHeader, },
-    methods:{
-    changeColor1(){
-        const selectDiseases = this.getElementById('btn-Ob');
-            selectDiseases.style.backgroundColor = "#3F72AF";
-            selectDiseases.style.color = "white";
-        },
-    changeColor2(){
-        const selectDiseases = this.getElementById('btn-Hyper');
-            selectDiseases.style.backgroundColor = "#3F72AF";
-            selectDiseases.style.color = "white";
-        },
-    changeColor3(){
-        const selectDiseases = this.getElementById('btn-Dia');
-            selectDiseases.style.backgroundColor = "#3F72AF";
-            selectDiseases.style.color = "white";
-        },
-    changeColor4(){
-        const selectDiseases = this.getElementById('btn-Gas');
-            selectDiseases.style.backgroundColor = "#3F72AF";
-            selectDiseases.style.color = "white";
-        },
+  },
+  components:{
+    FoodyHeader
+  },
+  methods:{
     updateSelectedDiseases() {
-        const selectedDiseasesElement = document.getElementById('selectedDiseases');
-            if (this.selectedDiseases.length > 0) {// 배열이 비어있지 않으면 '#'을 포함하여 문자열로 변환
-                selectedDiseasesElement.textContent = '#' + this.selectedDiseases.join(' #');
-            } else {// 배열이 비어있으면 빈 문자열로 설정
-                selectedDiseasesElement.textContent = '';
-            }
+            const selectedDiseasesElement = document.getElementById('selectedDiseases');
+            selectedDiseasesElement.textContent = '#'+ this.selectedDiseases.join(' #');
         },
-    addSelectedDisease(disease) {
-        if (!this.diseasesSelected) {
-            if (!this.selectedDiseases.includes(disease)) {
-                this.selectedDiseases.push(disease);
-            } else {// 이미 선택된 질환인 경우 배열에서 제거
-                const index = this.selectedDiseases.indexOf(disease);
-                if (index !== -1) {
-                    this.selectedDiseases.splice(index, 1);
+    addSelectedDisease(disease){
+            if (!this.diseasesSelected) {
+                if (!this.selectedDiseases.includes(disease)) {
+                    this.selectedDiseases.push(disease);
                 }
-            }
             this.updateSelectedDiseases();
-            // 질환 선택을 마치면 선택완료 버튼 블록
-            const completeBtn = document.getElementById('completeBtn1');
+                // 질환 선택을 마치면 선택완료 버튼 블록
+            const completeBtn = document.getElementById('completeBtn');
             completeBtn.style.display = 'block';
             }
         },
@@ -110,24 +82,21 @@ export default {
             allergyContainer.style.display = 'block';
 
             // 질환 선택 완료되면 더 이상 수정할 수 없도록 플래그 설정
-            this.diseasesSelected = true
+            this.diseasesSelected = true;
 
             // 선택 완료 버튼 비활성화
-            const completeBtn = document.getElementById('completeBtn1');
+            const completeBtn = document.getElementById('completeBtn');
             completeBtn.disabled = true;
-            completeBtn.style.display = 'none';
-            
+
             // 질병 선택 버튼들 비활성화
-            document.getElementById('btn-Ob').disabled = true;
-            document.getElementById('btn-Hyper').disabled = true;
-            document.getElementById('btn-Dia').disabled = true;
-            document.getElementById('btn-Gas').disabled = true;
-            document.getElementById('Disease-container').style.display = 'none';
+            document.getElementById('obesityBtn').disabled = true;
+            document.getElementById('hypertensionBtn').disabled = true;
+            document.getElementById('diabetesBtn').disabled = true;
+            document.getElementById('gastritisBtn').disabled = true;
+
             // "회원가입하기" 버튼 표시
             const registerBtn = document.getElementById('registerBtn');
             registerBtn.style.display = 'block';
-            const footer = document.getElementById('footer');
-            footer.style.display = 'flex';
         },
         addSelectedAllergy(allergy) {
             const selectedAllergiesElement = document.getElementById('selectedAllergies');
@@ -147,7 +116,7 @@ export default {
             selectedAllergiesElement.textContent += "#" + allergy + " ";
             }
         },
-    },
+  },
 }
 </script>
 
