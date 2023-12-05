@@ -43,7 +43,7 @@
     </div>
 </div>
 </div>
-<footer id="footer"><router-link v-bind:to="'SignLast'"  id="registerBtn" class="btn-signGo" style="display: none; text-align: center;">회원가입하기</router-link></footer>
+<footer id="footer"><router-link v-bind:to="'/SignLast'"  id="registerBtn" class="btn-signGo" style="display: none; text-align: center;">회원가입</router-link></footer>
 </template>
 
 <script>
@@ -72,7 +72,7 @@ export default {
                 }
             this.updateSelectedDiseases();
                 // 질환 선택을 마치면 선택완료 버튼 블록
-            const completeBtn = document.getElementById('completeBtn');
+            const completeBtn = document.getElementById('completeBtn1');
             completeBtn.style.display = 'block';
             }
         },
@@ -85,18 +85,20 @@ export default {
             this.diseasesSelected = true;
 
             // 선택 완료 버튼 비활성화
-            const completeBtn = document.getElementById('completeBtn');
+            const completeBtn = document.getElementById('completeBtn1');
             completeBtn.disabled = true;
 
             // 질병 선택 버튼들 비활성화
-            document.getElementById('obesityBtn').disabled = true;
-            document.getElementById('hypertensionBtn').disabled = true;
-            document.getElementById('diabetesBtn').disabled = true;
-            document.getElementById('gastritisBtn').disabled = true;
-
+            document.getElementById('btn-Ob').disabled = true;
+            document.getElementById('btn-Hyper').disabled = true;
+            document.getElementById('btn-Dia').disabled = true;
+            document.getElementById('btn-Gas').disabled = true;
+            document.getElementById('Disease-container').style.display = 'none';
             // "회원가입하기" 버튼 표시
             const registerBtn = document.getElementById('registerBtn');
             registerBtn.style.display = 'block';
+            const footer = document.getElementById('footer');
+            footer.style.display = 'block';
         },
         addSelectedAllergy(allergy) {
             const selectedAllergiesElement = document.getElementById('selectedAllergies');
