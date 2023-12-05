@@ -3,30 +3,35 @@
     <div class="container">
     <h3>식단추천</h3>
     <hr id="frist_line">
-        <div class="diet_list_box">
+        <div class="diet_list_box"><!-- vue를 최대한 활용 시킨 코드-->
             <div id="mealtime_box">
-                <div class='mealTime' id="mor">아침</div>
-                <div class='mealTime'  id="lun">점심</div>
-                <div class='mealTime'  id="din">저녁</div>
+                <div v-for="(meal, index) in meals"
+                :key="index" 
+                @click="selectMealTime(meal.id)"
+                :class="{ 'mealTime': true, 'selected': selectedMeal === meal.id }">{{ meal.name }}</div>
             </div>
             <div class="list_bd">
                 <div class="list_el">
-                    <div id="el">{{ a }}</div>
-                    <div id="el">{{ a }}</div>
-                    <div id="el">{{ a }}</div>
-                    <div id="el">{{ a }}</div>
-                    <div id="el">{{ a }}</div>
+                    <div  v-for="(item, index) in selectedMealItems" :key="index" id="el"  @click="selectItem(item)" :class="{ 'selected': selectedItem === item }">{{ item }}</div>
                 </div>
                 <div>
+                    <div id="tot_zip" v-show="!selectedItem">
                     <div id="tot_text">총 영양성분</div>
                     <hr id="second_line">
-                    <div id="el_name">
-                        <div>열량<br>(kcal)<br><p>1{{ a }}</p></div>
-                        <div>탄수화물<br>(g)<br><p>1{{ a }}</p></div>
-                        <div>단백질<br>(g)<br><p>1{{ a }}</p></div>
-                        <div>지방<br>(g)<br><p>1{{ a }}</p></div>
-                        <div>콜레스테롤<br>(mg)<br><p>1{{ a }}</p></div>
-                        <div>나트륨<br>(mg)<br><p>1{{ a }}</p></div>
+                        <div id="el_name">
+                            <div v-for="(value, key) in totalNutrition" :key="key">
+                            {{ key }}<br>({{ value.unit }})<br><p>{{ value.amount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="indi_zip" v-show="selectedItem">
+                    <div id="indi_text">{{ selectedItem }} 영양성분</div>
+                    <hr id="second_line">
+                        <div id="el_name">
+                            <div v-for="(value, key) in selectedNutrition" :key="key">
+                            {{ key }}<br>({{ value.unit }})<br><p>{{ value.amount }}</p>
+                            </div>
+                        </div>
                     </div>
                     <div id="notice">*식품을 누르면 각 식품별 영양성분을 확인하실 수 있습니다.</div>
                     <div id="two_btn">
@@ -116,9 +121,63 @@ export default {
     name: 'DietList',
     data() {
         return {
+            meals: [
+                { id: 'mor', name: '아침' },
+                { id: 'lun', name: '점심' },
+                { id: 'din', name: '저녁' }
+            ],
+            selectedMeal: 'mor',
+            mealItems: {
+                mor: ['m아이템 1', 'm아이템 2', 'm아이템 3', 'm아이템 4', 'm아이템 5'],
+                lun: ['아이템 1', '아이템 2', '아이템 3', '아이템 4', '아이템 5'],
+                din: ['아이템 1', '아이템 2', '아이템 3', '아이템 4', '아이템 5']
+            },
+            itemNutrition: {
+                'm아이템 1': { '열량': { unit: 'kcal', amount: '100' }, '탄수화물': { unit: 'g', amount: '20' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
+                'm아이템 2': { '열량': { unit: 'kcal', amount: '150' }, '탄수화물': { unit: 'g', amount: '25' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
+                'm아이템 3': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '22' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
+                'm아이템 4': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '23' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
+                'm아이템 5': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '22' }, '단백질': { unit: 'g', amount: '21' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
+                // 이하 각 아이템에 대한 영양 성분을 추가하십시오.
+            },
+            selectedItem: '아침 아이템 1',
         };
     },
     methods: {
+        selectMealTime(mealId) {
+                this.selectedMeal = mealId;
+                this.selectedItem = this.mealItems[mealId][0];
+                this.selectedItem = null;
+            },
+        selectItem(item) {
+                this.selectedItem = item;
+            },    // ... (기존 메서드 내용 유지)
+    },
+    computed: {
+        selectedMealItems() {
+            return this.mealItems[this.selectedMeal];
+        },
+        selectedNutrition() {
+            return this.itemNutrition[this.selectedItem];
+        },
+        totalNutrition() {
+            const total = {};
+            for (const item in this.selectedMealItems) {
+                const nutrition = this.itemNutrition[this.selectedMealItems[item]];
+                for (const nutrient in nutrition) {
+                    if (!total[nutrient]) {
+                        total[nutrient] = { unit: nutrition[nutrient].unit, amount: 0 };
+                    }
+                    total[nutrient].amount += parseInt(nutrition[nutrient].amount);
+                }
+            }
+            return total;
+        },
+    },
+    created() {
+        // 페이지 진입 시 초기 선택 설정
+        this.selectedMeal = 'mor'; // 기본값은 '아침'
+        this.selectedItem = null; // 선택된 아이템 초기화
     },
     props: {
         msg: String
@@ -157,16 +216,16 @@ h3{
     margin-top:4%;
 }
 
-#mealtime_box .mealTime{
+.mealTime{
     font-weight: bold;
     box-sizing: border-box;
     position: relative;
     width: 26.5vw;
     height: 5vh;
     line-height: 5vh;
-    background: #DBE2EF;
     border: 0.2px solid #3F72AF;
     border-radius: 14px 14px 0px 0px;
+    background: #DBE2EF;
 }
 .timeClicked {
     color: #FFFFFF;
@@ -196,6 +255,7 @@ h3{
     gap:2%;
 }
 .list_el #el{
+    font-size:0.65rem;
     width: 13.6vw;
     height: 2.5vh;
     background: #001335;
@@ -209,7 +269,12 @@ h3{
     text-align: left;
     margin-top:4%;
 }
-
+#indi_text{
+    color: #3F72AF;
+    font-weight: bold;
+    text-align: left;
+    margin-top:4%;
+}
 #second_line{
     border: solid 0.25vh;
     color:#3F72AF;
@@ -260,5 +325,15 @@ h3{
     line-height: 2.5vh;
     background: #3F72AF;
     border-radius: 4px;
+}
+.mealTime.selected {
+    border: 0.2px solid #001335;
+    background: #001335; /* 선택된 배경 색상으로 원하는 색상으로 변경하세요 */
+    color: #fff; /* 선택된 텍스트 색상으로 원하는 색상으로 변경하세요 */
+}
+
+.list_el #el.selected {
+    background-color: #3F72AF; /* 선택된 배경 색상으로 원하는 색상으로 변경하세요 */
+    color: #000; /* 선택된 텍스트 색상으로 원하는 색상으로 변경하세요 */
 }
 </style>
