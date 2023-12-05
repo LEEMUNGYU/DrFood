@@ -46,50 +46,6 @@ export default {
     }
   },
   methods:{
-    updateSelectedDiseases() {
-            const selectedDiseasesElement = document.getElementById('selectedDiseases');
-            selectedDiseasesElement.textContent = '#'+ this.selectedDiseases.join(' #');
-        },
-    addSelectedDisease(disease){
-            if (!this.diseasesSelected) {
-                if (!this.selectedDiseases.includes(disease)) {
-                    this.selectedDiseases.push(disease);
-                }
-            this.updateSelectedDiseases();
-                // 질환 선택을 마치면 선택완료 버튼 블록
-            const completeBtn = document.getElementById('completeBtn');
-            completeBtn.style.display = 'block';
-            }
-        },
-    showAllergyContainer() {
-            // 선택 완료 버튼을 클릭하면 알레르기 선택 창을 표시
-            const allergyContainer = document.getElementById('allergyContainer');
-            allergyContainer.style.display = 'block';
-
-            // 질환 선택 완료되면 더 이상 수정할 수 없도록 플래그 설정
-            this.diseasesSelected = true;
-
-            // 선택 완료 버튼 비활성화
-            const completeBtn = document.getElementById('completeBtn');
-            completeBtn.disabled = true;
-
-            // 질병 선택 버튼들 비활성화
-            document.getElementById('obesityBtn').disabled = true;
-            document.getElementById('hypertensionBtn').disabled = true;
-            document.getElementById('diabetesBtn').disabled = true;
-            document.getElementById('gastritisBtn').disabled = true;
-
-            // "회원가입하기" 버튼 표시
-            const registerBtn = document.getElementById('registerBtn');
-            registerBtn.style.display = 'block';
-        },
-    addSelectedAllergy(allergy) {
-            const selectedAllergiesElement = document.getElementById('selectedAllergies');
-            if (selectedAllergiesElement.textContent === '#""') {
-                selectedAllergiesElement.textContent = '';
-            }
-            selectedAllergiesElement.textContent += "#" + allergy + " ";
-        },
   },
 }
 </script>

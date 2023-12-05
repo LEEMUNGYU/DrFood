@@ -8,11 +8,6 @@ name: 'FoodyLogin',
 component: () => import('../components/FoodyLogin.vue'),
 },
 {
-path : "/SignInUser",
-name: 'SignInUser',
-component: () => import('../components/SignInUser.vue'),
-},
-{
 path: "/checkda",
 name: 'checkDA',
 component: () => import('../components/SignInDAcheck.vue'),
