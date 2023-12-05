@@ -118,7 +118,7 @@ export default {
             selectedAllergiesElement.textContent += "#" + allergy + " ";
             }
         },
-  },
+    },
 }
 </script>
 
