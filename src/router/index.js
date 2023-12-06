@@ -19,7 +19,7 @@ component: () => import('../components/SignInDAcheck.vue'),
 },
 {
 path : "/SignLast",
-name: 'SignLast',
+name: 'SignInLast',
 component: () => import('../components/SignInLast.vue'),
 },
 {
