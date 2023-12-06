@@ -7,7 +7,7 @@
   </div>
   <div class="box_zip">
     <div id="n_box">알레르기</div>
-    <div id="i_box">{{ $store.state.allergieNm }}</div>
+    <div id="i_box">{{ $store.state.allergieList }}</div>
   </div>
   <div class="dash_contents">
     <div id="diet_icon"> deit_img </div>

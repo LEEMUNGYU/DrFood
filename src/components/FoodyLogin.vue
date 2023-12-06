@@ -67,8 +67,10 @@ export default {
             break;
           case '-2': console.log(result);//"비밀번호가 틀렸습니다."
             break;
-          case '200': this.$store.commit('setUserName', result.nickNm);
-                      this.$store.commit('setAllergieNm', result.allergieNm);
+          case '200': console.log(result);
+                      this.$store.commit('setUserName', result.nickNm);
+                      this.$store.commit('setAllergieList', result.allergieList);
+                      //this.$store.commit('setAllergieNm', result.allergieNm);
                       goMain();
             break;
           default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."

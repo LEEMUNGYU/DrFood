@@ -6,6 +6,7 @@ const store = createStore({
     return{
     nickNm: '',
     allergieNm: '',
+    allergieList:[],
     }
   },
   getters: {
@@ -27,6 +28,9 @@ const store = createStore({
       state.nickNm = '';
       state.allergieNm = '';
     },
+    setAllergieList(state, allergieList){
+        state.allergieList = allergieList[];
+    }
   },
   plugins: [createPersistedState()],
 });
