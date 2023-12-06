@@ -10,9 +10,9 @@
         <div id="UserNick">닉네임: {{  }}</div>
     </div>
     <div id="SignUserDA" class="SignUserDA">
-        <h4>보유 질환</h4>
+        <h4 id="SignUserDAT">보유 질환</h4>
         <div id="UserDiseases"></div>
-        <h4>보유 알레르기</h4>
+        <h4 id="SignUserDAT">보유 알레르기</h4>
         <div id="UserAllergy"></div>
     </div>
     
@@ -32,14 +32,77 @@ export default {
 
 <style>
 #checkInfoTitle{
+    text-align: center;
+    margin:auto;
     font-size: 1.2rem;
+    margin-top: 10%;
     margin-bottom: 1%;
 }
 #checkInfoText{
+    text-align: center;
     color:#777;
     font-size:0.7rem;
 }
 
+#SignComp-btn{
+    background-color: #dbe2ef;
+    color: #3f72af;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+#SignUserInfo{
+    display: flex;
+    color: #3f72af;
+    margin-top:10%;
+    height: 15vh;
+    width: 80vw;
+    background-color: white;
+    border: 1px solid none;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px #ccc;
+    flex-direction: column;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: left;
+    line-height: 2.0rem;
+    margin-inline: auto;
+    text-indent: 1rem;
+}
+#SignUserDAT{
+    color: #3f72af;
+    text-align: left;
+    margin-left: 10%;
+    margin-bottom: 1%;
+}
+#UserDiseases{
+    box-sizing:border-box;
+    width: 80vw;
+    height: 5vh;
+    line-height: 5vh;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #ccc;
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    color: #3f72af;
+    text-align: center;
+    margin-inline: auto;
+}
+#UserAllergy{
+    box-sizing:border-box;
+    width: 80vw;
+    height: 5vh;
+    line-height: 5vh;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #ccc;
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    color: #3f72af;
+    text-align: center;
+    margin-inline: auto;
+}
 footer{
     position: relative;
     bottom: 0;
@@ -52,12 +115,4 @@ footer{
     line-height: 10vh;
     margin: 0 auto;
 }
-#SignComp-btn{
-    background-color: #dbe2ef;
-    color: #3f72af;
-    text-decoration: none;
-    font-size: 1.4rem;
-    font-weight: bold;
-}
-
 </style>
