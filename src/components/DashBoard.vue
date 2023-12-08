@@ -3,11 +3,11 @@
   <h2>{{ $store.state.nickNm }}님의 건강정보</h2>
   <div class="box_zip">
     <div id="n_box">질환</div>
-    <div id="i_box">질환</div>
+    <div id="i_box">{{ $store.state.diseaseNm }}</div>
   </div>
   <div class="box_zip">
     <div id="n_box">알레르기</div>
-    <div id="i_box">{{ $store.state.allergieList }}</div>
+    <div id="i_box">{{ $store.state.allergieList.join('') }}</div>
   </div>
   <div class="dash_contents">
     <div id="diet_icon"> deit_img </div>

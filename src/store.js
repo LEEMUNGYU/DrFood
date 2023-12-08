@@ -5,7 +5,7 @@ const store = createStore({
   state () {
     return{
     nickNm: '',
-    allergieNm: '',
+    diseaseNm:'',
     allergieList:[],
     }
   },
@@ -21,15 +21,15 @@ const store = createStore({
     setUserName(state, nickNm){
       state.nickNm = nickNm;
     },
-    setAllergieNm(state, allergieNm){
-      state.allergieNm = '#' + allergieNm.replace(/#/g, ' #');
+    setDiseaseNm(state, diseaseNm){
+      state.diseaseNm = '#' + diseaseNm.replace(/#/g, ' #');
     },
     resetState(state) {
       state.nickNm = '';
       state.allergieNm = '';
     },
     setAllergieList(state, allergieList){
-        state.allergieList = allergieList[];
+        state.allergieList = allergieList.map(item => ' #' + item.name);
     }
   },
   plugins: [createPersistedState()],

@@ -69,8 +69,8 @@ export default {
             break;
           case '200': console.log(result);
                       this.$store.commit('setUserName', result.nickNm);
+                      this.$store.commit('setDiseaseNm', result.diseaseNm)
                       this.$store.commit('setAllergieList', result.allergieList);
-                      //this.$store.commit('setAllergieNm', result.allergieNm);
                       goMain();
             break;
           default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
