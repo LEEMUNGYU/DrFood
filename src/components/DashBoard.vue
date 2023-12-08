@@ -46,7 +46,6 @@ export default {
           food3:'',
           food4:'',
           food5:'',
-       //data, 변수들 여기에 담기 object형식으로
         }
     },
     mounted() {
