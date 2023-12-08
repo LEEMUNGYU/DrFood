@@ -3,15 +3,11 @@
   
   <div class="container">
         <div class="header">식단관리</div>
-
         <hr>
-
         <div class="i-b">
             <img src="#" alt="어제 날짜로">
         </div>
-
         <div class="a">날짜 출력</div>
-
         <div class="i-b">
             <img src="#" alt="내일 날짜">
         </div>
