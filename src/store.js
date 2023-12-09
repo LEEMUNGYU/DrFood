@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate';
 const store = createStore({
   state () {
     return{
+    userId: '',
     nickNm: '',
     diseaseNm:'',
     allergieList:[],
@@ -18,6 +19,9 @@ const store = createStore({
     },
   },
   mutations:{
+    setUserIdx(state,userId){
+        state.userId = userId;
+    },
     setUserName(state, nickNm){
       state.nickNm = nickNm;
     },
@@ -27,6 +31,8 @@ const store = createStore({
     resetState(state) {
       state.nickNm = '';
       state.allergieNm = '';
+      state.diseaseNm = '';
+      state.allergieList = [];
     },
     setAllergieList(state, allergieList){
         state.allergieList = allergieList.map(item => ' #' + item.name);

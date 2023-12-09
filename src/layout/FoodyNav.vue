@@ -1,21 +1,21 @@
 <template>
     <div class="nav">  
-      <div id="s_effect1"><a href="/dietlist">식단추천</a></div>
-      <div id="s_effect2"><a href="/manage">식단관리</a></div>
-      <div id="s_effect3"><a href="/UserInfo">회원정보</a></div>
-      <div id="s_effect4"><a v-on:click="resetState()">로그아웃</a></div>
+      <router-link to="/dietlist"><div id="s_effect1">식단추천<img src="../style/img/Menu/ListOffBTN.svg" id="icon"></div></router-link>
+      <router-link to="/manage"><div id="s_effect1">식단관리<img src="../style/img/Menu/ManageOffBTN.svg" id="icon"></div></router-link>
+      <router-link to="/UserInfo"><div id="s_effect1">회원정보<img src="../style/img/Menu/UserOffBTN.svg" id="icon"></div></router-link>
+      <router-link to="/" @click="resetState()"><div id="s_effect1">로그아웃<img src="../style/img/Menu/ExitOffBTN.svg" id="icon"></div></router-link>
   </div>
 </template>
 
 <script>
 export default{
-   name:'FoodyNav',
-   methods: {
+    name:'FoodyNav',
+    methods: {
     resetState() {
       this.$store.commit('resetState');
       this.$router.replace({path:'/', name:'FoodyLogin'});
     },
-   },
+    },
 }
 
 </script>
@@ -73,5 +73,10 @@ a {
   color: #3F72AF;
   font-weight: bold;
   text-decoration: none;
+}
+
+#icon{
+  width: 42px;
+  height: 42px;
 }
 </style>

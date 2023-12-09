@@ -68,6 +68,7 @@ export default {
           case '-2': console.log(result);//"비밀번호가 틀렸습니다."
             break;
           case '200': console.log(result);
+                      this.$store.commit('setUserIdx', result.user_idx);
                       this.$store.commit('setUserName', result.nickNm);
                       this.$store.commit('setDiseaseNm', result.diseaseNm)
                       this.$store.commit('setAllergieList', result.allergieList);
@@ -105,7 +106,7 @@ template{
     justify-content: center;
     background-color: #dbe2ef;
     color: #3f72af;
-    width: 100vw;
+    width: 100%;
     height: 8vh;
     line-height:100%;
 }
