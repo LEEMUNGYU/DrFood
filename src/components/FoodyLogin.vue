@@ -68,6 +68,7 @@ export default {
           case '-2': console.log(result);//"비밀번호가 틀렸습니다."
             break;
           case '200': console.log(result);
+                      this.$store.commit('setUserEmail', email);
                       this.$store.commit('setUserIdx', result.user_idx);
                       this.$store.commit('setUserName', result.nickNm);
                       this.$store.commit('setDiseaseNm', result.diseaseNm)

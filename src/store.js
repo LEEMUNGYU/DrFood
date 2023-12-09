@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate';
 const store = createStore({
   state () {
     return{
+    email:'',
     userId: '',
     nickNm: '',
     diseaseNm:'',
@@ -19,6 +20,9 @@ const store = createStore({
     },
   },
   mutations:{
+    setUserEmail(state, userEmail){
+        state.email = userEmail;
+    },
     setUserIdx(state,userId){
         state.userId = userId;
     },

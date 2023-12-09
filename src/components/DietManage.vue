@@ -1,15 +1,14 @@
 <template>
-  <FoodyHeader></FoodyHeader>
-  
-  <div class="container">
+    <FoodyHeader></FoodyHeader>
+    <div class="container">
         <div class="header">식단관리</div>
         <hr>
         <div class="i-b">
-            <img src="#" alt="어제 날짜로">
+            <img src="../style/img/otherBTN/leftBTN.svg" alt="어제 날짜로">
         </div>
-        <div class="a">날짜 출력</div>
+        <div class="a">{{ currentDate }}</div>
         <div class="i-b">
-            <img src="#" alt="내일 날짜">
+            <img src="../style/img/otherBTN/rightBTN.svg" alt="내일 날짜">
         </div>
         <!--버튼 기능 활성화 해야 됨.-->
         <div class="box">
@@ -26,7 +25,7 @@
             <div class="alert">식사 기록이 없습니다.</div>
             <div class="r-b">기록하기</div>
             <div class="img">
-                <img src="#" alt="기록">
+                <img src="../style/img/otherBTN/PenBTN.svg" alt="기록">
             </div>
         </div>
 
@@ -61,6 +60,23 @@ import FoodyNav from '@/layout/FoodyNav.vue';
 export default {
     name: 'DietManage',
     components: { FoodyHeader, FoodyNav,},
+    data() {
+        return {
+        currentDate: '',
+        }
+    },
+    mounted() {
+        // 컴포넌트가 마운트된 후 현재 날짜를 설정
+        this.setCurrentDate();
+    },
+    methods: {
+        setCurrentDate() {
+            const today = new Date();
+            const month = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+            const day = today.getDate();
+            this.currentDate = `${month}월 ${day}일`;
+        },
+    },
 }
 </script>
 

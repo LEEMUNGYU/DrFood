@@ -6,7 +6,6 @@
     </div>
     <div id="SignUserInfo" class="SignUserInfo">
         <div id="UserId">아이디: {{  }}</div>
-        <div id="UserPWD">비밀번호: {{  }}</div>
         <div id="UserNick">닉네임: {{  }}</div>
     </div>
     <div id="SignUserDA" class="SignUserDA">
@@ -58,7 +57,7 @@ export default {
     height: 15vh;
     width: 80vw;
     background-color: white;
-    border: 1px solid none;
+    border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 3px 3px 3px #ccc;
     flex-direction: column;

@@ -78,6 +78,16 @@ name: 'UserInfo',
 component: () => import('../components/UserInfo.vue'),
 },
 {
+path: "/changeDis",
+name: 'ChangeDiseases',
+component: () => import('../components/ChangeDiseases.vue'),
+},
+{
+path: "/changeAle",
+name: 'ChangeAllergy',
+component: () => import('../components/ChangeAllergy.vue'),
+},
+{
 path: "/manage",
 name: 'DietManage',
 component: () => import('../components/DietManage.vue'),
