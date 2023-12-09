@@ -35,80 +35,13 @@
                     </div>
                     <div id="notice">*식품을 누르면 각 식품별 영양성분을 확인하실 수 있습니다.</div>
                     <div id="two_btn">
-                        <div id="reason">구성이유</div>
-                        <div id="reroll">식단 재추천</div>
+                        <div id="reason"><img src="../style/img/otherBTN/reasonBTN.svg" id="reCON">구성이유</div>
+                        <div id="reroll"><img src="../style/img/otherBTN/rerollBTN.svg" id="reCON">식단 재추천</div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="diet_list_box">
-            <div id="mealtime_box">
-                <div class='mealTime' id="mor">아침</div>
-                <div class='mealTime' id="lun">점심</div>
-                <div class='mealTime' id="din">저녁</div>
-            </div>
-            <div class="list_bd">
-                <div class="list_el">
-                    <div id="el">{{ a }}</div>
-                    <div id="el">{{ a }}</div>
-                    <div id="el">{{ a }}</div>
-                    <div id="el">{{ a }}</div>
-                    <div id="el">{{ a }}</div>
-                </div>
-                <div>
-                    <div id="tot_text">총 영양성분</div>
-                    <hr id="second_line">
-                    <div id="el_name">
-                        <div>열량<br>(kcal)<br><p>1{{ a }}</p></div>
-                        <div>탄수화물<br>(g)<br><p>1{{ a }}</p></div>
-                        <div>단백질<br>(g)<br><p>1{{ a }}</p></div>
-                        <div>지방<br>(g)<br><p>1{{ a }}</p></div>
-                        <div>콜레스테롤<br>(mg)<br><p>1{{ a }}</p></div>
-                        <div>나트륨<br>(mg)<br><p>1{{ a }}</p></div>
-                    </div>
-                    <div id="notice">*식품을 누르면 각 식품별 영양성분을 확인하실 수 있습니다.</div>
-                    <div id="two_btn">
-                        <div id="reason">구성이유</div>
-                        <div id="reroll">식단 재추천</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="diet_list_box">
-            <div id="mealtime_box">
-                <div class='mealTime' id="mor">아침</div>
-                <div class='mealTime' id="lun">점심</div>
-                <div class='mealTime' id="din">저녁</div>
-            </div>
-            <div class="list_bd">
-                <div class="list_el">
-                    <div id="el">{{ a }}</div>
-                    <div id="el">{{ a }}</div>
-                    <div id="el">{{ a }}</div>
-                    <div id="el">{{ a }}</div>
-                    <div id="el">{{ a }}</div>
-                </div>
-                <div>
-                    <div id="tot_text">총 영양성분</div>
-                    <hr id="second_line">
-                    <div id="el_name">
-                        <div>열량<br>(kcal)<br><p>1{{ a }}</p></div>
-                        <div>탄수화물<br>(g)<br><p>1{{ a }}</p></div>
-                        <div>단백질<br>(g)<br><p>1{{ a }}</p></div>
-                        <div>지방<br>(g)<br><p>1{{ a }}</p></div>
-                        <div>콜레스테롤<br>(mg)<br><p>1{{ a }}</p></div>
-                        <div>나트륨<br>(mg)<br><p>1{{ a }}</p></div>
-                    </div>
-                    <div id="notice">*식품을 누르면 각 식품별 영양성분을 확인하실 수 있습니다.</div>
-                    <div id="two_btn">
-                        <div id="reason">구성이유</div>
-                        <div id="reroll">식단 재추천</div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <FoodyNav link='FoodyNav.vue' />
 </template>
@@ -116,6 +49,7 @@
 <script>
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import FoodyNav from '@/layout/FoodyNav.vue';
+
 
 export default {
     name: 'DietList',
@@ -182,7 +116,7 @@ export default {
     props: {
         msg: String
     },
-    components: { FoodyHeader, FoodyNav },
+    components: { FoodyHeader, FoodyNav, },
 
 }
 </script>
@@ -306,6 +240,7 @@ h3{
     gap:45%;
 }
 #reason{
+    vertical-align: middle;
     color:#fff;
     font-size:0.6rem;
     font-weight: bold;
@@ -315,7 +250,11 @@ h3{
     background: #3F72AF;
     border-radius: 4px;
 }
-
+#reCON{
+    vertical-align: middle;
+    margin-right:3%;
+    margin-bottom:5%;
+}
 #reroll{
     color:#fff;
     font-size:0.6rem;

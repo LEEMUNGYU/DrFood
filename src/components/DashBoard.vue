@@ -10,7 +10,7 @@
     <div id="i_box">{{ $store.state.allergieList.join('') }}</div>
   </div>
   <div class="dash_contents">
-    <div id="diet_icon"> deit_img </div>
+    <div id="diet_icon"><img src="../style/img/Menu/ListOffBTN.svg" id="imgList"></div>
     <div id="dash_diet">
       <div>{{ currentDate }}</div>
       <div>추천식단</div>
