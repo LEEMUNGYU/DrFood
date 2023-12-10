@@ -42,7 +42,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 h3{
     text-align: left;
     margin-left: 3%;

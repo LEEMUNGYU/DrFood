@@ -117,7 +117,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #checkInfoTitle{
     text-align: center;
     margin:auto;

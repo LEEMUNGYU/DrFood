@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #UserInfo{
     display: flex;
     color: #3f72af;

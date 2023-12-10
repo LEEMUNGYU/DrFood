@@ -90,13 +90,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@font-face {
-    font-family: 'NPSfontBold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-}
-
 template{
     margin: 0;
     padding: 0; 
@@ -215,6 +208,7 @@ footer {
 .btn{
     background-color: #dbe2ef;
     color: #3F72AF;
+    font-weight: bold;
     font-size: 30px;
     border: none;
   }

@@ -1,5 +1,5 @@
 <template>
-    <FoodyHeader></FoodyHeader>
+    <foody-header></foody-header>
     <div class="container">
         <div class="header">식단관리</div>
         <hr>
@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-  <foody-nav></foody-nav>
+    <foody-nav></foody-nav>
 </template>
 
 <script>
@@ -80,14 +80,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     flex-direction: row;
-    font-family: 'NPSfontBold';
     align-content: center;
 }
 

@@ -21,7 +21,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .requestCompMessage{
     display:flex;
     flex-direction: column;

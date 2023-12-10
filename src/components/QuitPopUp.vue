@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .popup-view{
   opacity: 0;
   display: none;

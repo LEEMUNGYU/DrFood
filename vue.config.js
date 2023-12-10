@@ -9,4 +9,11 @@ module.exports = defineConfig({
       },
     },
   },
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `@import "@/style/main.scss";`
+      }
+    }
+  }
 })
