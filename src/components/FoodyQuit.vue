@@ -15,7 +15,7 @@
         탈퇴버튼이 활성화됩니다.</p>
     </div>
     <form><input  v-model="userInput" v-on:input="toggleQuit()" type="text" class="quit_input" placeholder="탈퇴할래요" required></form>
-    <button v-on:click="quitBtn()" id="quit_btn">회원탈퇴</button>
+    <button v-on:click="QuitComp()" id="quit_btn">회원탈퇴</button>
     </div>
   <foody-nav></foody-nav>
 </template>
@@ -23,6 +23,7 @@
 <script>
 import FoodyHeader from '@/layout/FoodyHeader.vue'
 import FoodyNav from '@/layout/FoodyNav.vue'
+import axios from 'axios';
 
 export default {
     name: 'FoodyQuit',
@@ -41,12 +42,28 @@ export default {
                 quit_btn.style.visibility = 'hidden';
             }
         },
-        quitBtn(){
+        QuitComp(){
+            const userId = parseInt(this.$store.state.userId, 10);
             const confirmed = window.confirm('정말 탈퇴하시겠습니까?');
+            
+
             if (confirmed) {
-                this.$router.push({ path: '/QuitComp' });
+        // 서버로 데이터 전송
+            axios.delete('https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/resign?idx='+userId)
+            .then(res => {
+                const result = res.data;
+            // 성공 시 작업
+            if(result==='200'){
+                console.log(res.data);
+                this.$router.push({path: '/QuitComp', name:'QuitComp'});
             }
-        },    
+            })
+            .catch(err => {
+                console.log('에러!!!');
+                console.log(err);
+            });
+            }
+        }    
     },
     components: { FoodyHeader, FoodyNav,},
 
@@ -54,6 +71,7 @@ export default {
 </script>
 
 <style>
+
 h3{
     text-align: left;
     margin-left: 3%;

@@ -14,8 +14,8 @@ const store = createStore({
     pwda: '',
     codeAlle: [],
     codeDise: [],
-    Allco:[],
-    Diseco:[],
+    Allco:'',
+    Diseco:'',
       }
   },
   getters: {
@@ -40,10 +40,23 @@ const store = createStore({
       state.diseaseNm = '#' + diseaseNm.replace(/#/g, ' #');
     },
     resetState(state) {
-      state.nickNm = '';
-      state.allergieNm = '';
-      state.diseaseNm = '';
-      state.allergieList = [];
+      const getDefaultState =() => {
+        return {
+          email:'',
+          userId: '',
+          nickNm: '',
+          diseaseNm:'',
+          allergieList:[],
+          pwd: '',
+          pwdq: '',
+          pwda: '',
+          codeAlle: [],
+          codeDise: [],
+          Allco:'',
+          Diseco:'',
+        };
+      };
+      Object.assign(state, getDefaultState());
     },
     setAllergieList(state, allergieList){
         state.allergieList = allergieList.map(item => ' #' + item.name);

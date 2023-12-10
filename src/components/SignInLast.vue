@@ -48,7 +48,7 @@ export default {
                     }
                 }
             }
-            this.setDiseco(this.diseco);
+            this.setDiseco(this.diseco.toString());
 
 
             const allergyCode = [
@@ -82,7 +82,7 @@ export default {
                     }
                 }
             }
-            this.setAllco(this.allco);
+            this.setAllco(this.allco.toString());
         },
         SignComp(){
             const email = this.$store.state.email;
