@@ -3,13 +3,12 @@
 <h3>회원가입</h3><hr id="first_line">
 <form class="container">
 <div class="id">
-    <input type="text" class="inputBox" placeholder="아이디" required><!-- ★아이디 중복확인은 script작업 필요-->
-    <p id="notice">*아이디 및 비번은 6~12자리로 입력해주세요</p>
-    <input type="text" class="inputBox" placeholder="비밀번호" required> <!-- ★비밀번호 가리는 것도 script작업 필요-->
-    <p id="notice">*아이디 및 비번은 6~12자리로 입력해주세요</p>
+    <input v-model="NewEmail" type="text" class="inputBox" placeholder="이메일" required><!-- ★아이디 중복확인은 script작업 필요-->
+    <input v-model="NewPwd" type="text" class="inputBox" placeholder="비밀번호" required> <!-- ★비밀번호 가리는 것도 script작업 필요-->
+    <p id="notice">*비밀번호는 6~12자리로 입력해주세요</p>
     <input type="password access" class="inputBox" placeholder="비밀번호 확인" required>
     <div>
-        <select class="form-select" id="inputGroupSelect02">
+        <select v-model="userQuestion" class="form-select" id="inputGroupSelect02">
             <option selected>질문 유형 선택</option>
             <option value="1">본인의 어린시절 별명은?</option><!--인증질문 1-->
             <option value="2">본인의 어린시절 장래 희망은?</option><!--인증질문 2-->
@@ -17,10 +16,8 @@
             <!--추가 질문은 여기부터 추가하여 사용-->
         </select>
     </div>
-    <input type="AnsWer" class="inputBox" placeholder="비밀번호 확인 질문 답변" required>
-    <input type="email" class="inputBox" placeholder="이메일" required>
-    <p id="notice">*이메일은 계정 분실 시 사용됩니다.</p>
-    <input type="NickName" class="inputBox" placeholder="닉네임" required>
+    <input v-model="userAnswer" type="AnsWer" class="inputBox" placeholder="비밀번호 확인 질문 답변" required>
+    <input v-model="NewNickName" type="NickName" class="inputBox" placeholder="닉네임" required>
     <div id="personalInfoCheck">
         <h4>개인정보활용동의</h4><a href="#" id="detail">자세히</a><!--#에 개인정보처리방침 삽입-->
     </div>
@@ -29,9 +26,7 @@
     </div>
 </div>
 </form>
-<footer>
-    <div><router-link v-bind:to="'/checkda'" class="btn" id="nextPage">다음</router-link></div>
-</footer>
+<div @click="nextPage()" class="btn" id="nextPage">다음</div>
 </template>
 
 <script>
@@ -40,6 +35,27 @@ import FoodyHeader from '@/layout/FoodyHeader.vue';
 export default {
     name:'SignInUser',
     components:{ FoodyHeader, },
+    data() {
+        return {
+            NewEmail: '',
+            NewPwd: '',
+            userQuestion: '',
+            userAnswer: '',
+            NewNickName: '',
+        };
+    },
+    methods:{
+    nextPage() {
+        this.$store.dispatch('updateUserData', {
+            email: this.NewEmail,
+            pwd: this.NewPwd,
+            pwdq: this.userQuestion,
+            pwda: this.userAnswer,
+            nickname: this.NewNickName,
+        });
+        this.$router.push({ path: '/checkda' });
+        },
+    },
 }
 </script>
 
@@ -130,8 +146,7 @@ h4{
     font-weight: bold;
 }
 
-
-footer {
+.btn{
     display: flex;
     flex-direction: column; 
     justify-content: center;
@@ -141,13 +156,8 @@ footer {
     background-color: #dbe2ef;
     color: #3f72af;
     width: 100%;
-    bottom: 0vh;
     padding-top: 2%;
     padding-bottom: 2%;
-}
-.btn{
-    background-color: #dbe2ef;
-    color: #3F72AF;
     font-size: 30px;
     border: none;
     text-decoration: none;

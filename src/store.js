@@ -9,7 +9,14 @@ const store = createStore({
     nickNm: '',
     diseaseNm:'',
     allergieList:[],
-    }
+    pwd: '',
+    pwdq: '',
+    pwda: '',
+    codeAlle: [],
+    codeDise: [],
+    Allco:[],
+    Diseco:[],
+      }
   },
   getters: {
     // username이 빈 문자열이면 로그인 안된상태
@@ -40,7 +47,31 @@ const store = createStore({
     },
     setAllergieList(state, allergieList){
         state.allergieList = allergieList.map(item => ' #' + item.name);
-    }
+    },
+    setCreateUserData(state, data) {
+      state.email = data.email;
+      state.pwd = data.pwd;
+      state.pwdq = data.pwdq;
+      state.pwda = data.pwda;
+      state.nickNm = data.nickname;
+    },
+    setCodeDise(state, selectedDiseases) {
+      state.codeDise = selectedDiseases;
+    },
+    setDiseco(state, diseco) {
+      state.Diseco = diseco;
+    },
+    setCodeAlle(state, selectedAllergies) {
+      state.codeAlle = selectedAllergies;
+    },
+    setAllco(state, allco) {
+      state.Allco = allco;
+    },
+  },
+  actions: {
+    updateUserData({ commit }, data) {
+      commit('setCreateUserData', data);
+    },
   },
   plugins: [createPersistedState()],
 });

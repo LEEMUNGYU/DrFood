@@ -15,7 +15,7 @@
     
     <div id="allergyContainer" style="display: none;">
     <h3>알레르기 선택</h3>
-    <p id="selectedAllergies"></p>
+    <p id="selectedAllergies">{{ selectedAllergies.map(item => '#' + item).join(' ') }}</p>
     <br>
     <div id="Allergy-container">
         <div id="egg" :class="{ 'selected': selectedAllergies.includes('달걀') }" class="allergy-btn"  @click="addSelectedAllergy('달걀')">달걀</div>
@@ -48,6 +48,7 @@
 
 <script>
 import FoodyHeader from '@/layout/FoodyHeader.vue';
+import { mapMutations } from 'vuex';
 
 export default {
     name:'checkDA',
@@ -113,26 +114,20 @@ export default {
             registerBtn.style.display = 'block';
             const footer = document.getElementById('footer');
             footer.style.display = 'block';
+            this.setCodeDise(this.selectedDiseases);
         },
-        addSelectedAllergy(allergy) {
-            const selectedAllergiesElement = document.getElementById('selectedAllergies');
-            // 현재 선택된 알레르기 목록을 가져오기
-            let selectedAllergies = selectedAllergiesElement.textContent.split(' ');
-            // 이미 선택된 알레르기인지 확인
-            const allergyToRemove = "#" + allergy;
-            if (selectedAllergies.includes(allergyToRemove)) {
-                 // 이미 선택된 알레르기를 배열에서 제거
-                selectedAllergies = selectedAllergies.filter(item => item !== allergyToRemove);
-                // 선택된 알레르기 업데이트
-                selectedAllergiesElement.textContent = selectedAllergies.join(' ');
+        addSelectedAllergy(allergy) {       
+            const index = this.selectedAllergies.indexOf(allergy);
+            if (index !== -1) {
+                // 이미 선택된 알레르기인 경우 제거
+                this.selectedAllergies.splice(index, 1);
             } else {
-                // 중복 확인 없이 추가
-                if (selectedAllergiesElement.textContent === '#""') {
-                    selectedAllergiesElement.textContent = '';
-                }
-                selectedAllergiesElement.textContent += "#" + allergy + " ";
+                // 선택되지 않은 경우 추가
+                this.selectedAllergies.push(allergy);
             }
+            this.setCodeAlle(this.selectedAllergies);
         },
+        ...mapMutations(['setCodeDise', 'setCodeAlle']),
     },
 }
 </script>
@@ -284,7 +279,92 @@ footer {
     align-content: center;
 }
 
+
 #egg.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#milk.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#bean.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#buckwheat.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#wheat.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#shrimp.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#crab.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#peanut.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#walnut.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#pinenut.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#mackerel.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#fish.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#abalone.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#oyster.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#clam.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#chicken.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#pig.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#cow.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#smalloctopus.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#octopus.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#squid.selected{
+    color:#fff;
+    background: #3F72AF;
+}
+#sesame.selected{
     color:#fff;
     background: #3F72AF;
 }

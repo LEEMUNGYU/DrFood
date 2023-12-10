@@ -2,7 +2,7 @@
 <foody-header></foody-header>
 <div id="allergyContainer">
     <h3>보유 알레르기</h3>
-    <p id="selectedAllergies">{{ selectedAllergies.join(' ') }}</p>
+    <p id="selectedAllergies">{{ selectedAllergies.map(item => '#' + item).join(' ') }}</p>
     <br>
     <div id="Allergy-container">
         <div id="egg" :class="{ 'selected': selectedAllergies.includes('달걀') }" class="allergy-btn"  @click="addSelectedAllergy('달걀')">달걀</div>
