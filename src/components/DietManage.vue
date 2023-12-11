@@ -1,5 +1,5 @@
 <template>
-    <foody-header></foody-header>
+    <foody-header />
     <div class="mainContents">
     <div class="container">
         <div class="header">식단관리</div>
@@ -52,7 +52,7 @@
         </div>
     </div>
 </div>
-    <foody-nav></foody-nav>
+    <foody-nav />
 </template>
 
 <script>
