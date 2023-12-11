@@ -1,5 +1,6 @@
 <template>
 <FoodyHeader></FoodyHeader>
+<div class="mainContents">
 <h3>회원가입</h3><hr id="first_line">
 <form class="container">
 <div class="id">
@@ -26,6 +27,7 @@
     </div>
 </div>
 </form>
+</div>
 <div @click="nextPage()" class="btn" id="nextPage">다음</div>
 </template>
 
@@ -60,6 +62,12 @@ export default {
 </script>
 
 <style scoped>
+.mainContents{
+  box-sizing: border-box;
+  padding-top: 15%;
+  padding-bottom:12%;
+  margin:0;
+}
 
 h3{
     text-align: left;
@@ -148,19 +156,21 @@ h4{
 
 .btn{
     display: flex;
-    flex-direction: column; 
+    position: fixed;
+    left:0;
+    right:0;
+    bottom:0;
     justify-content: center;
     height: 8vh;
-    position: relative;
-    transform : translateY(0vh);
-    background-color: #dbe2ef;
-    color: #3f72af;
-    width: 100%;
+    width: 100vw;
+    overflow:hidden;
     padding-top: 2%;
     padding-bottom: 2%;
-    font-size: 30px;
+    background-color: #dbe2ef;
+    color: #3F72AF;
+    font-size: 1.8rem;
+    font-weight: bold;
     border: none;
-    text-decoration: none;
     }
 
 </style>

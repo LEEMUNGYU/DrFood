@@ -1,10 +1,10 @@
 <template>
   <foody-header></foody-header>
-    <div>
+    <div class="mainContents">
     <h3>회원탈퇴</h3>
     <hr id="first_line">
     <div id="sorry">
-        <p id="main_text"><span id="accent">죄송합니다</span><br><br>
+        <p id="main_text"><span id="accent">죄송합니다</span><br>
         저희와 함께하신 시간동안 만족스러운<br>
         서비스를 드리지 못한 것 같아 죄송합니다<br><br>
         다음에 다시 만나게 될 때까지<br>
@@ -71,6 +71,12 @@ export default {
 </script>
 
 <style scoped>
+.mainContents{
+  box-sizing: border-box;
+  padding-top: 15%;
+  padding-bottom:12%;
+  margin:0;
+}
 
 h3{
     text-align: left;
@@ -91,12 +97,12 @@ h3{
 }
 #main_text{
     font-size: 1rem;
-    padding: 9%;
-    margin-top: 5%;
+    padding: 4%;
+    margin-top: 2%;
     color:#3F72AF;
 }
 #accent{
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: bold;
 }
 
@@ -112,7 +118,7 @@ h3{
     border: 1px solid #3F72AF;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
-    margin-top:4%;
+    margin-top:1%;
 }
 
 button{

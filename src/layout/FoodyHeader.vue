@@ -2,7 +2,7 @@
     <div id="headerBox">
     <div class="header">
         <div id="flex-IconBox1"><img src="../style/img/Menu/backBTN.svg" v-if="showIcon" class="backIcon" v-on:click="goBack()"></div>
-        <h1>Dr.Foody</h1>
+        <div id="title"><h1>Dr.Foody</h1></div>
         <div id="flex-IconBox2"><img src="../style/img/Menu/homeBTN.svg" v-if="showIcon2" class="homeIcon" v-on:click="goHome()"></div>
     </div>
     </div>
@@ -48,6 +48,7 @@ export default{
 
 <style scoped>
 #headerBox{
+  box-sizing: border-box;
   position: fixed;
   left: 0;
   right: 0;

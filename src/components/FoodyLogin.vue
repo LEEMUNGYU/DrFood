@@ -1,7 +1,8 @@
 <template>
 <foody-header />
+<div class="mainContents">
   <h2>반갑습니다</h2>
-<p class="p">Dr.Food 서비스를 이용하기 위해서는<br> 로그인이 필요합니다.</p>
+<p class="p">Dr.Food 서비스를 이용하기 위해서는<br>로그인이 필요합니다.</p>
 <br><br>
   <main>
     <form @submit.prevent="fnLogin" method="get"><!--로그인 정보 DB 입력??-->
@@ -20,6 +21,7 @@
   <label for="autologin"><input type="checkbox" id="autologin">자동 로그인</label>
   <router-link v-bind:to="'/SignInUser'" class="alink">회원가입</router-link><!--회원가입 주소 href에 입력-->
   <router-link v-bind:to="'/changePW'" class="alink">비밀번호 찾기</router-link><!--아이디 찾기 주소 href에 입력-->
+</div>
   <button type="submit" class="btn" id="loginGo" v-on:click="fnLogin()">로그인</button>
 </template>
 
@@ -88,37 +90,28 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-template{
-    margin: 0;
-    padding: 0; 
+.mainContents{
+  box-sizing: border-box;
+  padding-top: 30%;
+  padding-bottom:12%;
+  margin:0;
 }
 
 h2 {
-    /*반갑습니다*/
     text-align: center;
-    color: #001335;
-    height: 40px;
-    gap:calc(100vh-30px);
-    justify-content: space-between;
+    color: #000;
 }
 
 p {
     /*Dr.Food 서비스를...*/
     font-size: 17px;
-    color: #001335;
+    color: #000;
     text-align: center;
     font-weight: 550;
-    justify-content: space-between;
 }
 a{
   color:#3f72af;
   text-decoration : none;
-}
-
-
-form {
-    width: 100vw;
-    margin: auto;
 }
 
 input[type="text"] {
@@ -171,16 +164,21 @@ table { /*회원가입, 아이디 찾기*/
     text-decoration: none;
 }
 .btn{
+    display: flex;
     position: fixed;
     left:0;
     right:0;
     bottom:0;
-    height: 11%;
+    justify-content: center;
+    height: 8vh;
+    width: 100vw;
+    overflow:hidden;
+    padding-top: 2%;
+    padding-bottom: 2%;
     background-color: #dbe2ef;
     color: #3F72AF;
-    text-align: center;
-    font-weight: bold;
     font-size: 1.8rem;
+    font-weight: bold;
     border: none;
   }
 </style>

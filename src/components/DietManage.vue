@@ -1,5 +1,6 @@
 <template>
     <foody-header></foody-header>
+    <div class="mainContents">
     <div class="container">
         <div class="header">식단관리</div>
         <hr>
@@ -50,6 +51,7 @@
             </div>
         </div>
     </div>
+</div>
     <foody-nav></foody-nav>
 </template>
 
@@ -81,6 +83,12 @@ export default {
 </script>
 
 <style scoped>
+.mainContents{
+  box-sizing: border-box;
+  padding-top: 15%;
+  padding-bottom:25%;
+  margin:0;
+}
 .container {
     display: flex;
     align-items: center;

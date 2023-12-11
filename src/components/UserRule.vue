@@ -1,5 +1,6 @@
 <template>
   <FoodyHeader></FoodyHeader>
+<div class="mainContents">
 <h3>개인정보처리방침</h3><hr id="first_line">
 <div id="rules">
     <p id="rulesTitle">1. 처리하는 개인정보 항목</p>
@@ -29,6 +30,7 @@
         <li> 고객의 알레르기 및 질환에 따른 식단 추천 필터링</li>
       </ul>
 </div>
+</div>
 <FoodyNav></FoodyNav>
 </template>
 
@@ -43,6 +45,13 @@ export default {
 </script>
 
 <style scoped>
+.mainContents{
+  box-sizing: border-box;
+  padding-top: 10%;
+  padding-bottom:25%;
+  margin:0;
+}
+
 h3{
     text-align: left;
     margin-left: 3%;
