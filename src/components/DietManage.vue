@@ -1,26 +1,29 @@
 <template>
     <foody-header />
     <div class="mainContents">
+    <h3>식단관리</h3><hr id="first_line">
     <div class="container">
-        <div class="header">식단관리</div>
-        <hr>
-        <div class="i-b">
+        <div class="arrow">
             <img src="../style/img/otherBTN/leftBTN.svg" alt="어제 날짜로">
         </div>
-        <div class="a">{{ currentDate }}</div>
-        <div class="i-b">
+        <div class="day">{{ currentDate }}</div>
+        <div class="arrow">
             <img src="../style/img/otherBTN/rightBTN.svg" alt="내일 날짜">
         </div>
+    </div>
         <!--버튼 기능 활성화 해야 됨.-->
-        <div class="box">
+    <div>
+    <div class="container">
+        <div class="mealTime" id="mor">
             아침
         </div>
-        <div class="box">
+        <div class="mealTime" id="lun">
             점심
         </div>
-        <div class="box">
+        <div class="mealTime" id="din">
             저녁
         </div>
+    </div>
         <!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
         <div class="record">
             <div class="alert">식사 기록이 없습니다.</div>
@@ -83,77 +86,74 @@ export default {
 </script>
 
 <style scoped>
+
 .mainContents{
   box-sizing: border-box;
   padding-top: 15%;
-  padding-bottom:25%;
+  padding-bottom:12%;
   margin:0;
+}
+h3{
+    color:#3F72AF;
+    text-align: left;
+    margin-left: 3%;
+}
+
+#first_line{
+    border: solid 0.4vh;
+    color:#3F72AF;
+    border-radius: 5px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    margin: 3%;
 }
 .container {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-content: center;
+    justify-content: center;
+    width: 90vw;
+    margin-top:2%;
+    margin-bottom:2%;
+    margin:auto;
 }
 
-.a {
+.day {
     color: #001335;
-    font-size: 20px;
+    font-size: 1.4rem;
     text-align: center;
     font-weight: bold;
-    width: 30%;
+    flex:2;
     text-align: center;
 }
 
-.box {
+.mealTime {
+    margin-top:2%;
     background-color: #dbe2ef;
     color: #3f72af;
-    border-radius: 5%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 22vw;
+    border-radius: 5px;
+    font-size:1.2rem;
+    font-weight:bold;
+    width: 26vw;
     text-align: center;
-    margin-top: 5%;
     height: 8vh;
 }
-
-hr {
-    width: 100%;
-    border: solid 2px #3f72af;
-    margin-bottom: 20px;
-}
-
-.header {
-    color: #3f72af;
-    font-weight: bold;
-    font-size: 2rem;
-}
-
-.img {
-    width: 20%;
-    padding: 10px;
-}
-/*image-box*/
-.i-b {
-    /*이전 페이지, 다음 페이지*/
-    width: 30%;
+.arrow {
+    margin:auto;
     text-align: center;
 }
 
 .record {
     /*식사 기록 부분*/
     background-color: #dbe2ef;
-    width: 100%;
+    width: 90vw;
     color: #3f72af;
     height: 10vh;
-    border-radius: 14px;
+    border-radius: 10px;
     margin-top: 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin:auto;
+    margin-top:2%;
+    margin-bottom:2%;
 }
 /*record-btn*/
 .r-b {
@@ -174,15 +174,11 @@ hr {
 }
 
 .main {
-    width: 368px;
-    height: 386px;
-    left: 31px;
-    top: 426px;
+    width: 90vw;
+    height: 40vh;
     background: #dbe2ef;
-    border-radius: 14px;
-    margin-top: 5vh;
-    margin-left: 10vw;
-    justify-self: space-between;
+    border-radius: 10px;
+    margin:auto;
 }
 
 .word {

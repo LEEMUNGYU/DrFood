@@ -25,12 +25,12 @@ export default{
         hideIconOnScreens(){
             const currentPath = this.$route.path;
             
-            if(currentPath === ('/' || '/QuitComp')){
+            if(currentPath === '/' || currentPath === '/QuitComp'  ){
                 this.showIcon = false;
                 this.showIcon2 = false;
-            }else if(currentPath === ('/board')){
+            }else if(currentPath === '/board'){
                 this.showIcon = false;
-            }else if(currentPath === ('/SignInUser' || '/SignLast')){
+            }else if(currentPath === '/SignInUser' || currentPath === '/SignLast' || currentPath === '/checkda' || currentPath === '/scPW'){
                 this.showIcon2 = false;
             }else{
                 //eslint-disable-next-line no-empty

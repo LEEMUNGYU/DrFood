@@ -1,5 +1,6 @@
 <template>
-  <FoodyHeader></FoodyHeader>
+  <FoodyHeader />
+  <div class="mainContents">
     <div id="checkInfo">
         <h3 id="checkInfoTitle">아래의 정보로 회원가입이 진행됩니다.</h3>
         <div id="checkInfoText">질환과 알레르기 정보는 회원 정보 페이지에서 수정할 수 있습니다.</div>
@@ -14,7 +15,7 @@
         <h4 id="SignUserDAT">보유 알레르기</h4>
         <div id="UserAllergy">{{ $store.state.codeAlle.map(item => '#' + item).join(' ') }}</div>
     </div>
-    
+</div>
     <div @click="SignComp()"  id="SignComp-btn" class="SignComp-btn">확인</div>
 </template>
 
@@ -118,6 +119,12 @@ export default {
 </script>
 
 <style scoped>
+.mainContents{
+    box-sizing: border-box;
+    padding-top: 15%;
+    padding-bottom:12%;
+    margin:0;
+  }
 #checkInfoTitle{
     text-align: center;
     margin:auto;
@@ -132,19 +139,23 @@ export default {
 }
 
 #SignComp-btn{
-    position: relative;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 10vh;
-    text-align: center;
-    line-height: 10vh;
-    margin: 0 auto;
+    display: flex;
+    position: fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    justify-content: center;
+    height: 8vh;
+    width: 100vw;
+    overflow:hidden;
+    padding-top: 2%;
+    padding-bottom: 2%;
     background-color: #dbe2ef;
-    color: #3f72af;
-    text-decoration: none;
-    font-size: 1.4rem;
+    color: #3F72AF;
+    font-size: 1.8rem;
     font-weight: bold;
+    border: none;
+    text-decoration: none;
 }
 #SignUserInfo{
     display: flex;
