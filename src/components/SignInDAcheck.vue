@@ -1,5 +1,5 @@
 <template>
-    <FoodyHeader></FoodyHeader>
+    <foody-header />
     <div class="main">
     <div>
         <h3>보유 질환</h3>

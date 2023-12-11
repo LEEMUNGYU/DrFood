@@ -1,8 +1,10 @@
 <template>
+    <div id="headerBox">
     <div class="header">
-        <img src="../style/img/Menu/backBTN.svg" id="backBTN" v-on:click="goBack()">
+        <div id="flex-IconBox1"><img src="../style/img/Menu/backBTN.svg" v-if="showIcon" class="backIcon" v-on:click="goBack()"></div>
         <h1>Dr.Foody</h1>
-        <img src="../style/img/Menu/homeBTN.svg" id="homeBTN" v-on:click="goHome()">
+        <div id="flex-IconBox2"><img src="../style/img/Menu/homeBTN.svg" v-if="showIcon2" class="homeIcon" v-on:click="goHome()"></div>
+    </div>
     </div>
 </template>
 
@@ -10,7 +12,30 @@
 
 export default{
     name: 'FoodyHeader',
+    data(){
+        return{
+            showIcon: true,
+            showIcon2: true,
+        }
+    },
+    created(){
+       this.hideIconOnScreens();
+    },
     methods: {
+        hideIconOnScreens(){
+            const currentPath = this.$route.path;
+            
+            if(currentPath === ('/' || '/QuitComp')){
+                this.showIcon = false;
+                this.showIcon2 = false;
+            }else if(currentPath === ('/board')){
+                this.showIcon = false;
+            }else if(currentPath === ('/SignInUser' || '/SignLast')){
+                this.showIcon2 = false;
+            }else{
+                //eslint-disable-next-line no-empty
+            }
+        },
         goBack() {
             this.$router.go(-1);
         },
@@ -22,6 +47,12 @@ export default{
 </script>
 
 <style scoped>
+#headerBox{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+}
 
 .header{ 
     display: flex;
@@ -38,11 +69,20 @@ export default{
     text-align :center;
     overflow:hidden;
 }
-
-#backBTN{
+#flex-IconBox{
+    width: 8vw;
     justify-content: right;
 }
-#homeBTN{
+#flex-IconBox2{
+    width: 8vw; 
     justify-content: left;
+}
+.backIcon{
+    width: 8vw;
+    height: 100%;
+}
+.homeIcon{
+    width: 6vw;
+    height: 100%;
 }
 </style>

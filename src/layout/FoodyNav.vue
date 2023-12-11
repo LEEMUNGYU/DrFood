@@ -1,9 +1,9 @@
 <template>
     <div class="nav">  
-      <router-link to="/dietlist"><div id="s_effect1">식단추천<img src="../style/img/Menu/ListOffBTN.svg" id="icon"></div></router-link>
-      <router-link to="/manage"><div id="s_effect1">식단관리<img src="../style/img/Menu/ManageOffBTN.svg" id="icon"></div></router-link>
-      <router-link to="/UserInfo"><div id="s_effect1">회원정보<img src="../style/img/Menu/UserOffBTN.svg" id="icon"></div></router-link>
-      <router-link to="/" @click="resetState()"><div id="s_effect1">로그아웃<img src="../style/img/Menu/ExitOffBTN.svg" id="icon"></div></router-link>
+      <router-link to="/dietlist" id="s_effect1"><div>식단추천</div><img src="../style/img/Menu/ListOffBTN.svg" id="icon"></router-link>
+      <router-link to="/manage" id="s_effect1"><div>식단관리</div><img src="../style/img/Menu/ManageOffBTN.svg" id="icon"></router-link>
+      <router-link to="/UserInfo" id="s_effect1"><div>회원정보</div><img src="../style/img/Menu/UserOffBTN.svg" id="icon"></router-link>
+      <router-link to="/" @click="resetState()" id="s_effect1"><div>로그아웃</div><img src="../style/img/Menu/ExitOffBTN.svg" id="icon2"></router-link>
   </div>
 </template>
 
@@ -23,8 +23,13 @@ export default{
 <style scoped>
 .nav{
   display:flex;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
   margin:0;
   padding: 0;
+  width:100%;
 }
 
 #s_effect1{
@@ -33,9 +38,8 @@ export default{
     color:#3F72AF;
     justify-content: center;
     justify-items: center;
-    width:25vw;
+    width:25%;
     height: 100%;
-    padding: 2%;
 }
 #s_effect2{
     flex:1;
@@ -43,9 +47,8 @@ export default{
     color:#3F72AF;
     justify-content: center;
     justify-items: center;
-    width:25vw;
+    width:25%;
     height: 100%;
-    padding: 2%;
 }
 #s_effect3{
     flex:1;
@@ -53,9 +56,8 @@ export default{
     color:#3F72AF;
     justify-content: center;
     justify-items: center;
-    width:25vw;
+    width:25%;
     height: 100%;
-    padding: 2%;
 }
 #s_effect4{
     flex:1;
@@ -63,9 +65,8 @@ export default{
     color:#3F72AF;
     justify-content: center;
     justify-items: center;
-    width:25vw;
+    width:25%;
     height: 100%;
-    padding: 2%;
 }
 
 
@@ -76,7 +77,12 @@ a {
 }
 
 #icon{
-  width: 42px;
-  height: 42px;
+    width: 10vw;
+    height: 8vh;
+}
+
+#icon2{
+    width: 8vw;
+    height: 8vh;
 }
 </style>

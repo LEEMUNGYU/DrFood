@@ -1,10 +1,6 @@
 <template>
-    <div class="header">
-        <h1>Dr.Foody</h1>
-    </div>
-<div class="h2"><br>
-  <h2>반갑습니다</h2><br>
-</div>
+<foody-header />
+  <h2>반갑습니다</h2>
 <p class="p">Dr.Food 서비스를 이용하기 위해서는<br> 로그인이 필요합니다.</p>
 <br><br>
   <main>
@@ -24,12 +20,11 @@
   <label for="autologin"><input type="checkbox" id="autologin">자동 로그인</label>
   <router-link v-bind:to="'/SignInUser'" class="alink">회원가입</router-link><!--회원가입 주소 href에 입력-->
   <router-link v-bind:to="'/changePW'" class="alink">비밀번호 찾기</router-link><!--아이디 찾기 주소 href에 입력-->
-  <footer>
-      <div><button type="submit" class="btn" id="loginGo" v-on:click="fnLogin()">로그인</button></div>
-  </footer>
+  <button type="submit" class="btn" id="loginGo" v-on:click="fnLogin()">로그인</button>
 </template>
 
 <script>
+import FoodyHeader from '@/layout/FoodyHeader.vue';
 import axios from 'axios';
 
 
@@ -50,8 +45,7 @@ export default {
       const pwd = this.user_pw;
         axios({
         method: 'get',
-        //url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/login?email=abcd123@gmail.com&pwd=123123',
-        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/login',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/login?',
         params: {
           email,
           pwd
@@ -77,14 +71,18 @@ export default {
             break;
           default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
             break;
-        }
-    })
-      .catch(err => {
-      console.log('에러!!!');
-      console.log(err);
-  })
-  }
-} } 
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
+          }
+    },
+    components:{
+      FoodyHeader,
+    },
+ } 
 
 </script>
 
@@ -94,22 +92,6 @@ template{
     margin: 0;
     padding: 0; 
 }
-.header{ 
-    display: flex;
-    position: relative;
-    justify-content: center;
-    background-color: #dbe2ef;
-    color: #3f72af;
-    width: 100%;
-    height: 8vh;
-    line-height:100%;
-}
-
-h1{
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-}
 
 h2 {
     /*반갑습니다*/
@@ -117,7 +99,6 @@ h2 {
     color: #001335;
     height: 40px;
     gap:calc(100vh-30px);
-    /*margin-bottom: -30px;*/
     justify-content: space-between;
 }
 
@@ -189,27 +170,17 @@ table { /*회원가입, 아이디 찾기*/
     gap: 10%;
     text-decoration: none;
 }
-
-footer {
-    display: flex;
-    flex-direction: column; 
-    justify-content: center;
-    height: 8vh;
-    position: relative;
-    transform : translateY(0vh);
-    background-color: #dbe2ef;
-    color: #3f72af;
-    width: 100%;
-    bottom: 0vh;
-    padding-top: 2%;
-    padding-bottom: 2%;
-}
-
 .btn{
+    position: fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    height: 11%;
     background-color: #dbe2ef;
     color: #3F72AF;
+    text-align: center;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 1.8rem;
     border: none;
   }
 </style>
