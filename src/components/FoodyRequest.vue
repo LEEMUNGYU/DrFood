@@ -2,19 +2,19 @@
 <FoodyHeader />
 <div class="mainContents">
 <h3>문의하기</h3><hr id="first_line">
-<div>
-  <span>E-mail</span>
+<div class="total-contents">
+<div id="mail">
   <input type="text" placeholder="이메일" aria-label="이메일" v-model="email">
 </div>
-
-<input type="text" placeholder="제목" aria-label="default input example" v-model="titleText">
-
-<div>
-    <span>내용</span>
-    <textarea rows="8" aria-label="내용" v-model="contentText"></textarea>
+<div id="title">
+  <input type="text" placeholder="제목" aria-label="default input example" v-model="titleText">
+</div>
+<div id="contents">
+  <textarea rows="8" placeholder="내용"  aria-label="내용" v-model="contentText"></textarea>
 </div>
 </div>
-<button type="submit" class="btn" id="requestSend" v-on:click="requestSend()">문의 전송</button>
+</div>
+<button type="submit" class="btn" id="requestSend" @click="requestSend()">문의 전송</button>
 </template>
 
 <script>
@@ -67,21 +67,50 @@ h3{
 }
 
 
-footer {
+input {
     display: flex;
-    flex-direction: column; 
     justify-content: center;
-    height: 8vh;
-    position: relative;
-    transform : translateY(0vh);
-    background-color: #dbe2ef;
-    color: #3f72af;
-    width: 100%;
-    bottom: 0vh;
+    margin:auto;
+    margin-bottom:5%;
+    color: #222222;
+    font-size: 1.1rem;
+    font-weight: bold;
+    width: 80%;
+    height: 4vh;
+    border: 1px solid #3f72af;
+    border-radius: 5px;
+    padding-left: 2%;
     padding-top: 2%;
     padding-bottom: 2%;
+    z-index: 5;
 }
-
+#mail{
+    margin-top:8%;
+}
+#mail input{
+    background-image: url(../style/img/otherBTN/mailBTN.svg);
+    background-position: 2% center;
+    background-repeat: no-repeat;
+    text-indent: 2rem;
+}
+textarea{
+    font-family: 'NotoSansKR';
+    display: flex;
+    justify-content: center;
+    margin:auto;
+    margin-bottom:5%;
+    color: #222222;
+    width: 80%;
+    height: 35vh;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: 1px solid #3f72af;
+    border-radius: 5px;
+    padding-left: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    resize: none;
+}
 .btn{
     display: flex;
     position: fixed;

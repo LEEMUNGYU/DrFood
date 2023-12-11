@@ -23,6 +23,11 @@ name: 'SignInLast',
 component: () => import('../components/SignInLast.vue'),
 },
 {
+path : "/scPW",
+name: 'scPW',
+component: () => import('../components/ScPW.vue'),
+},
+{
 path: "/board",
 name: 'DashBoard',
 component: () => import('../components/DashBoard.vue'),

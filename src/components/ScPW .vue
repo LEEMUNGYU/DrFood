@@ -1,8 +1,11 @@
 <template><!--좀 더 진행-->
   <foody-header />
   <div class="mainContents">
-    <h3>비밀번호 변경</h3><hr id="first_line">
+    <h3>비밀번호 찾기</h3><hr id="first_line">
     <form>
+      <div>
+        <input class="userId" placeholder="아이디" aria-label="아이디" v-model="userId">
+      </div>
       <div><select v-model="pw_question">
             <option selected>질문 유형 선택</option>
             <option value="1">본인의 어린시절 별명은?</option><!--인증질문 1-->
@@ -34,9 +37,10 @@ import axios from 'axios';
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 
 export default {
-  name:"changePW",
+  name:"scPW",
   data(){
     return{
+      userId: '',
       pw_question: '',
       pw_answer: '',
       change_pw:'',
