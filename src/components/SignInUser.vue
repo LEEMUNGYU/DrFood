@@ -70,9 +70,9 @@ export default {
 }
 
 h3{
+    color:#3F72AF;
     text-align: left;
     margin-left: 3%;
-    margin-top: 8%;
 }
 
 #first_line{
@@ -85,7 +85,6 @@ h3{
 .container{
     overflow:scroll;
     width:100%;
-    height:80vh;
     padding-bottom:5%;
 }
 

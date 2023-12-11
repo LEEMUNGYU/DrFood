@@ -1,5 +1,6 @@
 <template>
     <foody-header />
+    <div class="mainContents">
     <div class="main">
     <div>
         <h3>보유 질환</h3>
@@ -41,9 +42,11 @@
         <div id="squid" :class="{ 'selected': selectedAllergies.includes('오징어') }" class="allergy-btn" @click="addSelectedAllergy('오징어')">오징어</div>
         <div id="sesame" :class="{ 'selected': selectedAllergies.includes('깨') }" class="allergy-btn" @click="addSelectedAllergy('깨')">깨</div>
     </div>
+    <button id="completeBtn2" class="btn" style="display: none; text-align: center;" @click="completeAllergySelection()">선택 완료</button>
 </div>
 </div>
-<footer id="footer"><router-link v-bind:to="'/SignLast'"  id="registerBtn" class="btn-signGo" style="display: none; text-align: center;">회원가입</router-link></footer>
+</div>
+<router-link v-bind:to="'/SignLast'"  id="registerBtn" class="btn-signGo" style="display: none; text-align: center;">회원가입</router-link>
 </template>
 
 <script>
@@ -58,6 +61,7 @@ export default {
         diseasesSelected: false,
         selectedAllergies: [],
         allergiesSelected: false,
+        completeBtn2Clicked: false,
         }
     },
     components:{
@@ -101,7 +105,7 @@ export default {
 
             // 선택 완료 버튼 비활성화
             const completeBtn = document.getElementById('completeBtn1');
-            completeBtn.disabled = true;
+            completeBtn.style.display = 'none';
 
             // 질병 선택 버튼들 비활성화
             document.getElementById('btn-Ob').disabled = true;
@@ -112,8 +116,6 @@ export default {
             // "회원가입하기" 버튼 표시
             const registerBtn = document.getElementById('registerBtn');
             registerBtn.style.display = 'block';
-            const footer = document.getElementById('footer');
-            footer.style.display = 'block';
             this.setCodeDise(this.selectedDiseases);
         },
         addSelectedAllergy(allergy) {       
@@ -125,7 +127,18 @@ export default {
                 // 선택되지 않은 경우 추가
                 this.selectedAllergies.push(allergy);
             }
+            const completeBtn2 = document.getElementById('completeBtn2');
+            completeBtn2.style.display = 'block';
             this.setCodeAlle(this.selectedAllergies);
+        },
+        completeAllergySelection(){
+            this.completeBtn2Clicked = true;
+            if(this.completeBtn2Clicked === true){
+                const allergyContainer = document.getElementById('Allergy-container');
+                allergyContainer.style.display = 'none';
+                const completeBtn2 = document.getElementById('completeBtn2');
+                completeBtn2.style.display = 'none';
+            }
         },
         ...mapMutations(['setCodeDise', 'setCodeAlle']),
     },
@@ -133,6 +146,12 @@ export default {
 </script>
 
 <style scoped>
+.mainContents{
+  box-sizing: border-box;
+  padding-top: 15%;
+  padding-bottom:12%;
+  margin:0;
+}
 .main{
     display: flex;
     flex-direction: column;
@@ -143,7 +162,6 @@ h3 {
     color: #3F72AF;
     text-align: left;
     margin-left: 8%;
-    margin-top: 8%;
 }
 
 p {
@@ -159,6 +177,7 @@ p {
     color: #3f72af;
     text-align: center;
     margin-left: 3%;
+    margin-bottom: 4%;
     margin-inline: auto;
 }
 
@@ -167,24 +186,18 @@ form {
     margin: auto;
 }
 
-footer {
-    position: relative;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 20vw;
-    background-color: #dbe2ef;
-    color: #3f72af;
-    line-height: 20px;
-    text-align: center;
-    margin: 0 auto;
-}
-
 .btn {
+    justify-content: center;
+    width:30vw;
+    height:8vh;
     background-color: #dbe2ef;
     color: #3F72AF;
-    font-size: 1em;
-    border: none;
+    font-size: 1.2em;
+    font-weight:bold;
+    border: 1px solid #001335;
+    margin-top:2%;
+    margin: auto;
+    border-radius: 5px;
     text-align: center;
 }
 
@@ -441,26 +454,22 @@ footer {
     color:#C57123;
 }
 
-
-footer{
-    display: none;
-    flex-direction: column; 
+.btn-signGo{
+    display: flex;
+    position: fixed;
+    left:0;
+    right:0;
+    bottom:0;
     justify-content: center;
     height: 8vh;
-    position: relative;
-    transform : translateY(0vh);
-    background-color: #dbe2ef;
-    color: #3f72af;
-    width: 100%;
-    bottom: 0vh;
-    margin-top:3%;
+    width: 100vw;
+    overflow:hidden;
     padding-top: 2%;
     padding-bottom: 2%;
-}
-.btn-signGo{
     background-color: #dbe2ef;
     color: #3F72AF;
-    font-size: 30px;
+    font-size: 1.8rem;
+    font-weight: bold;
     border: none;
     text-decoration: none;
 }

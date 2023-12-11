@@ -4,10 +4,10 @@
   <h3>회원정보</h3><hr id="first_line">
 <div class="h3">  <p>무엇을 도와드릴까요?</p></div>
 <div class="Info-list">
-  <router-link to="/change" class="Info-btn"><img />회원 정보 변경</router-link>
-  <router-link to="/request" class="Info-btn"><img />문의하기</router-link>
-  <router-link to="/rule" class="Info-btn"><img />개인정보처리방침</router-link>
-  <router-link to="/quit" class="Info-btn"><img />회원탈퇴</router-link>
+  <router-link to="/change" class="Info-btn">회원 정보 변경<img id="goto" src="../style/img/Menu/GoToBTN.svg"/></router-link>
+  <router-link to="/request" class="Info-btn">문의하기<img id="goto" src="../style/img/Menu/GoToBTN.svg"/></router-link>
+  <router-link to="/rule" class="Info-btn">개인정보처리방침<img id="goto" src="../style/img/Menu/GoToBTN.svg"/></router-link>
+  <router-link to="/quit" class="Info-btn">회원탈퇴<img id="goto" src="../style/img/Menu/GoToBTN.svg"/></router-link>
 </div>
 </div>
 <foody-nav  />
@@ -58,11 +58,12 @@ p {
 }
 
 .Info-btn{
-  box-shadow: 0px -16px 0px 0px #ffffff;
-  background-image: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
-  background-color: #f5f5f5;
-  border-radius: 13px;
-  border: 2px solid #dcdcdc;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 3px 3px 3px 0px #ccc;
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid #ccc;
   padding: 2%;
   width: 70vw;
   color: #3F72AF;
@@ -73,13 +74,7 @@ p {
   text-align: left;
   margin: 0.6rem;
 }
-
-.Info-btn:hover {
-  background-image: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
-  background-color: #f6f6f6;
-}
-
-.Info-btn:active {
-  top: 1px; 
+#goto{
+  width: 6vw;
 }
 </style>

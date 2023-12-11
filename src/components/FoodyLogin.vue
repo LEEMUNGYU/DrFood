@@ -20,7 +20,7 @@
 
   <label for="autologin"><input type="checkbox" id="autologin">자동 로그인</label>
   <router-link v-bind:to="'/SignInUser'" class="alink">회원가입</router-link><!--회원가입 주소 href에 입력-->
-  <router-link v-bind:to="'/changePW'" class="alink">비밀번호 찾기</router-link><!--아이디 찾기 주소 href에 입력-->
+  <router-link v-bind:to="'/scPW'" class="alink">비밀번호 찾기</router-link><!--아이디 찾기 주소 href에 입력-->
 </div>
   <button type="submit" class="btn" id="loginGo" v-on:click="fnLogin()">로그인</button>
 </template>
