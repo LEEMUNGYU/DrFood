@@ -47,15 +47,15 @@ export default {
 <style scoped>
 .mainContents{
   box-sizing: border-box;
-  padding-top: 10%;
+  padding-top: 15%;
   padding-bottom:25%;
   margin:0;
 }
 
 h3{
+    color:#3F72AF;
     text-align: left;
     margin-left: 3%;
-    margin-top: 8%;
 }
 
 #first_line{

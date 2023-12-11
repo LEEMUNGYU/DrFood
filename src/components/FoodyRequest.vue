@@ -1,7 +1,7 @@
 <template>
-<FoodyHeader link='FoodyHeader.vue' />
+<FoodyHeader />
+<div class="mainContents">
 <h3>문의하기</h3><hr id="first_line">
-
 <div>
   <span>E-mail</span>
   <input type="text" placeholder="이메일" aria-label="이메일" v-model="email">
@@ -13,10 +13,8 @@
     <span>내용</span>
     <textarea rows="8" aria-label="내용" v-model="contentText"></textarea>
 </div>
-
-<footer>
-    <div><button type="submit" class="btn" id="requestSend" v-on:click="requestSend()">문의 전송</button></div>
-</footer>
+</div>
+<button type="submit" class="btn" id="requestSend" v-on:click="requestSend()">문의 전송</button>
 </template>
 
 <script>
@@ -48,10 +46,16 @@ export default {
 </script>
 
 <style scoped>
+.mainContents{
+  box-sizing: border-box;
+  padding-top: 15%;
+  padding-bottom:12%;
+  margin:0;
+}
 h3{
+    color:#3F72AF;
     text-align: left;
     margin-left: 3%;
-    margin-top: 8%;
 }
 
 #first_line{
@@ -79,10 +83,21 @@ footer {
 }
 
 .btn{
-    font-family: 'NPSfontBold';
+    display: flex;
+    position: fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    justify-content: center;
+    height: 8vh;
+    width: 100vw;
+    overflow:hidden;
+    padding-top: 2%;
+    padding-bottom: 2%;
     background-color: #dbe2ef;
     color: #3F72AF;
-    font-size: 30px;
+    font-size: 1.8rem;
+    font-weight: bold;
     border: none;
 }
 

@@ -1,7 +1,7 @@
 <template>
-    <foody-header></foody-header>
-    <div>
-    <h3>보유 질환</h3>
+    <foody-header />
+    <div class="mainContents">
+    <h3>보유 질환 수정</h3><hr id="first_line">
     <p id="selectedDiseases"></p>
     </div>
     <div id="Disease-container">
@@ -10,7 +10,7 @@
         <div id="btn-Dia"  :class="{ 'selected': selectedDiseases.includes('당뇨') }"  class="DiseaseBtn" @click="addSelectedDisease('당뇨')">당뇨</div>
         <div id="btn-Gas"  :class="{ 'selected': selectedDiseases.includes('위염') }"  class="DiseaseBtn" @click="addSelectedDisease('위염')">위염</div>
     </div>
-    <foody-nav></foody-nav>
+    <foody-nav />
 </template>
 
 <script>
@@ -57,12 +57,24 @@ export default {
 </script>
 
 <style scoped>
-
+.mainContents{
+  box-sizing: border-box;
+  padding-top: 15%;
+  padding-bottom:12%;
+  margin:0;
+}
 h3 {
-    color: #3F72AF;
+    color:#3F72AF;
     text-align: left;
-    margin-left: 8%;
-    margin-top: 8%;
+    margin-left: 3%;
+}
+
+#first_line{
+    border: solid 0.4vh;
+    color:#3F72AF;
+    border-radius: 5px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    margin: 3%;
 }
 
 p {

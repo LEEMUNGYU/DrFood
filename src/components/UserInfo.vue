@@ -1,5 +1,6 @@
 <template>
-<FoodyHeader link='FoodyHeader.vue' />
+<foody-header />
+<div class="mainContents">
   <h3>회원정보</h3><hr id="first_line">
 <div class="h3">  <p>무엇을 도와드릴까요?</p></div>
 <div class="Info-list">
@@ -8,7 +9,8 @@
   <router-link to="/rule" class="Info-btn"><img />개인정보처리방침</router-link>
   <router-link to="/quit" class="Info-btn"><img />회원탈퇴</router-link>
 </div>
-<FoodyNav link="FoodyNav.vue"  />
+</div>
+<foody-nav  />
 </template>
 
 <script>
@@ -22,10 +24,16 @@ export default {
 </script>
 
 <style scoped>
+.mainContents{
+  box-sizing: border-box;
+  padding-top: 15%;
+  padding-bottom:12%;
+  margin:0;
+}
 h3{
+    color:#3F72AF;
     text-align: left;
     margin-left: 3%;
-    margin-top: 8%;
 }
 
 #first_line{

@@ -1,7 +1,8 @@
 <template>
 <foody-header></foody-header>
+<div class="mainContents">
 <div id="allergyContainer">
-    <h3>보유 알레르기</h3>
+    <h3>보유 알레르기 수정</h3><hr id="first_line">
     <p id="selectedAllergies">{{ selectedAllergies.map(item => '#' + item).join(' ') }}</p>
     <br>
     <div id="Allergy-container">
@@ -28,8 +29,10 @@
         <div id="squid" :class="{ 'selected': selectedAllergies.includes('오징어') }" class="allergy-btn" @click="addSelectedAllergy('오징어')">오징어</div>
         <div id="sesame" :class="{ 'selected': selectedAllergies.includes('깨') }" class="allergy-btn" @click="addSelectedAllergy('깨')">깨</div>
     </div>
-    <foody-nav></foody-nav>
 </div>
+</div>
+<foody-nav />
+
 </template>
 
 <script>
@@ -61,11 +64,24 @@ export default {
 </script>
 
 <style scoped>
+.mainContents{
+  box-sizing: border-box;
+  padding-top: 15%;
+  padding-bottom:12%;
+  margin:0;
+}
 h3 {
-    color: #3F72AF;
+    color:#3F72AF;
     text-align: left;
-    margin-left: 8%;
-    margin-top: 8%;
+    margin-left: 3%;
+}
+
+#first_line{
+    border: solid 0.4vh;
+    color:#3F72AF;
+    border-radius: 5px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    margin: 3%;
 }
 
 p {

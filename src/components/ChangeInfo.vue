@@ -1,17 +1,20 @@
 <template>
-<FoodyHeader></FoodyHeader>
+<FoodyHeader />
+<div class="mainContents">
+    <h3>회원정보 변경</h3><hr id="first_line">
     <div id="UserInfo" class="UserInfo">
-        <div id="UserId">아이디: {{ $store.state.email }}</div>
-        <div id="UserNick">닉네임: {{ $store.state.nickNm }}</div>
+        <div id="UserId">아이디: {{ "$store.state.email" }}</div>
+        <div id="UserNick">닉네임: {{ "$store.state.nickNm" }}</div>
     </div>
     <router-link to="/changePW" style="text-decoration: none;"><div id="changePWDgo">비밀번호 변경</div></router-link>
     <div id="UserDA" class="UserDA">
         <h4 id="UserDAT">보유 질환</h4>
-        <router-link to="/changeDis" style="text-decoration: none;"><div id="UserDiseases">{{  $store.state.diseaseNm  }}</div></router-link>
+        <router-link to="/changeDis" style="text-decoration: none;"><div id="UserDiseases">{{  "$store.state.diseaseNm"  }}</div></router-link>
         <h4 id="UserDAT">보유 알레르기</h4>
-        <router-link to="/changeAle" style="text-decoration: none;"><div id="UserAllergy">{{  $store.state.allergieList.join('')  }}</div></router-link>
+        <router-link to="/changeAle" style="text-decoration: none;"><div id="UserAllergy">{{  "$store.state.allergieList.join('')"  }}</div></router-link>
     </div>
-<foody-nav></foody-nav>
+</div>
+<foody-nav />
 </template>
 
 <script>
@@ -26,6 +29,26 @@ export default {
 </script>
 
 <style scoped>
+.mainContents{
+  box-sizing: border-box;
+  padding-top: 15%;
+  padding-bottom:12%;
+  margin:0;
+}
+
+h3 {
+    color:#3F72AF;
+    text-align: left;
+    margin-left: 3%;
+}
+
+#first_line{
+    border: solid 0.4vh;
+    color:#3F72AF;
+    border-radius: 5px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    margin: 3%;
+}
 #UserInfo{
     display: flex;
     color: #3f72af;

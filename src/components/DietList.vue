@@ -303,9 +303,9 @@ export default {
 }
 
 h3{
+    color:#3F72AF;
     text-align: left;
     margin-left: 3%;
-    margin-top: 8%;
 }
 
 #frist_line{

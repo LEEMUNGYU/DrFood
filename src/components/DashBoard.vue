@@ -1,13 +1,14 @@
 <template>
-  <FoodyHeader link='FoodyHeader.vue' />
-  <h2>{{ $store.state.nickNm }}님의 건강정보</h2>
+  <FoodyHeader />
+<div class="mainContents">
+  <h2>{{ "$store.state.nickNm" }}님의 건강정보</h2>
   <div class="box_zip">
     <div id="n_box">질환</div>
-    <div id="i_box">{{ $store.state.diseaseNm }}</div>
+    <div id="i_box">{{ "$store.state.diseaseNm" }}</div>
   </div>
   <div class="box_zip">
     <div id="n_box">알레르기</div>
-    <div id="i_box">{{ $store.state.allergieList.join('') }}</div>
+    <div id="i_box">{{ "$store.state.allergieList.join('')" }}</div>
   </div>
   <div class="dash_contents">
     <div id="diet_icon"><img src="../style/img/Menu/ListOffBTN.svg" id="imgList"></div>
@@ -24,8 +25,8 @@
     <div>{{ food4 }}</div>
     <div>{{ food5 }}</div>
   </div> 
-
-  <FoodyNav link="FoodyNav.vue"  />
+</div>
+  <FoodyNav />
 </template>
 
 <script>
@@ -97,9 +98,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.mainContents{
+  box-sizing: border-box;
+  padding-top: 15%;
+  padding-bottom:12%;
+  margin:0;
+}
 h2 {
   color: #023059;
-  margin-top: 10%;
   margin-bottom: 5%;
 }
 a {

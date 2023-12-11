@@ -1,6 +1,7 @@
 <template><!--좀 더 진행-->
-  <foody-header></foody-header>
-  <main>
+  <foody-header />
+  <div class="mainContents">
+    <h3>비밀번호 변경</h3><hr id="first_line">
     <form>
       <div><select v-model="pw_question">
             <option selected>질문 유형 선택</option>
@@ -24,10 +25,8 @@
       </div>
       </div>
     </form>
-  </main>
-  <footer>
-      <div><button type="submit" class="btn" id="pwChangeGo" v-on:click="PWchange()">비밀번호 변경</button></div>
-  </footer>
+  </div>
+<button type="submit" class="btn" id="pwChangeGo" v-on:click="PWchange()">비밀번호 변경</button>
 </template>
 
 <script>
@@ -69,7 +68,12 @@ export default {
 </script>
 
 <style scoped>
-
+.mainContents{
+  box-sizing: border-box;
+  padding-top: 15%;
+  padding-bottom:12%;
+  margin:0;
+}
 form{
   display: flex;
   flex-direction: column;
@@ -131,25 +135,23 @@ input[type="password1"] {
     margin-inline: auto;
 }
 
-footer {
-    display: flex;
-    flex-direction: column; 
-    justify-content: center;
-    height: 8vh;
-    position: relative;
-    transform : translateY(0vh);
-    background-color: #dbe2ef;
-    color: #3f72af;
-    width: 100%;
-    bottom: 0vh;
-    padding-top: 2%;
-    padding-bottom: 2%;
-}
 
 .btn{
+    display: flex;
+    position: fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    justify-content: center;
+    height: 8vh;
+    width: 100vw;
+    overflow:hidden;
+    padding-top: 2%;
+    padding-bottom: 2%;
     background-color: #dbe2ef;
     color: #3F72AF;
-    font-size: 30px;
+    font-size: 1.8rem;
+    font-weight: bold;
     border: none;
   }
 </style>
