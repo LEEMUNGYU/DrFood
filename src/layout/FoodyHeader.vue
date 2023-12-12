@@ -1,9 +1,9 @@
 <template>
     <div id="headerBox">
     <div class="header">
-        <div id="flex-IconBox1"><img src="../style/img/Menu/backBTN.svg" v-if="showIcon" class="backIcon" v-on:click="goBack()"></div>
+        <div id="flex-IconBox1"><img src="../style/img/Menu/backBTN.svg" class="backIcon" v-on:click="goBack()"></div>
         <div id="title"><h1>Dr.Foody</h1></div>
-        <div id="flex-IconBox2"><img src="../style/img/Menu/homeBTN.svg" v-if="showIcon2" class="homeIcon" v-on:click="goHome()"></div>
+        <div id="flex-IconBox2"><img src="../style/img/Menu/homeBTN.svg" class="homeIcon" v-on:click="goHome()"></div>
     </div>
     </div>
 </template>
@@ -14,24 +14,28 @@ export default{
     name: 'FoodyHeader',
     data(){
         return{
-            showIcon: true,
-            showIcon2: true,
         }
     },
-    created(){
+    mounted(){
        this.hideIconOnScreens();
     },
     methods: {
         hideIconOnScreens(){
             const currentPath = this.$route.path;
-            
+            const element1 = document.getElementById("flex-IconBox1");
+            const element2 = document.getElementById("flex-IconBox2");
+
             if(currentPath === '/' || currentPath === '/QuitComp'  ){
-                this.showIcon = false;
-                this.showIcon2 = false;
+                element1.style.visibility = 'hidden';
+                element1.disabled = true;
+                element2.style.visibility = 'hidden';
+                element2.disabled = true;
             }else if(currentPath === '/board'){
-                this.showIcon = false;
+                element1.style.visibility = 'hidden';
+                element1.disabled = true;
             }else if(currentPath === '/SignInUser' || currentPath === '/SignLast' || currentPath === '/checkda' || currentPath === '/scPW'){
-                this.showIcon2 = false;
+                element2.style.visibility = 'hidden';
+                element2.disabled = true;
             }else{
                 //eslint-disable-next-line no-empty
             }
@@ -70,11 +74,13 @@ export default{
     text-align :center;
     overflow:hidden;
 }
-#flex-IconBox{
+#flex-IconBox1{
+    visibility: visible;
     width: 8vw;
     justify-content: right;
 }
 #flex-IconBox2{
+    visibility: visible;
     width: 8vw; 
     justify-content: left;
 }

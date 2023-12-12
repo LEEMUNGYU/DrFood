@@ -12,45 +12,62 @@
         </div>
     </div>
         <!--버튼 기능 활성화 해야 됨.-->
-    <div>
+    
     <div class="container">
-        <div class="mealTime" id="mor">
-            아침
-        </div>
-        <div class="mealTime" id="lun">
-            점심
-        </div>
-        <div class="mealTime" id="din">
-            저녁
-        </div>
+        <div class="mealTime" id="mor">아침</div>
+        <div class="mealTime" id="lun">점심</div>
+        <div class="mealTime" id="din">저녁</div>
     </div>
+    <div class="writeList">
         <!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
         <div class="record">
-            <div class="alert">식사 기록이 없습니다.</div>
+            <div class="noticeRecord">식사 기록이 없습니다</div>
             <div class="r-b">기록하기</div>
-            <div class="img">
-                <img src="../style/img/otherBTN/PenBTN.svg" alt="기록">
+            <div class="write_BTN">
+                <img src="../style/img/otherBTN/PenBTN.svg" id="penBTN" alt="기록">
             </div>
         </div>
-
+        <div class="writeRecord">
+            <div class="titleNbtn">
+                <div class="write_word">식사기록</div>
+                <div class="Icons">
+                <div class="saveNchange_BTN">
+                    <img src="../style/img/otherBTN/saveBTN.svg" id="saveBTN" alt="저장">
+                    <img src="../style/img/otherBTN/PenBTN.svg" id="changeBTN" alt="수정">
+                </div>
+                <div class="saveText">저장</div>
+                <div class="changeText">수정</div>
+                </div>
+            </div>
+            <div class="writeListItems">
+                <div class="writeListEle">
+                    <div class="Ele1">1</div><div class="puls">+</div><div class="minus">-</div>
+                </div>
+                <div class="writeListEle">
+                    <div class="Ele1">1</div><div class="puls">+</div><div class="minus">-</div>
+                </div>
+                <div class="writeListEle">
+                    <div class="Ele1">1</div><div class="puls">+</div><div class="minus">-</div>
+                </div>
+                <div class="writeListEle">
+                    <div class="Ele1">1</div><div class="puls">+</div><div class="minus">-</div>
+                </div>
+                <div class="writeListEle">
+                    <div class="Ele1">1</div><div class="puls">+</div><div class="minus">-</div>
+                </div>
+                <div class="compNcan">
+                    <div class="comp">추가 기록</div><div class="can">기록 취소</div>
+                </div>                
+            </div>
+        </div>
         <div class="main">
             <div class="word">식단 추천</div>
-            <div class="ul">
-                <div class="item1">
-                    1
-                </div>
-                <div class="item1">
-                    2
-                </div>
-                <div class="item1">
-                    3
-                </div>
-                <div class="item1">
-                    4
-                </div>
-                <div class="item1">
-                    5
-                </div>
+            <div class="writeListItems">
+                <div class="item1">1</div>
+                <div class="item1">2</div>
+                <div class="item1">3</div>
+                <div class="item1">4</div>
+                <div class="item1">5</div>
             </div>
         </div>
     </div>
@@ -109,12 +126,19 @@ h3{
 .container {
     display: flex;
     justify-content: center;
-    width: 90vw;
+    width: 80vw;
     margin-top:2%;
     margin-bottom:2%;
     margin:auto;
+    gap:10%;
 }
-
+.writeList{
+    margin-top:1%;
+    margin-bottom:2%;
+    padding:3%;
+    height:50vh;
+    overflow: scroll;
+}
 .day {
     color: #001335;
     font-size: 1.4rem;
@@ -129,10 +153,11 @@ h3{
     background-color: #dbe2ef;
     color: #3f72af;
     border-radius: 5px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
     font-size:1.2rem;
     font-weight:bold;
+    line-height: 8vh;
     width: 26vw;
-    text-align: center;
     height: 8vh;
 }
 .arrow {
@@ -143,63 +168,204 @@ h3{
 .record {
     /*식사 기록 부분*/
     background-color: #dbe2ef;
-    width: 90vw;
+    width: 80vw;
     color: #3f72af;
     height: 10vh;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     margin-top: 5%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin:auto;
+    gap:7%;
     margin-top:2%;
     margin-bottom:2%;
 }
 /*record-btn*/
 .r-b {
     /*기록하기 글자*/
+    font-size: 0.9rem;
     color: #3f72af;
-    padding: 10px;
-    align-items: end;
-    background-color: #dbe2ef;
-    border-radius: 10%;
-    border: #dbe2ef;
+    font-weight:bold;
+    margin-right:-5%;
 }
 
-.alert {
+.noticeRecord {
     /*식사 기록이 없습니다.*/
     color: #001335;
-    font-size: 20px;
-    padding: 10px;
+    font-weight:bold;
+    font-size: 1rem;
 }
-
-.main {
-    width: 90vw;
-    height: 40vh;
+.titleNbtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3%;
+}
+.writeRecord{
+    width: 80vw;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
     background: #dbe2ef;
     border-radius: 10px;
+    padding-bottom:3%;
     margin:auto;
+    margin-top:4%;
+}
+.write_word{
+    margin-left:30%;
+    font-size: 1.4rem;
+    text-align: center;
+    color: #3f72af;
+    font-weight: bold;
+}
+.Icons{
+    margin-left:20%;
+    display:flex;
+    flex-direction: column;
+}
+.saveNchange_BTN{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+}
+#saveBTN{
+    display:block;
+    margin:auto;
+    margin-top:5%;
+    margin-bottom:5%;
+    width:80%;
+    height:80%;
+}
+#changeBTN{
+    display:none;
+    margin:auto;
+    margin-top:5%;
+    margin-bottom:5%;
+    width:80%;
+    height:80%;
+}
+.saveText{
+    display:block;
+    font-size: 1rem;
+    color: #3f72af;
+    font-weight:bold;
+}
+.changeText{
+    display:none;
+    font-size: 1rem;
+    color: #3f72af;
+    font-weight:bold;
+}
+.main {
+    width: 80vw;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+    background: #dbe2ef;
+    border-radius: 10px;
+    padding-bottom:3%;
+    margin:auto;
+    margin-top:4%;
 }
 
 .word {
-    font-size: 30px;
-    line-height: 36px;
+    padding:3%;
+    font-size: 1.4rem;  
     text-align: center;
     color: #3f72af;
     font-weight: bold;
 }
 
-.ul{
-    justify-items: space-between;
+.writeListItems{
+    justify-content: center;
+    align-items: center;
+    
 }
 .item1{
-    width: 193px;
-    height: 42px;
+    width: 50vw;
+    height: 6vh;
+    line-height: 6vh;
     background: #FFFFFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
-    text-align: center;
-    margin: 2vh;
+    margin:auto;
+    margin-top:3%;
+}
+.write_BTN{
+    padding:0.5%;
+    background: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+}
+#penBTN{
+    width:80%;
+    height:80%;
+}
+
+.writeListEle{
+    display: flex;
+    justify-content: center;
     align-items: center;
+}
+.Ele1{
+    width: 45vw;
+    height: 6vh;
+    line-height: 6vh;
+    background: #FFFFFF;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    margin-top:3%;
+}
+
+.puls{
+    color:#17A1FA;
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 7vw;
+    height: 4vh;
+    background: #FFFFFF;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    margin-left: 5%;
+    margin-right:3%;
+    margin-top:3%;
+}
+
+.minus{
+    color:#FF5454;
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 7vw;
+    height: 4vh;
+    background: #FFFFFF;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    margin-top:3%;
+}
+
+.compNcan{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin:auto;
+    margin-top:5%;
+    gap:5%;
+}
+.comp, .can{
+    width:30vw;
+    height: 4vh;
+    background: #FFFFFF;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+}
+.comp{
+    color:#17A1FA;
+    font-weight: bold;
+}
+.can{
+    color:#FF5454;
+    font-weight: bold;
 }
 </style>
