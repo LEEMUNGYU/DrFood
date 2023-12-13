@@ -10,10 +10,12 @@
         <div id="btn-Dia"  :class="{ 'selected': selectedDiseases.includes('당뇨') }"  class="DiseaseBtn" @click="addSelectedDisease('당뇨')">당뇨</div>
         <div id="btn-Gas"  :class="{ 'selected': selectedDiseases.includes('위염') }"  class="DiseaseBtn" @click="addSelectedDisease('위염')">위염</div>
     </div>
+    <div :click="pushChangeDise()">완료</div>
     <foody-nav />
 </template>
 
 <script>
+import axios from 'axios';
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import FoodyNav from '@/layout/FoodyNav.vue';
 
@@ -23,8 +25,10 @@ export default {
     components: { FoodyHeader, FoodyNav,},
     data(){
     return{
+        userIdx: this.$store.state.userId,
         selectedDiseases: [],
         diseasesSelected: false,
+        codeDise: this.$store.state.codeDise,
         }
     },
     methods:{
@@ -52,6 +56,34 @@ export default {
             this.updateSelectedDiseases();
             }
         },
+    pushChangeDise(){
+      const userIdx = this.userIdx;
+      const code = this.codeDise;
+      
+      axios({
+        method: 'post',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/diseasechange',
+        params: {
+          userIdx,
+          code,
+        }
+        })
+        .then((res) => {
+            const result = res.data;
+            switch(result.rst_cd){
+              case '200': console.log(result);
+                          this.$store.commit('setCodeDise', result.foodName);
+                          break;
+              default: console.log(result);
+                        break;
+             }
+        }) 
+        .catch(err => {
+            console.log('에러!!!');
+            console.log(err);
+        })
+
+    }
     },
 }
 </script>
