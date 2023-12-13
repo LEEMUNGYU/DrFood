@@ -14,20 +14,20 @@
         <!--버튼 기능 활성화 해야 됨.-->
     
     <div class="container">
-        <div class="mealTime" id="mor">아침</div>
-        <div class="mealTime" id="lun">점심</div>
-        <div class="mealTime" id="din">저녁</div>
+        <div v-for="(meal, index) in meals"
+                :key="index" 
+                @click="selectMealTime(meal.id)"
+                :class="{ 'mealTime': true, 'selected': selectedMeal === meal.id }">{{ meal.name }}</div>
     </div>
     <div class="writeList">
-        <!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
-        <div class="record">
+        <div class="record" v-if="!showWriteRecord">
             <div class="noticeRecord">식사 기록이 없습니다</div>
             <div class="r-b">기록하기</div>
-            <div class="write_BTN">
+            <div class="write_BTN" @click="writeRecord()">
                 <img src="../style/img/otherBTN/PenBTN.svg" id="penBTN" alt="기록">
             </div>
         </div>
-        <div class="writeRecord">
+        <div class="writeRecord" v-if="showWriteRecord">
             <div class="titleNbtn">
                 <div class="write_word">식사기록</div>
                 <div class="Icons">
@@ -41,33 +41,18 @@
             </div>
             <div class="writeListItems">
                 <div class="writeListEle">
-                    <div class="Ele1">1</div><div class="puls">+</div><div class="minus">-</div>
-                </div>
-                <div class="writeListEle">
-                    <div class="Ele1">1</div><div class="puls">+</div><div class="minus">-</div>
-                </div>
-                <div class="writeListEle">
-                    <div class="Ele1">1</div><div class="puls">+</div><div class="minus">-</div>
-                </div>
-                <div class="writeListEle">
-                    <div class="Ele1">1</div><div class="puls">+</div><div class="minus">-</div>
-                </div>
-                <div class="writeListEle">
-                    <div class="Ele1">1</div><div class="puls">+</div><div class="minus">-</div>
+                    <input type="text" placeholder="{{mor}}" aria-label="mor1"><div class="puls">+</div><div class="minus">-</div>
                 </div>
                 <div class="compNcan">
                     <div class="comp">추가 기록</div><div class="can">기록 취소</div>
+                    <div class="del">기록 삭제</div>
                 </div>                
             </div>
         </div>
         <div class="main">
             <div class="word">식단 추천</div>
             <div class="writeListItems">
-                <div class="item1">1</div>
-                <div class="item1">2</div>
-                <div class="item1">3</div>
-                <div class="item1">4</div>
-                <div class="item1">5</div>
+                <div  v-for="(item, index) in selectedMealItems" :key="index" id="item" class="item1">{{ item }}</div>
             </div>
         </div>
     </div>
@@ -84,12 +69,26 @@ export default {
     components: { FoodyHeader, FoodyNav,},
     data() {
         return {
+        showWriteRecord: false,
         currentDate: '',
+        meals: [
+            { id: 'mor', name: '아침' },
+            { id: 'lun', name: '점심' },
+            { id: 'din', name: '저녁' }
+        ],
+        selectedMeal: 'mor',
+        mealItems: {
+                mor: ['m아이템 1', 'm아이템 2', 'm아이템 3', 'm아이템 4', 'm아이템 5'],
+                lun: ['l아이템 1', 'l아이템 2', 'l아이템 3', 'l아이템 4', 'l아이템 5'],
+                din: ['d아이템 1', 'd아이템 2', 'd아이템 3', 'd아이템 4', 'd아이템 5']
+        },
         }
     },
     mounted() {
         // 컴포넌트가 마운트된 후 현재 날짜를 설정
         this.setCurrentDate();
+    },
+    computed:{
     },
     methods: {
         setCurrentDate() {
@@ -98,6 +97,19 @@ export default {
             const day = today.getDate();
             this.currentDate = `${month}월 ${day}일`;
         },
+        writeRecord(){
+            this.showWriteRecord = true;
+        },
+        selectMealTime(mealId) {
+                this.selectedMeal = mealId;
+                this.selectedItem = this.mealItems[mealId][0];
+                this.selectedItem = null;
+        },
+        selectItem(item) {
+                this.selectedItem = item;
+        },    // ... (기존 메서드 내용 유지)
+    },
+    created() {
     },
 }
 </script>
@@ -154,6 +166,18 @@ h3{
     color: #3f72af;
     border-radius: 5px;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+    font-size:1.2rem;
+    font-weight:bold;
+    line-height: 8vh;
+    width: 26vw;
+    height: 8vh;
+}
+.mealTime.selected{
+    margin-top:2%;
+    background-color: #3f72af;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: inset 3px 3px 3px rgba(0, 0, 0, 0.25);
     font-size:1.2rem;
     font-weight:bold;
     line-height: 8vh;
@@ -318,7 +342,18 @@ h3{
     border-radius: 8px;
     margin-top:3%;
 }
-
+input{
+    width: 45vw;
+    height: 6vh;
+    line-height: 6vh;
+    background: #FFFFFF;
+    box-shadow: inset 3px 3px 3px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    text-indent: 1rem;
+    margin-top:3%;
+}
 .puls{
     color:#17A1FA;
     font-size: 1.2rem;
@@ -361,10 +396,23 @@ h3{
     border-radius: 3px;
 }
 .comp{
+    display:block;
     color:#17A1FA;
     font-weight: bold;
 }
 .can{
+    display:block;
+    color:#FF5454;
+    font-weight: bold;
+}
+
+.del{
+    display:none;
+    width:20vw;
+    height: 4vh;
+    background: #FFFFFF;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
     color:#FF5454;
     font-weight: bold;
 }

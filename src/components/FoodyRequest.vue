@@ -4,7 +4,7 @@
 <h3>문의하기</h3><hr id="first_line">
 <div class="total-contents">
 <div id="mail">
-  <input type="text" placeholder="이메일" aria-label="이메일" v-model="email">
+  <input type="text" v-model="email" disabled="disabled">
 </div>
 <div id="title">
   <input type="text" placeholder="제목" aria-label="default input example" v-model="titleText">
@@ -19,28 +19,54 @@
 
 <script>
 import FoodyHeader from '@/layout/FoodyHeader.vue';
+import axios from 'axios';
+import { mapState } from 'vuex';
 
 export default {
     name:'FoodyRequest',
     components: { FoodyHeader,},
     data() {
         return {
-        email: '',
+        email: this.$store.state.email,
         titleText: '',
         contentText: '',
         } 
     },
+    computed: {
+    // Vuex 스토어의 'state' 모듈의 'email' 상태를 가져옴
+    ...mapState('state', ['email']),
+    },
     methods: {
         requestSend(){
         const email=this.email;
-        const titleText=this.titleText;
-        const contentText=this.contentText;
+        const subject=this.titleText;
+        const content=this.contentText;
         const requestComp = () => this.$router.push({path:'/RequestComp', name:'RequestComp',});
+        axios({
+        method: 'post',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/userquestion/submitQuestion?',
+        params: {
+          email,
+          subject,
+          content,
+        }
+        })
+        .then((res) => {
+        const result = res.data;
 
-        if(email!='' && titleText!='' && contentText!=''){
-            requestComp();
-        }
-        }
+        switch(result.rst_cd){
+          case '200': console.log(result);
+                      requestComp();
+            break;
+          default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
+            break;
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
+        },
     },
 }
 </script>

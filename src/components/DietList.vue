@@ -124,6 +124,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import FoodyNav from '@/layout/FoodyNav.vue';
 
@@ -151,19 +152,19 @@ export default {
             selectedMeal1: 'mor',
             selectedMeal2: 'mor',
             mealItems: {
-                mor: ['m아이템 1', 'm아이템 2', 'm아이템 3', 'm아이템 4', 'm아이템 5'],
-                lun: ['아이템 1', '아이템 2', '아이템 3', '아이템 4', '아이템 5'],
-                din: ['아이템 1', '아이템 2', '아이템 3', '아이템 4', '아이템 5']
+                mor: this.$store.state.DietList[0],
+                lun: this.$store.state.DietList[1],
+                din: this.$store.state.DietList[2]
             },
             mealItems1: {
-                mor: ['m아이템 1', 'm아이템 2', 'm아이템 3', 'm아이템 4', 'm아이템 5'],
-                lun: ['아이템 1', '아이템 2', '아이템 3', '아이템 4', '아이템 5'],
-                din: ['아이템 1', '아이템 2', '아이템 3', '아이템 4', '아이템 5']
+                mor: this.$store.state.DietList[3],
+                lun: this.$store.state.DietList[4],
+                din: this.$store.state.DietList[5]
             },
             mealItems2: {
-                mor: ['m아이템 1', 'm아이템 2', 'm아이템 3', 'm아이템 4', 'm아이템 5'],
-                lun: ['아이템 1', '아이템 2', '아이템 3', '아이템 4', '아이템 5'],
-                din: ['아이템 1', '아이템 2', '아이템 3', '아이템 4', '아이템 5']
+                mor: this.$store.state.DietList[6],
+                lun: this.$store.state.DietList[7],
+                din: this.$store.state.DietList[8]
             },
             itemNutrition: {
                 'm아이템 1': { '열량': { unit: 'kcal', amount: '100' }, '탄수화물': { unit: 'g', amount: '20' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
@@ -195,6 +196,38 @@ export default {
         };
     },
     methods: {
+        pullDietList(){
+            const email = this.user_id;
+            const pwd = this.user_pw;
+        axios({
+        method: 'get',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/login?',
+        params: {
+          email,
+          pwd
+        }
+        })
+        .then((res) => {
+        const result = res.data;
+
+        switch(result.rst_cd){
+          case '-1': console.log(result);//"계정이 존재하지 않습니다."
+            break;
+          case '-2': console.log(result);//"비밀번호가 틀렸습니다."
+            break;
+          case '200': console.log(result);
+                      this.$store.commit('setDietList', result.user_idx);
+                      this.$store.commit('setNutri', result.user_idx);
+            break;
+          default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
+            break;
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
+        },
         selectMealTime(mealId) {
                 this.selectedMeal = mealId;
                 this.selectedItem = this.mealItems[mealId][0];

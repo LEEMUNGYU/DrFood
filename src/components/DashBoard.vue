@@ -1,14 +1,14 @@
 <template>
   <FoodyHeader />
 <div class="mainContents">
-  <h2>{{ "$store.state.nickNm" }}님의 건강정보</h2>
+  <h2>{{ $store.state.nickNm }}님의 건강정보</h2>
   <div class="box_zip">
     <div id="n_box">질환</div>
-    <div id="i_box">{{ "$store.state.diseaseNm" }}</div>
+    <div id="i_box">{{ $store.state.diseaseNm }}</div>
   </div>
   <div class="box_zip">
     <div id="n_box">알레르기</div>
-    <div id="i_box">{{ "$store.state.allergieList.join('')" }}</div>
+    <div id="i_box">{{ $store.state.allergieList.join('') }}</div>
   </div>
   <div class="dash_contents">
     <div id="diet_icon"><img src="../style/img/Menu/ListOffBTN.svg" id="imgList"></div>
@@ -19,17 +19,14 @@
   </div>
   <div class="dash_dietList">
     <div id="mealTime">{{ mealTime }}</div>
-    <div>{{ food1 }}</div>
-    <div>{{ food2 }}</div>
-    <div>{{ food3 }}</div>
-    <div>{{ food4 }}</div>
-    <div>{{ food5 }}</div>
+    <div id="todayList">{{ food }}</div>
   </div> 
 </div>
   <FoodyNav />
 </template>
 
 <script>
+import axios from 'axios';
 import login from '@/components/FoodyLogin.vue';
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import FoodyNav from '@/layout/FoodyNav.vue';
@@ -38,15 +35,12 @@ export default {
     name: "DashBoard",
     data() {
         return {
+          email: this.$store.state.email,
           currentDate: '',
           mealTime: '',
           nickNm: '',
           allergieNm: '',
-          food1:'',
-          food2:'',
-          food3:'',
-          food4:'',
-          food5:'',
+          food: this.$store.state.TodayList,
         }
     },
     mounted() {
@@ -55,6 +49,7 @@ export default {
     setInterval(() => {
       this.updateMealTime(); // 1초마다 갱신
     }, 1000);
+    this.callTodayList();
     },
     methods: {
     getCurrentDate() {
@@ -84,13 +79,38 @@ export default {
     },
     getUser(){ 
       console.log(login.params.nickNm);
-    }
+    },
+    callTodayList(){
+      const email = this.email;
+      
+      axios({
+        method: 'get',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/recommended',
+        params: {
+          email,
+        }
+        })
+        .then((res) => {
+            const result = res.data;
+            switch(result.rst_cd){
+              case '200': console.log(result);
+                          this.$store.commit('setTodayList', result.foodName);
+                          break;
+              default: console.log(result);
+                        break;
+             }
+        }) 
+        .catch(err => {
+            console.log('에러!!!');
+            console.log(err);
+        })
+      }
     },
     props: {
         msg: String,
     },
     components: { FoodyHeader, FoodyNav },
-  }
+}
 </script>
 
 
@@ -181,5 +201,9 @@ a {
   color: #3F72AF;
   font-weight:  bolder;
   font-size: 1.5rem;
+}
+
+#todayList{
+  color:#000;
 }
 </style>

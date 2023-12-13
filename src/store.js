@@ -7,7 +7,7 @@ const store = createStore({
     email:'',
     userId: '',
     nickNm: '',
-    diseaseNm:'',
+    diseaseNm:[],
     allergieList:[],
     pwd: '',
     pwdq: '',
@@ -16,7 +16,10 @@ const store = createStore({
     codeDise: [],
     Allco:'',
     Diseco:'',
-      }
+    DietList:[],
+    FoodsNutri:[],
+    TodayList:'',
+    }
   },
   getters: {
     // username이 빈 문자열이면 로그인 안된상태
@@ -54,6 +57,9 @@ const store = createStore({
           codeDise: [],
           Allco:'',
           Diseco:'',
+          DietList:[],
+          FoodsNutri:'',
+          TodayList:'',
         };
       };
       Object.assign(state, getDefaultState());
@@ -79,6 +85,15 @@ const store = createStore({
     },
     setAllco(state, allco) {
       state.Allco = allco;
+    },
+    setDietList(state, DietList){
+      state.DietList = DietList;
+    },
+    setFoodsNutri(state, FoodsNutri){
+      state.DietList = FoodsNutri;
+    },
+    setTodayList(state, List){
+      state.TodayList = List;
     },
   },
   actions: {
