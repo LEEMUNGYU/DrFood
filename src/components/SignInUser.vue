@@ -5,9 +5,12 @@
 <form class="container">
 <div class="id">
     <input v-model="NewEmail" type="text" class="inputBox" placeholder="이메일" required><!-- ★아이디 중복확인은 script작업 필요-->
+    <p id="checkID">*이메일를 다시 한번 확인해주세요</p>
     <input v-model="NewPwd" type="text" class="inputBox" placeholder="비밀번호" required> <!-- ★비밀번호 가리는 것도 script작업 필요-->
     <p id="notice">*비밀번호는 6~12자리로 입력해주세요</p>
-    <input type="password access" class="inputBox" placeholder="비밀번호 확인" required>
+    <input v-model="PwdAccess" type="password access" class="inputBox" placeholder="비밀번호 확인" required>
+    <p id="checkPW">*비밀번호가 일치하지 않습니다</p>
+    <p id="checkPW1">*비밀번호의 길이를 확인해주세요</p>
     <div>
         <select v-model="userQuestion" class="form-select" id="inputGroupSelect02">
             <option selected>질문 유형 선택</option>
@@ -23,8 +26,9 @@
         <h4>개인정보활용동의</h4><a href="#" id="detail">자세히</a><!--#에 개인정보처리방침 삽입-->
     </div>
     <div id="checkBox">
-        <input type="checkbox" name="consent" value="yes"><label for="consent">동의함</label>
+        <input type="checkbox" name="consent" value="yes" ref="consent"><label for="consent">동의함</label>
     </div>
+    <div><p id="checkYES">*개인정보처리방침에 동의해주세요</p></div>
 </div>
 </form>
 </div>
@@ -41,6 +45,7 @@ export default {
         return {
             NewEmail: '',
             NewPwd: '',
+            PwdAccess:'',
             userQuestion: '',
             userAnswer: '',
             NewNickName: '',
@@ -48,14 +53,37 @@ export default {
     },
     methods:{
     nextPage() {
-        this.$store.dispatch('updateUserData', {
-            email: this.NewEmail,
-            pwd: this.NewPwd,
-            pwdq: this.userQuestion,
-            pwda: this.userAnswer,
-            nickname: this.NewNickName,
-        });
-        this.$router.push({ path: '/checkda' });
+        let email_format = /^[0-9a-zA-Z._-]+@[0-9a-zA-Z_-]+\.[a-zA-Z]{2,4}$/;
+        let lenPW = this.NewPwd.length;
+        let check = this.$refs.consent.checked;
+        
+        if((email_format.test(this.NewEmail)!=false) && (this.NewPwd===this.PwdAccess) && (lenPW>5 && lenPW<12) && (check!=false)){
+            this.$store.dispatch('updateUserData', {
+                email: this.NewEmail,
+                pwd: this.NewPwd,
+                pwdq: this.userQuestion,
+                pwda: this.userAnswer,
+                nickname: this.NewNickName,
+            });
+            this.$router.push({ path: '/checkda' });
+        }else{
+            document.getElementById("checkID").style.display = 'none';
+            document.getElementById("checkPW").style.display = 'none';
+            document.getElementById("checkPW1").style.display = 'none';
+            document.getElementById("checkYES").style.display = 'none';
+            if(email_format.test(this.NewEmail)!=true){
+                document.getElementById("checkID").style.display = 'flex';
+            }
+            if(this.NewPwd!=this.PwdAccess){
+                document.getElementById("checkPW").style.display = 'flex';
+            }
+            if(lenPW<5 || lenPW>12){
+                document.getElementById("checkPW1").style.display = 'flex';
+            }
+            if(check!=true){
+                document.getElementById("checkYES").style.display = 'flex';
+            }
+        }
         },
     },
 }
@@ -136,6 +164,48 @@ h4{
 #notice{
     box-sizing:border-box;
     display: flex;
+    width: 70vw;
+    color: red;
+    font-size: 0.8rem;
+    margin-inline: auto;
+    margin-top: 0.4rem;
+    justify-content: right;
+}
+#checkID{
+    display:none;
+    box-sizing:border-box;
+    width: 70vw;
+    color: red;
+    font-size: 0.8rem;
+    margin-inline: auto;
+    margin-top: 0.4rem;
+    justify-content: right;
+}
+
+#checkPW{
+    display:none;
+    box-sizing:border-box;
+    width: 70vw;
+    color: red;
+    font-size: 0.8rem;
+    margin-inline: auto;
+    margin-top: 0.4rem;
+    justify-content: right;
+}
+#checkPW1{
+    display:none;
+    box-sizing:border-box;
+    width: 70vw;
+    color: red;
+    font-size: 0.8rem;
+    margin-inline: auto;
+    margin-top: 0.4rem;
+    justify-content: right;
+}
+
+#checkYES{
+    display:none;
+    box-sizing:border-box;
     width: 70vw;
     color: red;
     font-size: 0.8rem;
