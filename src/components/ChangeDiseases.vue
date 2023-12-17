@@ -10,7 +10,7 @@
         <div id="btn-Dia"  :class="{ 'selected': selectedDiseases.includes('당뇨') }"  class="DiseaseBtn" @click="addSelectedDisease('당뇨')">당뇨</div>
         <div id="btn-Gas"  :class="{ 'selected': selectedDiseases.includes('위염') }"  class="DiseaseBtn" @click="addSelectedDisease('위염')">위염</div>
     </div>
-    <div :click="pushChangeDise()">완료</div>
+    <div class="compBTN" :click="pushChangeDise()">완료</div>
     <foody-nav />
 </template>
 
@@ -123,6 +123,21 @@ p {
     text-align: center;
     margin-left: 3%;
     margin-inline: auto;
+}
+.compBTN{
+    justify-content: center;
+    width:25vw;
+    height:5vh;
+    line-height: 5vh;
+    background-color: #dbe2ef;
+    color: #3F72AF;
+    font-size: 1.2em;
+    font-weight:bold;
+    border: 1px solid #001335;
+    margin-top:2%;
+    margin: auto;
+    border-radius: 5px;
+    text-align: center;
 }
 
 #Disease-container {

@@ -4,6 +4,7 @@
     <h3>회원탈퇴</h3>
     <hr id="first_line">
     <div id="sorry">
+        <popup-view v-if="this.openModal == true" @closePopup="closeModalView" @goodbye="goodbye"/>
         <p id="main_text"><span id="accent">죄송합니다</span><br>
         저희와 함께하신 시간동안 만족스러운<br>
         서비스를 드리지 못한 것 같아 죄송합니다<br><br>
@@ -21,6 +22,7 @@
 </template>
 
 <script>
+import PopupView from '@/components/QuitPopUp.vue'
 import FoodyHeader from '@/layout/FoodyHeader.vue'
 import FoodyNav from '@/layout/FoodyNav.vue'
 import axios from 'axios';
@@ -30,7 +32,8 @@ export default {
     data(){
         return{
         userInput: '',
-        popupView: false,
+        openModal: false,
+        goodbye : false,
         }
     },
     methods:{
@@ -44,10 +47,10 @@ export default {
         },
         QuitComp(){
             const userId = parseInt(this.$store.state.userId, 10);
-            const confirmed = window.confirm('정말 탈퇴하시겠습니까?');
-            
+            this.openModal =true;
+            const confirmed = this.goodbye;
 
-            if (confirmed) {
+            if (confirmed != false) {
         // 서버로 데이터 전송
             axios.delete('https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/resign?idx='+userId)
             .then(res => {
@@ -63,9 +66,12 @@ export default {
                 console.log(err);
             });
             }
-        }    
+        },
+        closeModalView(data){
+            this.openModal = data;
+        },    
     },
-    components: { FoodyHeader, FoodyNav,},
+    components: { PopupView, FoodyHeader, FoodyNav,},
 
 }
 </script>

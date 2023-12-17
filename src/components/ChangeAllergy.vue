@@ -29,6 +29,7 @@
         <div id="squid" :class="{ 'selected': selectedAllergies.includes('오징어') }" class="allergy-btn" @click="addSelectedAllergy('오징어')">오징어</div>
         <div id="sesame" :class="{ 'selected': selectedAllergies.includes('깨') }" class="allergy-btn" @click="addSelectedAllergy('깨')">깨</div>
     </div>
+    <div class="compBTN" :click="pushChangeAllergy()">완료</div>
 </div>
 </div>
 <foody-nav />
@@ -38,6 +39,7 @@
 <script>
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import FoodyNav from '@/layout/FoodyNav.vue';
+import axios from 'axios';
 
 export default {
     name:'ChangeAllergy',
@@ -46,6 +48,7 @@ export default {
     return{
         selectedAllergies: [],
         allergiesSelected: false,
+        codeAlle: this.$store.state.codeAlle,
         }
     },
     methods:{
@@ -58,6 +61,33 @@ export default {
                 // 선택되지 않은 경우 추가
                 this.selectedAllergies.push(allergy);
             }
+        },
+        pushChangeDise(){
+            const userIdx = this.userIdx;
+            const code = this.codeAlle;
+      
+            axios({
+                method: 'post',
+                url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/allergiechange',
+                params: {
+                    userIdx,
+                    code,
+                }
+                })
+                .then((res) => {
+                    const result = res.data;
+                    switch(result.rst_cd){
+                    case '200': console.log(result);
+                            this.$store.commit('setCodeAlle', result.foodName);
+                            break;
+                    default: console.log(result);
+                            break;
+                    }
+                }) 
+                .catch(err => {
+                    console.log('에러!!!');
+                    console.log(err);
+                })
         },
     }
 }
@@ -99,6 +129,8 @@ p {
     margin-left: 3%;
     margin-inline: auto;
 }
+
+
 #Allergy-container {
     overflow: scroll;
     display: flex;
@@ -115,6 +147,23 @@ p {
     margin-inline: auto;
     flex-wrap: wrap;
     justify-content: space-around;
+}
+
+
+.compBTN{
+    justify-content: center;
+    width:25vw;
+    height:5vh;
+    line-height: 5vh;
+    background-color: #dbe2ef;
+    color: #3F72AF;
+    font-size: 1.2em;
+    font-weight:bold;
+    border: 1px solid #001335;
+    margin-top:2%;
+    margin: auto;
+    border-radius: 5px;
+    text-align: center;
 }
 .allergy-btn{
     width: 15vh;
