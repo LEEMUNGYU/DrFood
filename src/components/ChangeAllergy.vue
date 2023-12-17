@@ -29,7 +29,7 @@
         <div id="squid" :class="{ 'selected': selectedAllergies.includes('오징어') }" class="allergy-btn" @click="addSelectedAllergy('오징어')">오징어</div>
         <div id="sesame" :class="{ 'selected': selectedAllergies.includes('깨') }" class="allergy-btn" @click="addSelectedAllergy('깨')">깨</div>
     </div>
-    <div class="compBTN" :click="pushChangeAllergy()">완료</div>
+    <div class="compBTN" @click="pushChangeAllergy()">완료</div>
 </div>
 </div>
 <foody-nav />
@@ -46,25 +46,40 @@ export default {
     components: { FoodyHeader, FoodyNav,},
     data(){
     return{
+        userIdx: this.$store.state.userId,
         selectedAllergies: [],
         allergiesSelected: false,
         codeAlle: this.$store.state.codeAlle,
         }
     },
     methods:{
-        addSelectedAllergy(allergy) {
-            const index = this.selectedAllergies.indexOf(allergy);
-            if (index !== -1) {
-                // 이미 선택된 알레르기인 경우 제거
-                this.selectedAllergies.splice(index, 1);
-            } else {
-                // 선택되지 않은 경우 추가
-                this.selectedAllergies.push(allergy);
-            }
+        updateSelectedAllergies() {
+                const selectedAllergiesElement = document.getElementById('selectedAllergies');
+                if (this.selectedAllergies.length > 0) {
+                // 배열이 비어있지 않으면 '#'을 포함하여 문자열로 변환
+                    selectedAllergiesElement.textContent = '#' + this.selectedAllergies.join(' #');
+                } else {
+                // 배열이 비어있으면 빈 문자열로 설정
+                    selectedAllergiesElement.textContent = '';
+                }
         },
-        pushChangeDise(){
+        addSelectedAllergy(Allergies){
+                if (!this.allergiesSelected) {
+                    if (!this.selectedAllergies.includes(Allergies)) {
+                        this.selectedAllergies.push(Allergies);
+                    }else {
+                    // 이미 선택된 질환인 경우 배열에서 제거
+                        const index = this.selectedAllergies.indexOf(Allergies);
+                        if (index !== -1) {
+                            this.selectedAllergies.splice(index, 1);
+                        }
+                    }
+                this.updateSelectedAllergies();
+                }   
+        },
+        pushChangeAllergy(){
             const userIdx = this.userIdx;
-            const code = this.codeAlle;
+            const code = '#'+ this.selectedAllergies.join(' #');
       
             axios({
                 method: 'post',
@@ -79,6 +94,7 @@ export default {
                     switch(result.rst_cd){
                     case '200': console.log(result);
                             this.$store.commit('setCodeAlle', result.foodName);
+                            this.$router.push({path: '/change', name:'ChangeInfo'});
                             break;
                     default: console.log(result);
                             break;

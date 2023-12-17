@@ -10,7 +10,7 @@
         <div id="btn-Dia"  :class="{ 'selected': selectedDiseases.includes('당뇨') }"  class="DiseaseBtn" @click="addSelectedDisease('당뇨')">당뇨</div>
         <div id="btn-Gas"  :class="{ 'selected': selectedDiseases.includes('위염') }"  class="DiseaseBtn" @click="addSelectedDisease('위염')">위염</div>
     </div>
-    <div class="compBTN" :click="pushChangeDise()">완료</div>
+    <div class="compBTN" @click="pushChangeDise()">완료</div>
     <foody-nav />
 </template>
 
@@ -29,7 +29,7 @@ export default {
         selectedDiseases: [],
         diseasesSelected: false,
         codeDise: this.$store.state.codeDise,
-        }
+        }   
     },
     methods:{
     updateSelectedDiseases() {
@@ -58,7 +58,7 @@ export default {
         },
     pushChangeDise(){
       const userIdx = this.userIdx;
-      const code = this.codeDise;
+      const code = '#'+ this.selectedDiseases.join(' #');
       
       axios({
         method: 'post',
@@ -73,6 +73,7 @@ export default {
             switch(result.rst_cd){
               case '200': console.log(result);
                           this.$store.commit('setCodeDise', result.foodName);
+                          this.$router.push({path: '/change', name:'ChangeInfo'});
                           break;
               default: console.log(result);
                         break;
