@@ -41,10 +41,12 @@
             </div>
             <div class="writeListItems">
                 <div class="writeListEle">
-                    <input type="text" placeholder="{{mor}}" aria-label="mor1"><div class="puls">+</div><div class="minus">-</div>
+                    <div v-for="(item, index) in selectedMealItems" :key="index"  class="inputWrapper">
+                        <input v-model="selectedMealItems[index]" :placeholder="'Item'+(1 + index)"><div class="puls">+</div><div class="minus">-</div>
+                    </div>
                 </div>
                 <div class="compNcan">
-                    <div class="comp">추가 기록</div><div class="can">기록 취소</div>
+                    <div class="comp" @click="addInput(index)">추가 기록</div><div class="can" @click="recordCancel()">기록 취소</div>
                     <div class="del">기록 삭제</div>
                 </div>                
             </div>
@@ -52,7 +54,7 @@
         <div class="main">
             <div class="word">식단 추천</div>
             <div class="writeListItems">
-                <div  v-for="(item, index) in selectedMealItems" :key="index" id="item" class="item1">{{ item }}</div>
+                <div  v-for="(item, index) in selectedMealItemsRecord" :key="index" id="item" class="item1">{{ item }}</div>
             </div>
         </div>
     </div>
@@ -70,6 +72,7 @@ export default {
     data() {
         return {
         showWriteRecord: false,
+        originalMealItems: {},
         currentDate: '',
         meals: [
             { id: 'mor', name: '아침' },
@@ -82,6 +85,11 @@ export default {
                 lun: ['l아이템 1', 'l아이템 2', 'l아이템 3', 'l아이템 4', 'l아이템 5'],
                 din: ['d아이템 1', 'd아이템 2', 'd아이템 3', 'd아이템 4', 'd아이템 5']
         },
+        mealItemsRecord: {
+                mor: ['m아이템 1', 'm아이템 2', 'm아이템 3', 'm아이템 4', 'm아이템 5'],
+                lun: ['l아이템 1', 'l아이템 2', 'l아이템 3', 'l아이템 4', 'l아이템 5'],
+                din: ['d아이템 1', 'd아이템 2', 'd아이템 3', 'd아이템 4', 'd아이템 5']
+        },
         }
     },
     mounted() {
@@ -89,6 +97,12 @@ export default {
         this.setCurrentDate();
     },
     computed:{
+        selectedMealItems() {
+            return this.mealItems[this.selectedMeal];
+        },
+        selectedMealItemsRecord() {
+            return this.mealItemsRecord[this.selectedMeal];
+        },
     },
     methods: {
         setCurrentDate() {
@@ -108,8 +122,17 @@ export default {
         selectItem(item) {
                 this.selectedItem = item;
         },    // ... (기존 메서드 내용 유지)
+        addInput(index) {
+            const newIndex = index + 1 === this.selectedMealItems.length ? index + 1 : this.selectedMealItems.length;
+            this.selectedMealItems.splice(newIndex, 0, ''); // 빈 문자열로 새로운 항목 추가
+        },
+        recordCancel(){
+            this.selectedMealItems.splice(5, this.selectedMealItems.length - 5);
+            this.showWriteRecord=false;
+        },
     },
     created() {
+        this.originalMealItems = { ...this.mealItems };
     },
 }
 </script>
@@ -330,6 +353,7 @@ h3{
 
 .writeListEle{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -342,6 +366,12 @@ h3{
     border-radius: 8px;
     margin-top:3%;
 }
+.inputWrapper {
+    display: flex;
+    align-items: center; /* 가운데 정렬 */
+    margin-top: 3%; /* 원하는 간격 조정 */
+}
+
 input{
     width: 45vw;
     height: 6vh;
@@ -358,7 +388,7 @@ input{
     color:#17A1FA;
     font-size: 1.2rem;
     font-weight: bold;
-    width: 7vw;
+    width: 9vw;
     height: 4vh;
     background: #FFFFFF;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
@@ -372,7 +402,7 @@ input{
     color:#FF5454;
     font-size: 1.2rem;
     font-weight: bold;
-    width: 7vw;
+    width: 9vw;
     height: 4vh;
     background: #FFFFFF;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
