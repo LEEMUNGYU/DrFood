@@ -1,12 +1,13 @@
 import { createStore } from 'vuex'
 import createPersistedState from 'vuex-persistedstate';
-
+import {getUserFromCookie,getAuthFromCookie} from'@/utils/cookies';
 const store = createStore({
   state () {
     return{
-    email:'',
+    email: '',
+    token: getAuthFromCookie() || '',
     userId: '',
-    nickNm: '',
+    nickNm: getUserFromCookie() ||  '',
     diseaseNm:[],
     allergieList:[],
     pwd: '',
@@ -42,10 +43,14 @@ const store = createStore({
     setDiseaseNm(state, diseaseNm){
       state.diseaseNm = '#' + diseaseNm.replace(/#/g, ' #');
     },
+    setToken(state, token){
+      state.token = token;
+    },
     resetState(state) {
       const getDefaultState =() => {
         return {
-          email:'',
+          email: '',
+          token: '',
           userId: '',
           nickNm: '',
           diseaseNm:'',

@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import deleteCookie from '@/utils/cookies';
+
 export default{
   name:'FoodyNav',
   mounted(){
@@ -17,6 +19,7 @@ export default{
   resetState() {
     this.$store.commit('resetState');
     this.$router.replace({path:'/', name:'FoodyLogin'});
+    deleteCookie(this.token);
   },
   changeIconOnScreens(){
       const currentPath = this.$route.path;

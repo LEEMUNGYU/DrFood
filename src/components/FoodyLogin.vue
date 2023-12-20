@@ -28,6 +28,7 @@
 <script>
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import axios from 'axios';
+import { saveAuthToCookie, saveUserToCookie } from '@/utils/cookies';
 
 
 export default {
@@ -69,6 +70,8 @@ export default {
                       this.$store.commit('setUserName', result.nickNm);
                       this.$store.commit('setDiseaseNm', result.diseaseNm)
                       this.$store.commit('setAllergieList', result.allergieList);
+                      saveAuthToCookie(this.token);
+                      saveUserToCookie(result.nickNm);
                       goMain();
             break;
           default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."

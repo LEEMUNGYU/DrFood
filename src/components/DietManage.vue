@@ -112,8 +112,21 @@ export default {
             this.currentDate = `${month}월 ${day}일`;
         },
         changeDateNext() {
+            const date = new Date();
+
+            date.setDate(date.getDate() +1);
+
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            
+            this.currentDate = `${month}월 ${day}일`;
         },
         changeDatePrev() {
+            let date = new Date();
+            const month = date.getMonth() + 1;
+            const day = date.getDate() -1;
+            
+            this.currentDate = `${month}월 ${day}일`;
         },
         writeRecord(){
             this.showWriteRecord = true;
