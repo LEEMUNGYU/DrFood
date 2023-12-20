@@ -4,11 +4,11 @@
     <h3>식단관리</h3><hr id="first_line">
     <div class="container">
         <div class="arrow">
-            <img src="../style/img/otherBTN/leftBTN.svg" alt="어제 날짜로">
+            <img src="../style/img/otherBTN/leftBTN.svg" alt="어제 날짜로" @click="changeDatePrev">
         </div>
         <div class="day">{{ currentDate }}</div>
         <div class="arrow">
-            <img src="../style/img/otherBTN/rightBTN.svg" alt="내일 날짜">
+            <img src="../style/img/otherBTN/rightBTN.svg" alt="내일 날짜" @click="changeDateNext">
         </div>
     </div>
         <!--버튼 기능 활성화 해야 됨.-->
@@ -35,16 +35,16 @@
                     <img src="../style/img/otherBTN/saveBTN.svg" id="saveBTN" alt="저장">
                     <img src="../style/img/otherBTN/PenBTN.svg" id="changeBTN" alt="수정">
                 </div>
-                <div class="saveText">저장</div>
+                <div class="saveText" @click="saveRecord()">저장</div>
                 <div class="changeText">수정</div>
                 </div>
             </div>
             <div class="writeListItems">
-                <div class="writeListEle">
-                    <div v-for="(item, index) in selectedMealItems" :key="index"  class="inputWrapper">
-                        <input v-model="selectedMealItems[index]" :placeholder="'Item'+(1 + index)"><div class="puls">+</div><div class="minus">-</div>
+                    <div class="writeListEle">
+                        <div v-for="(item, index) in selectedMealItems" :key="index"  class="inputWrapper">
+                            <input v-model="selectedMealItems[index].value" :placeholder="getPlaceholderText(index)" :disabled="selectedMealItems[index].disabled"><div class="puls" @click="decisionList(index, true)">+</div><div class="minus" @click="decisionList(index, false)">-</div>
+                        </div>
                     </div>
-                </div>
                 <div class="compNcan">
                     <div class="comp" @click="addInput(index)">추가 기록</div><div class="can" @click="recordCancel()">기록 취소</div>
                     <div class="del">기록 삭제</div>
@@ -54,7 +54,7 @@
         <div class="main">
             <div class="word">식단 추천</div>
             <div class="writeListItems">
-                <div  v-for="(item, index) in selectedMealItemsRecord" :key="index" id="item" class="item1">{{ item }}</div>
+                <div  v-for="(item, index) in selectedMealItemsRecord" :key="index" id="item" class="item1">{{ item.value }}</div>
             </div>
         </div>
     </div>
@@ -81,14 +81,14 @@ export default {
         ],
         selectedMeal: 'mor',
         mealItems: {
-                mor: ['m아이템 1', 'm아이템 2', 'm아이템 3', 'm아이템 4', 'm아이템 5'],
-                lun: ['l아이템 1', 'l아이템 2', 'l아이템 3', 'l아이템 4', 'l아이템 5'],
-                din: ['d아이템 1', 'd아이템 2', 'd아이템 3', 'd아이템 4', 'd아이템 5']
+                mor: [ {value: 'm아이템 1', active: true} , {value: 'm아이템 2', active: true} , {value: 'm아이템 3', active: true} , {value: 'm아이템 4', active: true} , {value: 'm아이템 5', active: true} ],
+                lun: [ {value: 'l아이템 1', active: true} , {value: 'l아이템 2', active: true} , {value: 'l아이템 3', active: true} , {value: 'l아이템 4', active: true} , {value: 'l아이템 5', active: true} ],
+                din: [ {value: 'd아이템 1', active: true} , {value: 'd아이템 2', active: true} , {value: 'd아이템 3', active: true} , {value: 'd아이템 4', active: true} , {value: 'd아이템 5', active: true} ]
         },
         mealItemsRecord: {
-                mor: ['m아이템 1', 'm아이템 2', 'm아이템 3', 'm아이템 4', 'm아이템 5'],
-                lun: ['l아이템 1', 'l아이템 2', 'l아이템 3', 'l아이템 4', 'l아이템 5'],
-                din: ['d아이템 1', 'd아이템 2', 'd아이템 3', 'd아이템 4', 'd아이템 5']
+                mor: [ {value: 'm아이템 1', active: true} , {value: 'm아이템 2', active: true} , {value: 'm아이템 3', active: true} , {value: 'm아이템 4', active: true} , {value: 'm아이템 5', active: true} ],
+                lun: [ {value: 'l아이템 1', active: true} , {value: 'l아이템 2', active: true} , {value: 'l아이템 3', active: true} , {value: 'l아이템 4', active: true} , {value: 'l아이템 5', active: true} ],
+                din: [ {value: 'd아이템 1', active: true} , {value: 'd아이템 2', active: true} , {value: 'd아이템 3', active: true} , {value: 'd아이템 4', active: true} , {value: 'd아이템 5', active: true} ]
         },
         }
     },
@@ -111,6 +111,10 @@ export default {
             const day = today.getDate();
             this.currentDate = `${month}월 ${day}일`;
         },
+        changeDateNext() {
+        },
+        changeDatePrev() {
+        },
         writeRecord(){
             this.showWriteRecord = true;
         },
@@ -118,17 +122,44 @@ export default {
                 this.selectedMeal = mealId;
                 this.selectedItem = this.mealItems[mealId][0];
                 this.selectedItem = null;
+                this.showWriteRecord=false;
         },
         selectItem(item) {
                 this.selectedItem = item;
         },    // ... (기존 메서드 내용 유지)
         addInput(index) {
             const newIndex = index + 1 === this.selectedMealItems.length ? index + 1 : this.selectedMealItems.length;
-            this.selectedMealItems.splice(newIndex, 0, ''); // 빈 문자열로 새로운 항목 추가
+            this.selectedMealItems.splice(newIndex, 0, {value:'', active:true}); // 빈 문자열로 새로운 항목 추가
         },
         recordCancel(){
-            this.selectedMealItems.splice(5, this.selectedMealItems.length - 5);
+            //this.selectedMealItems.splice(5, this.selectedMealItems.length - 5);
+            //this.selectedMealItems.forEach((item) => {
+            //    item.disabled = false;
+            //});
             this.showWriteRecord=false;
+            this.$router.go(0);
+        },
+        getPlaceholderText(index){
+            return 'Item ' + (1 + index);
+        },
+        decisionList(index, hide){
+            const plusIcons = document.querySelectorAll('.puls');
+            const minusIcons = document.querySelectorAll('.minus');
+            if (hide) {
+            // 선택된 input의 상태를 저장하고 + 아이콘을 숨김
+                this.selectedMealItems[index] = { value: this.selectedMealItems[index].value, disabled: true};
+                // 해당하는 plus 아이콘을 숨김
+                plusIcons[index].style.display = 'none';
+                minusIcons[index].style.display = 'block';
+            } else {
+            // + 아이콘을 다시 visible 상태로 변경하고 input을 다시 활성화
+                this.selectedMealItems[index] = { value: this.selectedMealItems[index].value, disabled: false};
+                plusIcons[index].style.display = 'block';
+                minusIcons[index].style.display = 'none';
+            }
+        },
+        saveRecord(){
+            
         },
     },
     created() {
@@ -384,31 +415,37 @@ input{
     text-indent: 1rem;
     margin-top:3%;
 }
+input:disabled {
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+    font-weight: bold;
+}
 .puls{
     color:#17A1FA;
     font-size: 1.2rem;
     font-weight: bold;
-    width: 9vw;
-    height: 4vh;
+    width: 12vw;
+    height: 4.5vh;
     background: #FFFFFF;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
-    margin-left: 5%;
-    margin-right:3%;
+    margin-left: 6%;
     margin-top:3%;
 }
 
 .minus{
+    display:none;
     color:#FF5454;
     font-size: 1.2rem;
     font-weight: bold;
-    width: 9vw;
-    height: 4vh;
+    width: 12vw;
+    height: 4.5vh;
     background: #FFFFFF;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
+    margin-left: 6%;
     margin-top:3%;
 }
+
 
 .compNcan{
     display: flex;

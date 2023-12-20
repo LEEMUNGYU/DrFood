@@ -6,6 +6,7 @@
 <div class="id">
     <input v-model="NewEmail" type="text" class="inputBox" placeholder="이메일" required><!-- ★아이디 중복확인은 script작업 필요-->
     <p id="checkID">*이메일를 다시 한번 확인해주세요</p>
+    <input v-model="NewNickName" type="NickName" class="inputBox" placeholder="닉네임" required>
     <input v-model="NewPwd" type="text" class="inputBox" placeholder="비밀번호" required> <!-- ★비밀번호 가리는 것도 script작업 필요-->
     <p id="notice">*비밀번호는 6~12자리로 입력해주세요</p>
     <input v-model="PwdAccess" type="password access" class="inputBox" placeholder="비밀번호 확인" required>
@@ -13,15 +14,14 @@
     <p id="checkPW1">*비밀번호의 길이를 확인해주세요</p>
     <div>
         <select v-model="userQuestion" class="form-select" id="inputGroupSelect02">
-            <option selected>질문 유형 선택</option>
-            <option value="1">본인의 어린시절 별명은?</option><!--인증질문 1-->
-            <option value="2">본인의 어린시절 장래 희망은?</option><!--인증질문 2-->
-            <option value="3">본인의 어린 시절에 존경 했던 인물은?</option><!--인증질문 3-->
+            <option value="" selected>비밀번호 확인 질문</option>
+            <option value="1" :class="{ 'selected-color': userQuestion === '1' }">본인의 어린시절 별명은?</option><!--인증질문 1-->
+            <option value="2" :class="{ 'selected-color': userQuestion === '2' }">본인의 어린시절 장래 희망은?</option><!--인증질문 2-->
+            <option value="3" :class="{ 'selected-color': userQuestion === '3' }">본인의 어린 시절에 존경 했던 인물은?</option><!--인증질문 3-->
             <!--추가 질문은 여기부터 추가하여 사용-->
         </select>
     </div>
     <input v-model="userAnswer" type="AnsWer" class="inputBox" placeholder="비밀번호 확인 질문 답변" required>
-    <input v-model="NewNickName" type="NickName" class="inputBox" placeholder="닉네임" required>
     <div id="personalInfoCheck">
         <h4>개인정보활용동의</h4><a href="#" id="detail">자세히</a><!--#에 개인정보처리방침 삽입-->
     </div>
@@ -138,6 +138,7 @@ select{
     border: 1px solid #3f72af;
     font-weight: bold;
     border-radius: 5px;
+    color:gray;
     margin-inline: auto;
     margin: 0.6rem;
 }
