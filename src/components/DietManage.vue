@@ -4,11 +4,11 @@
     <h3>식단관리</h3><hr id="first_line">
     <div class="container">
         <div class="arrow">
-            <img src="../style/img/otherBTN/leftBTN.svg" alt="어제 날짜로" @click="changeDatePrev">
+            <img src="../style/img/otherBTN/leftBTN.svg" alt="어제 날짜로" @click="moveDay(-1)">
         </div>
         <div class="day">{{ currentDate }}</div>
         <div class="arrow">
-            <img src="../style/img/otherBTN/rightBTN.svg" alt="내일 날짜" @click="changeDateNext">
+            <img src="../style/img/otherBTN/rightBTN.svg" alt="내일 날짜" @click="moveDay(1)">
         </div>
     </div>
         <!--버튼 기능 활성화 해야 됨.-->
@@ -35,8 +35,8 @@
                     <img src="../style/img/otherBTN/saveBTN.svg" id="saveBTN" alt="저장">
                     <img src="../style/img/otherBTN/PenBTN.svg" id="changeBTN" alt="수정">
                 </div>
-                <div class="saveText" @click="saveRecord()">저장</div>
-                <div class="changeText">수정</div>
+                <div class="saveText" v-if="isSaveVisible" @click="saveRecord()">저장</div>
+                <div class="changeText" @click="ChangeRecord()">수정</div>
                 </div>
             </div>
             <div class="writeListItems">
@@ -72,6 +72,7 @@ export default {
     data() {
         return {
         showWriteRecord: false,
+        isSaveVisible: true,
         originalMealItems: {},
         currentDate: '',
         meals: [
@@ -107,25 +108,17 @@ export default {
     methods: {
         setCurrentDate() {
             const today = new Date();
+            console.log(today);
             const month = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
             const day = today.getDate();
             this.currentDate = `${month}월 ${day}일`;
         },
-        changeDateNext() {
-            const date = new Date();
+        moveDay(offset) {
+            const currentDate = new Date(this.currentDate.replace(/월|일/g, '').replace(/\s/g, '/'));
+            const newDate = new Date(currentDate.setDate(currentDate.getDate() + offset));
 
-            date.setDate(date.getDate() +1);
-
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-            
-            this.currentDate = `${month}월 ${day}일`;
-        },
-        changeDatePrev() {
-            let date = new Date();
-            const month = date.getMonth() + 1;
-            const day = date.getDate() -1;
-            
+            const month = (newDate.getMonth() + 1);
+            const day = newDate.getDate();
             this.currentDate = `${month}월 ${day}일`;
         },
         writeRecord(){
@@ -145,12 +138,9 @@ export default {
             this.selectedMealItems.splice(newIndex, 0, {value:'', active:true}); // 빈 문자열로 새로운 항목 추가
         },
         recordCancel(){
-            //this.selectedMealItems.splice(5, this.selectedMealItems.length - 5);
-            //this.selectedMealItems.forEach((item) => {
-            //    item.disabled = false;
-            //});
+            this.mealItems[this.selectedMeal] = this.mealItemsRecord[this.selectedMeal].map(item => ({ ...item }));
             this.showWriteRecord=false;
-            this.$router.go(0);
+            this.isSaveVisible = true;
         },
         getPlaceholderText(index){
             return 'Item ' + (1 + index);
@@ -172,6 +162,64 @@ export default {
             }
         },
         saveRecord(){
+            this.mealItems[this.selectedMeal].forEach(item => {
+                item.disabled = true;
+            });
+            const plusIcons = document.querySelectorAll('.puls');
+            const minusIcons = document.querySelectorAll('.minus');
+            const comp =  document.querySelectorAll('.comp');
+            const can =  document.querySelectorAll('.can');
+            const del = document.querySelectorAll('.del');
+            plusIcons.forEach(icon => (icon.style.display = 'none'));
+            minusIcons.forEach(icon => (icon.style.display = 'none'));
+            comp.forEach(button => (button.style.display = 'none'));
+            can.forEach(button => (button.style.display = 'none'));
+            del.forEach(button => (button.style.display = 'block'));
+
+            const changeBTN = document.querySelectorAll('#changeBTN');
+            changeBTN.forEach(button => (button.style.display = 'block'));
+            const saveBTN = document.querySelectorAll('#saveBTN');
+            saveBTN.forEach(button => (button.style.display = 'none'));
+            const changeText = document.querySelectorAll('.changeText');
+            changeText.forEach(element => (element.style.display = 'block'));
+            const saveText = document.querySelectorAll('.saveText');
+            saveText.forEach(element => (element.style.display = 'none'));
+            // 수정 버튼만 보이도록 설정
+            const record = document.querySelectorAll('.record');
+            record.forEach(element => (element.style.display = 'none'));
+            this.showWriteRecord = true;
+            this.isSaveVisible = false;
+        },
+        ChangeRecord() {
+            this.mealItems[this.selectedMeal].forEach(item => {
+                item.disabled = false;
+            });
+            const plusIcons = document.querySelectorAll('.puls');
+            const minusIcons = document.querySelectorAll('.minus');
+            const comp =  document.querySelectorAll('.comp');
+            const can =  document.querySelectorAll('.can');
+            const del = document.querySelectorAll('.del');
+            plusIcons.forEach(icon => (icon.style.display = 'block'));
+            minusIcons.forEach(icon => (icon.style.display = 'block'));
+            comp.forEach(button => (button.style.display = 'block'));
+            can.forEach(button => (button.style.display = 'block'));
+            del.forEach(button => (button.style.display = 'none'));
+
+            const changeBTN = document.querySelectorAll('#changeBTN');
+            changeBTN.forEach(button => (button.style.display = 'none'));
+            const saveBTN = document.querySelectorAll('#saveBTN');
+            saveBTN.forEach(button => (button.style.display = 'block'));
+            const changeText = document.querySelectorAll('.changeText');
+            changeText.forEach(element => (element.style.display = 'none'));
+            const saveText = document.querySelectorAll('.saveText');
+            saveText.forEach(element => (element.style.display = 'block'));
+            // 수정 버튼만 보이도록 설정
+            const record = document.querySelectorAll('.record');
+            record.forEach(element => (element.style.display = 'block'));
+            this.showWriteRecord = true;
+            this.isSaveVisible = true;
+        },
+        DelRecord(){
             
         },
     },
@@ -488,7 +536,7 @@ input:disabled {
 
 .del{
     display:none;
-    width:20vw;
+    width:30vw;
     height: 4vh;
     background: #FFFFFF;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);

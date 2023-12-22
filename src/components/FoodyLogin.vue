@@ -70,7 +70,7 @@ export default {
                       this.$store.commit('setUserName', result.nickNm);
                       this.$store.commit('setDiseaseNm', result.diseaseNm)
                       this.$store.commit('setAllergieList', result.allergieList);
-                      saveAuthToCookie(this.token);
+                      saveAuthToCookie(result.email);
                       saveUserToCookie(result.nickNm);
                       goMain();
             break;
@@ -84,9 +84,7 @@ export default {
             })
           }
     },
-    components:{
-      FoodyHeader,
-    },
+    components:{  FoodyHeader, },
  } 
 
 </script>

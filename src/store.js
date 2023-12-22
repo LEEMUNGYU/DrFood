@@ -1,13 +1,14 @@
 import { createStore } from 'vuex'
 import createPersistedState from 'vuex-persistedstate';
 import {getUserFromCookie,getAuthFromCookie} from'@/utils/cookies';
+
 const store = createStore({
   state () {
     return{
     email: '',
-    token: getAuthFromCookie() || '',
+    token: (getAuthFromCookie() || ''),
     userId: '',
-    nickNm: getUserFromCookie() ||  '',
+    nickNm: (getUserFromCookie() ||  ''),
     diseaseNm:[],
     allergieList:[],
     pwd: '',
