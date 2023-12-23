@@ -47,10 +47,11 @@
                     </div>
                 <div class="compNcan">
                     <div class="comp" @click="addInput(index)">추가 기록</div><div class="can" @click="recordCancel()">기록 취소</div>
-                    <div class="del">기록 삭제</div>
+                    <div class="del" @click="DelRecord()">기록 삭제</div>
                 </div>                
             </div>
         </div>
+        <PopupView v-if="this.openModal == true" @closePopup="closeModalView" @recordDelete="reco"/>
         <div class="main">
             <div class="word">식단 추천</div>
             <div class="writeListItems">
@@ -65,14 +66,26 @@
 <script>
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import FoodyNav from '@/layout/FoodyNav.vue';
+import PopupView from '@/components/RecordPopUp.vue';
+//import axios from 'axios';
 
 export default {
     name: 'DietManage',
-    components: { FoodyHeader, FoodyNav,},
+    components: { FoodyHeader, FoodyNav, PopupView, },
     data() {
         return {
-        showWriteRecord: false,
-        isSaveVisible: true,
+        openModal: false,
+        reco : false,
+        showWriteRecord: {
+            mor: false,
+            lun: false,
+            din: false
+        },
+        isSaveVisible: {
+            mor: false,
+            lun: false,
+            din: false
+        },
         originalMealItems: {},
         currentDate: '',
         meals: [
@@ -82,14 +95,14 @@ export default {
         ],
         selectedMeal: 'mor',
         mealItems: {
-                mor: [ {value: 'm아이템 1', active: true} , {value: 'm아이템 2', active: true} , {value: 'm아이템 3', active: true} , {value: 'm아이템 4', active: true} , {value: 'm아이템 5', active: true} ],
-                lun: [ {value: 'l아이템 1', active: true} , {value: 'l아이템 2', active: true} , {value: 'l아이템 3', active: true} , {value: 'l아이템 4', active: true} , {value: 'l아이템 5', active: true} ],
-                din: [ {value: 'd아이템 1', active: true} , {value: 'd아이템 2', active: true} , {value: 'd아이템 3', active: true} , {value: 'd아이템 4', active: true} , {value: 'd아이템 5', active: true} ]
+                mor: [ {value: 'm아이템 1', active: true, check: false} , {value: 'm아이템 2', active: true, check: false} , {value: 'm아이템 3', active: true, check: false} , {value: 'm아이템 4', active: true, check: false} , {value: 'm아이템 5', active: true, check: false} ],
+                lun: [ {value: 'l아이템 1', active: true, check: false} , {value: 'l아이템 2', active: true, check: false} , {value: 'l아이템 3', active: true, check: false} , {value: 'l아이템 4', active: true, check: false} , {value: 'l아이템 5', active: true, check: false} ],
+                din: [ {value: 'd아이템 1', active: true, check: false} , {value: 'd아이템 2', active: true, check: false} , {value: 'd아이템 3', active: true, check: false} , {value: 'd아이템 4', active: true, check: false} , {value: 'd아이템 5', active: true, check: false} ]
         },
         mealItemsRecord: {
-                mor: [ {value: 'm아이템 1', active: true} , {value: 'm아이템 2', active: true} , {value: 'm아이템 3', active: true} , {value: 'm아이템 4', active: true} , {value: 'm아이템 5', active: true} ],
-                lun: [ {value: 'l아이템 1', active: true} , {value: 'l아이템 2', active: true} , {value: 'l아이템 3', active: true} , {value: 'l아이템 4', active: true} , {value: 'l아이템 5', active: true} ],
-                din: [ {value: 'd아이템 1', active: true} , {value: 'd아이템 2', active: true} , {value: 'd아이템 3', active: true} , {value: 'd아이템 4', active: true} , {value: 'd아이템 5', active: true} ]
+                mor: [ {value: 'm아이템 1', active: true, check: false} , {value: 'm아이템 2', active: true, check: false} , {value: 'm아이템 3', active: true, check: false} , {value: 'm아이템 4', active: true, check: false} , {value: 'm아이템 5', active: true, check: false} ],
+                lun: [ {value: 'l아이템 1', active: true, check: false} , {value: 'l아이템 2', active: true, check: false} , {value: 'l아이템 3', active: true, check: false} , {value: 'l아이템 4', active: true, check: false} , {value: 'l아이템 5', active: true, check: false} ],
+                din: [ {value: 'd아이템 1', active: true, check: false} , {value: 'd아이템 2', active: true, check: false} , {value: 'd아이템 3', active: true, check: false} , {value: 'd아이템 4', active: true, check: false} , {value: 'd아이템 5', active: true, check: false} ]
         },
         }
     },
@@ -127,19 +140,28 @@ export default {
         selectMealTime(mealId) {
                 this.selectedMeal = mealId;
                 this.selectedItem = this.mealItems[mealId][0];
-                this.selectedItem = null;
-                this.showWriteRecord=false;
+                this.showWriteRecord = this.hasSavedRecord(mealId);
+                if(this.hasSavedRecord(mealId)){
+                    this.$nextTick(() => {
+                        this.setSaveRecord();
+                    });
+                } else {
+                    this.isSaveVisible = true;
+                }
+        },
+        hasSavedRecord(mealType) {// 각 시간에 대한 저장 기록이 있는지 확인하는 함수
+            return this.mealItems[mealType].every(item => item.check);
         },
         selectItem(item) {
                 this.selectedItem = item;
         },    // ... (기존 메서드 내용 유지)
         addInput(index) {
             const newIndex = index + 1 === this.selectedMealItems.length ? index + 1 : this.selectedMealItems.length;
-            this.selectedMealItems.splice(newIndex, 0, {value:'', active:true}); // 빈 문자열로 새로운 항목 추가
+            this.selectedMealItems.splice(newIndex, 0, {value:'', active:true, check:false}); // 빈 문자열로 새로운 항목 추가
         },
         recordCancel(){
             this.mealItems[this.selectedMeal] = this.mealItemsRecord[this.selectedMeal].map(item => ({ ...item }));
-            this.showWriteRecord=false;
+            this.showWriteRecord= false;
             this.isSaveVisible = true;
         },
         getPlaceholderText(index){
@@ -161,17 +183,19 @@ export default {
                 minusIcons[index].style.display = 'none';
             }
         },
-        saveRecord(){
-            this.mealItems[this.selectedMeal].forEach(item => {
-                item.disabled = true;
-            });
+        setSaveRecord(){
             const plusIcons = document.querySelectorAll('.puls');
             const minusIcons = document.querySelectorAll('.minus');
             const comp =  document.querySelectorAll('.comp');
             const can =  document.querySelectorAll('.can');
             const del = document.querySelectorAll('.del');
-            plusIcons.forEach(icon => (icon.style.display = 'none'));
-            minusIcons.forEach(icon => (icon.style.display = 'none'));
+            this.selectedMealItems.forEach((item, index) => {
+                const plusIcon = plusIcons[index];
+                const minusIcon = minusIcons[index];
+
+                plusIcon.style.display = 'none';
+                minusIcon.style.display = 'none';
+            });
             comp.forEach(button => (button.style.display = 'none'));
             can.forEach(button => (button.style.display = 'none'));
             del.forEach(button => (button.style.display = 'block'));
@@ -190,17 +214,18 @@ export default {
             this.showWriteRecord = true;
             this.isSaveVisible = false;
         },
-        ChangeRecord() {
-            this.mealItems[this.selectedMeal].forEach(item => {
-                item.disabled = false;
-            });
+        setChangeRecord() {
             const plusIcons = document.querySelectorAll('.puls');
             const minusIcons = document.querySelectorAll('.minus');
             const comp =  document.querySelectorAll('.comp');
             const can =  document.querySelectorAll('.can');
             const del = document.querySelectorAll('.del');
-            plusIcons.forEach(icon => (icon.style.display = 'block'));
-            minusIcons.forEach(icon => (icon.style.display = 'block'));
+            this.selectedMealItems.forEach((item, index) => {
+                const minusIcon = minusIcons[index];
+                const plusIcon = plusIcons[index];
+                minusIcon.style.display = 'none';
+                plusIcon.style.display = 'block';
+            });
             comp.forEach(button => (button.style.display = 'block'));
             can.forEach(button => (button.style.display = 'block'));
             del.forEach(button => (button.style.display = 'none'));
@@ -216,11 +241,29 @@ export default {
             // 수정 버튼만 보이도록 설정
             const record = document.querySelectorAll('.record');
             record.forEach(element => (element.style.display = 'block'));
-            this.showWriteRecord = true;
-            this.isSaveVisible = true;
+            this.showWriteRecord = this.hasSavedRecord(this.selectedMeal);
+            this.isSaveVisible = this.hasSavedRecord(this.selectedMeal);
+        },
+        saveRecord(){
+            this.setSaveRecord();
+            this.mealItems[this.selectedMeal].forEach(item => {item.disabled = true, item.check = true;});
+        },
+        ChangeRecord() {
+            this.setChangeRecord();
+            this.mealItems[this.selectedMeal].forEach(item => { item.disabled = false, item.check = false; });
         },
         DelRecord(){
-            
+            this.openModal =true;
+            const confirmed = this.reco;
+
+            if(confirmed != false){
+                this.mealItems[this.selectedMeal] = this.mealItemsRecord[this.selectedMeal].map(item => ({ ...item }));
+                this.showWriteRecord= false;
+                this.isSaveVisible = true;
+            }
+        },
+        closeModalView(data){
+            this.openModal = data;
         },
     },
     created() {
