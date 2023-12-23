@@ -21,6 +21,7 @@ const store = createStore({
     DietList:[],
     FoodsNutri:[],
     TodayList:'',
+    todayOccasion:'',
     }
   },
   getters: {
@@ -63,6 +64,7 @@ const store = createStore({
           codeDise: [],
           Allco:'',
           Diseco:'',
+          todayOccasion:'',
           DietList:[],
           FoodsNutri:'',
           TodayList:'',
@@ -101,6 +103,9 @@ const store = createStore({
     setTodayList(state, List){
       state.TodayList = List;
     },
+    setTodayOccasion(state, occ){
+      state.todayOccasion = occ;
+    }
   },
   actions: {
     updateUserData({ commit }, data) {

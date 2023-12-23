@@ -19,7 +19,7 @@
   </div>
   <div class="dash_dietList">
     <div id="mealTime">{{ mealTime }}</div>
-    <div id="todayList">{{ food }}</div>
+    <div id="todayList" v-for="(item, index) in food" :key="index">{{ item }}</div>
   </div> 
 </div>
   <FoodyNav />
@@ -40,6 +40,7 @@ export default {
           mealTime: '',
           nickNm: '',
           allergieNm: '',
+          nowTimes: '',
           food: this.$store.state.TodayList,
         }
     },
@@ -60,6 +61,7 @@ export default {
       const day = String(today.getDate()).padStart(2, '0');
 
       this.currentDate = `${year}년 ${month}월 ${day}일`;
+      this.nowTimes = `${year}-${month}-${day}`;
     },
     updateMealTime() {
       const currentTime = new Date();
@@ -82,19 +84,24 @@ export default {
     },
     callTodayList(){
       const email = this.email;
+      const date = this.nowTimes;
+      const occasion = this.mealTime;
       
       axios({
         method: 'get',
-        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/recommended',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/searchRmdMeal',
         params: {
           email,
+          date,
+          occasion,
         }
         })
         .then((res) => {
             const result = res.data;
             switch(result.rst_cd){
               case '200': console.log(result);
-                          this.$store.commit('setTodayList', result.foodName);
+                          this.$store.commit('setTodayList', result.foodList);
+                          this.$store.commit('setTodayOccasion', this.occasion);
                           break;
               default: console.log(result);
                         break;
@@ -204,6 +211,8 @@ a {
 }
 
 #todayList{
-  color:#000;
+  color: #3F72AF;
+  padding:1%;
+  font-size: 1.1rem;
 }
 </style>
