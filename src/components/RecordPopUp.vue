@@ -5,7 +5,7 @@
           <p>기록을 삭제하시겠습니까?</p>
           <div id="btn_zip">
             <button @click="closePopup()" id="close">취소</button>
-            <button @click="recordDelete()" id="delRe">확인</button>
+            <button @click="deReco()" id="delRe">확인</button>
           </div>
       </div>
     </div>
@@ -13,14 +13,14 @@
   
   <script>
   export default {
-      name:'RecordPopUp',
+      name:'RecordPopUp', 
       methods:{
         closePopup(){
           this.$emit('closePopup', false);
         },
-        recordDelete(){
-          this.$emit('reco', true);
-        }
+        deReco(){
+          this.$parent.Reco = true;
+        },
       },
   }
   </script>

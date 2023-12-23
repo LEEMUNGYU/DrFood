@@ -32,11 +32,12 @@ function deleteCookie() {
     //다른 페이지도 지우게 만들기 위해서는 모든 path data를 설정해야함
   }
 }
-
 export {
   saveAuthToCookie,
   saveUserToCookie,
   getAuthFromCookie,
   getUserFromCookie,
   deleteCookie,
+  //setRecordCookie,
+  //getRecordCookie,
 };

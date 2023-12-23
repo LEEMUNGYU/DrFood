@@ -51,7 +51,7 @@
                 </div>                
             </div>
         </div>
-        <PopupView v-if="this.openModal == true" @closePopup="closeModalView" @recordDelete="reco"/>
+        <RecordPopUp v-if="this.openModal == true" @closePopup="closeModalView" @deReco="Reco"/>
         <div class="main">
             <div class="word">식단 추천</div>
             <div class="writeListItems">
@@ -64,18 +64,18 @@
 </template>
 
 <script>
+import RecordPopUp from '@/components/RecordPopUp.vue';
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import FoodyNav from '@/layout/FoodyNav.vue';
-import PopupView from '@/components/RecordPopUp.vue';
 //import axios from 'axios';
 
 export default {
     name: 'DietManage',
-    components: { FoodyHeader, FoodyNav, PopupView, },
+    components: { FoodyHeader, FoodyNav, RecordPopUp, },
     data() {
         return {
         openModal: false,
-        reco : false,
+        Reco : false,
         showWriteRecord: {
             mor: false,
             lun: false,
@@ -254,20 +254,30 @@ export default {
         },
         DelRecord(){
             this.openModal =true;
-            const confirmed = this.reco;
-
-            if(confirmed != false){
-                this.mealItems[this.selectedMeal] = this.mealItemsRecord[this.selectedMeal].map(item => ({ ...item }));
-                this.showWriteRecord= false;
-                this.isSaveVisible = true;
-            }
         },
         closeModalView(data){
             this.openModal = data;
         },
     },
+    watch: {
+        Reco(newVal) {
+            const confirmed = newVal;
+
+            if(confirmed != false){
+                this.mealItems[this.selectedMeal] = this.mealItemsRecord[this.selectedMeal].map(item => ({ ...item }));
+                this.showWriteRecord= false;
+                this.isSaveVisible = true;
+                this.openModal =false;
+                this.Reco = false;
+            }
+        },
+    },
     created() {
         this.originalMealItems = { ...this.mealItems };
+        const allChecksFalse = Object.values(this.mealItems).every(items => items.every(item => !item.check));
+        if (allChecksFalse) {
+            this.showWriteRecord = false;
+        }
     },
 }
 </script>
