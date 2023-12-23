@@ -29,6 +29,7 @@
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import axios from 'axios';
 import { saveAuthToCookie, saveUserToCookie } from '@/utils/cookies';
+import { getAuthFromCookie, getUserFromCookie } from '@/utils/cookies';
 
 
 export default {
@@ -41,6 +42,9 @@ export default {
   },
     props: {
     msg: String,
+  },
+  mounted() {  // 자동 로그인 로직 실행
+    this.performAutoLogin();
   },
   methods: {
     fnLogin() {
@@ -57,7 +61,6 @@ export default {
       .then((res) => {
       const goMain = () => this.$router.push({path:'/board', name:'DashBoard',});
       const result = res.data;
-            
         // 4. 로그인이 성공하면 다른 페이지로 이동한다.
         switch(result.rst_cd){
           case '-1': console.log(result);//"계정이 존재하지 않습니다."
@@ -70,8 +73,8 @@ export default {
                       this.$store.commit('setUserName', result.nickNm);
                       this.$store.commit('setDiseaseNm', result.diseaseNm)
                       this.$store.commit('setAllergieList', result.allergieList);
-                      saveAuthToCookie(result.email);
-                      saveUserToCookie(result.nickNm);
+                      saveAuthToCookie(email);
+                      saveUserToCookie(pwd);
                       goMain();
             break;
           default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
@@ -82,7 +85,35 @@ export default {
               console.log('에러!!!');
               console.log(err);
             })
+          }, 
+        performAutoLogin(){//자동로그인
+          const email = getAuthFromCookie.call(this);
+          const pwd = getUserFromCookie.call(this);
+          if(email != '' && pwd != ''){
+            axios({
+              method: 'get',
+            url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/login?',
+            params: {
+                email,
+                pwd
+              }
+            })
+            .then((res) => {
+              const goMain = () => this.$router.push({path:'/board', name:'DashBoard',});
+              const result = res.data;
+              this.$store.commit('setUserEmail', email);
+              this.$store.commit('setUserIdx', result.user_idx);
+              this.$store.commit('setUserName', result.nickNm);
+              this.$store.commit('setDiseaseNm', result.diseaseNm)
+              this.$store.commit('setAllergieList', result.allergieList);
+              goMain();
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
           }
+        },
     },
     components:{  FoodyHeader, },
  } 

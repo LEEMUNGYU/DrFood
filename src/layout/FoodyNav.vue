@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import deleteCookie from '@/utils/cookies';
+import { deleteCookie, getAuthFromCookie, getUserFromCookie } from '@/utils/cookies';
 
 export default{
   name:'FoodyNav',
@@ -17,9 +17,13 @@ export default{
   },
   methods: {
   resetState() {
+    const email = getAuthFromCookie.call(this);
+    const pwd = getUserFromCookie.call(this);
+
     this.$store.commit('resetState');
     this.$router.replace({path:'/', name:'FoodyLogin'});
-    deleteCookie(this.token);
+    deleteCookie(email);
+    deleteCookie(pwd);
   },
   changeIconOnScreens(){
       const currentPath = this.$route.path;

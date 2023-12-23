@@ -21,8 +21,16 @@ function getUserFromCookie() {
   );
 }
 
-function deleteCookie(value) {
-  document.cookie = `${value}=; expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+function deleteCookie() {
+  let cookies = document.cookie.split(";");
+
+  for (let i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i];
+    let eqPos = cookie.indexOf("=");
+    let name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+    //다른 페이지도 지우게 만들기 위해서는 모든 path data를 설정해야함
+  }
 }
 
 export {

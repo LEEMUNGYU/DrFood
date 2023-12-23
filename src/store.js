@@ -6,9 +6,9 @@ const store = createStore({
   state () {
     return{
     email: '',
-    token: (getAuthFromCookie() || ''),
+    cookieID: (getAuthFromCookie() || ''),
     userId: '',
-    nickNm: (getUserFromCookie() ||  ''),
+    cookiePWD: (getUserFromCookie() ||  ''),
     diseaseNm:[],
     allergieList:[],
     pwd: '',
