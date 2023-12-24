@@ -5,7 +5,7 @@
     <form>
       <div><select v-model="pw_question">
             <option selected>질문 유형 선택</option>
-            <option>현재 국적</option><!--인증질문 1-->
+            <option>본인의 어린시절 별명은?</option><!--인증질문 1-->
             <option>본인의 어린시절 장래 희망은?</option><!--인증질문 2-->
             <option>본인의 어린 시절에 존경 했던 인물은?</option><!--인증질문 3-->
             <!--추가 질문은 여기부터 추가하여 사용-->
@@ -52,7 +52,7 @@ export default {
   updated(){
     this.QAcheck();
   },
-  method:{
+  methods:{
     QAcheck(){
       const email = this.email;
       const pwdq = this.pw_question;

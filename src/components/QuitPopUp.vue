@@ -5,7 +5,7 @@
         <p>정말 탈퇴하시겠습니까?</p>
         <div id="btn_zip">
           <button @click="closePopup()" id="close">취소</button>
-          <button @click="goodBye()" id="comp">확인</button>
+          <button @click="GBye()" id="QTcomp">확인</button>
         </div>
     </div>
   </div>
@@ -18,7 +18,7 @@ export default {
       closePopup(){
         this.$emit('closePopup', false);
       },
-      goodBye(){
+      GBye(){
         this.$emit('goodbye', true);
       }
     },
@@ -66,7 +66,7 @@ button{
     font-size: 1rem;
     color: #000;
 }
-#comp{
+#QTcomp{
     justify-content: center;
     justify-items: center;
     border: none;

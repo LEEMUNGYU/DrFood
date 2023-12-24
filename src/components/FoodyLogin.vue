@@ -18,7 +18,7 @@
     </form>
   </main>
 
-  <label for="autologin"><input type="checkbox" id="autologin">자동 로그인</label>
+  <label for="autologin"><input type="checkbox" id="autologin"  v-model="autoLogin">자동 로그인</label>
   <router-link v-bind:to="'/SignInUser'" class="alink">회원가입</router-link><!--회원가입 주소 href에 입력-->
   <router-link v-bind:to="'/scPW'" class="alink">비밀번호 찾기</router-link><!--아이디 찾기 주소 href에 입력-->
 </div>
@@ -38,6 +38,7 @@ export default {
     return {
       user_id: '',
       user_pw: '',
+      autoLogin: false,
     } 
   },
     props: {
@@ -50,6 +51,7 @@ export default {
     fnLogin() {
       const email = this.user_id;
       const pwd = this.user_pw;
+      const autoLoginCheck = this.autoLogin;
         axios({
         method: 'get',
         url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/login?',
@@ -73,8 +75,8 @@ export default {
                       this.$store.commit('setUserName', result.nickNm);
                       this.$store.commit('setDiseaseNm', result.diseaseNm)
                       this.$store.commit('setAllergieList', result.allergieList);
-                      saveAuthToCookie(email);
-                      saveUserToCookie(pwd);
+                      if(autoLoginCheck === true ){ saveAuthToCookie(email);}
+                      if(autoLoginCheck === true ){ saveUserToCookie(pwd);} 
                       goMain();
             break;
           default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
@@ -91,7 +93,7 @@ export default {
           const pwd = getUserFromCookie.call(this);
           if(email != '' && pwd != ''){
             axios({
-              method: 'get',
+            method: 'get',
             url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/login?',
             params: {
                 email,

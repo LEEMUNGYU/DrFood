@@ -4,7 +4,7 @@
     <h3>회원탈퇴</h3>
     <hr id="first_line">
     <div id="sorry">
-        <popup-view v-if="this.openModal == true" @closePopup="closeModalView" @goodbye="goodbye"/>
+        <popup-view v-if="this.openModal" @closePopup="closeModalView" @goodbye="goodbye"/>
         <p id="main_text"><span id="accent">죄송합니다</span><br>
         저희와 함께하신 시간동안 만족스러운<br>
         서비스를 드리지 못한 것 같아 죄송합니다<br><br>
@@ -22,9 +22,9 @@
 </template>
 
 <script>
-import PopupView from '@/components/QuitPopUp.vue'
-import FoodyHeader from '@/layout/FoodyHeader.vue'
-import FoodyNav from '@/layout/FoodyNav.vue'
+import PopupView from '@/components/QuitPopUp.vue';
+import FoodyHeader from '@/layout/FoodyHeader.vue';
+import FoodyNav from '@/layout/FoodyNav.vue';
 import axios from 'axios';
 
 export default {
@@ -33,7 +33,7 @@ export default {
         return{
         userInput: '',
         openModal: false,
-        goodbye : false,
+        goodbye: false,
         }
     },
     methods:{
@@ -46,11 +46,14 @@ export default {
             }
         },
         QuitComp(){
-            const userId = parseInt(this.$store.state.userId, 10);
             this.openModal =true;
+        },
+        GoodByeMyF(){
+            const userId = parseInt(this.$store.state.userId, 10);
             const confirmed = this.goodbye;
+            const goodbyeMyFriend = () => this.$router.push({path: '/QuitComp', name:'QuitComp'});
 
-            if (confirmed != false) {
+            if(confirmed !==false){
         // 서버로 데이터 전송
             axios.delete('https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/resign?idx='+userId)
             .then(res => {
@@ -58,7 +61,7 @@ export default {
             // 성공 시 작업
             if(result==='200'){
                 console.log(res.data);
-                this.$router.push({path: '/QuitComp', name:'QuitComp'});
+                goodbyeMyFriend();
             }
             })
             .catch(err => {

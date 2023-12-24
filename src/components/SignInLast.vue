@@ -98,12 +98,12 @@ export default {
             axios.post('https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/join?email='+email+'&pwd='+pwd
                         +'&nickname='+nickNm+'&pwdq='+pwdq+'&pwda='+pwda+'&codeDise='+codeDise+'&codeAlle='+codeAlle)
             .then(res => {
-                const goComp = () => this.$router.push({path:'/SignInComp'});
                 const result = res.data;
+                const goToDrFoody = this.$router.push({ name: 'SignInComp', path:'/SignInComp'});
             // 성공 시 작업
             switch(result){
                 case '200': console.log(res.data);
-                            goComp();
+                            goToDrFoody;
                             break;
                 default : console.log(res.data);
                             break;
