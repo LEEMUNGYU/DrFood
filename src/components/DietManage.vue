@@ -95,14 +95,38 @@ export default {
         ],
         selectedMeal: 'mor',
         mealItems: {
-                mor: [ {value: 'm아이템 1', active: true, check: false} , {value: 'm아이템 2', active: true, check: false} , {value: 'm아이템 3', active: true, check: false} , {value: 'm아이템 4', active: true, check: false} , {value: 'm아이템 5', active: true, check: false} ],
-                lun: [ {value: 'l아이템 1', active: true, check: false} , {value: 'l아이템 2', active: true, check: false} , {value: 'l아이템 3', active: true, check: false} , {value: 'l아이템 4', active: true, check: false} , {value: 'l아이템 5', active: true, check: false} ],
-                din: [ {value: 'd아이템 1', active: true, check: false} , {value: 'd아이템 2', active: true, check: false} , {value: 'd아이템 3', active: true, check: false} , {value: 'd아이템 4', active: true, check: false} , {value: 'd아이템 5', active: true, check: false} ]
+                mor: [  {value: 'm아이템 1', active: true, check: false, disabled: false} ,
+                        {value: 'm아이템 2', active: true, check: false, disabled: false} ,
+                        {value: 'm아이템 3', active: true, check: false, disabled: false} ,
+                        {value: 'm아이템 4', active: true, check: false, disabled: false} ,
+                        {value: 'm아이템 5', active: true, check: false, disabled: false} ],
+                lun: [  {value: 'l아이템 1', active: true, check: false, disabled: false} ,
+                        {value: 'l아이템 2', active: true, check: false, disabled: false} ,
+                        {value: 'l아이템 3', active: true, check: false, disabled: false} ,
+                        {value: 'l아이템 4', active: true, check: false, disabled: false} ,
+                        {value: 'l아이템 5', active: true, check: false, disabled: false} ],
+                din: [  {value: 'd아이템 1', active: true, check: false, disabled: false} ,
+                        {value: 'd아이템 2', active: true, check: false, disabled: false} ,
+                        {value: 'd아이템 3', active: true, check: false, disabled: false} ,
+                        {value: 'd아이템 4', active: true, check: false, disabled: false} ,
+                        {value: 'd아이템 5', active: true, check: false, disabled: false} ]
         },
         mealItemsRecord: {
-                mor: [ {value: 'm아이템 1', active: true, check: false} , {value: 'm아이템 2', active: true, check: false} , {value: 'm아이템 3', active: true, check: false} , {value: 'm아이템 4', active: true, check: false} , {value: 'm아이템 5', active: true, check: false} ],
-                lun: [ {value: 'l아이템 1', active: true, check: false} , {value: 'l아이템 2', active: true, check: false} , {value: 'l아이템 3', active: true, check: false} , {value: 'l아이템 4', active: true, check: false} , {value: 'l아이템 5', active: true, check: false} ],
-                din: [ {value: 'd아이템 1', active: true, check: false} , {value: 'd아이템 2', active: true, check: false} , {value: 'd아이템 3', active: true, check: false} , {value: 'd아이템 4', active: true, check: false} , {value: 'd아이템 5', active: true, check: false} ]
+                mor: [  {value: 'm아이템 1', active: true, check: false} ,
+                        {value: 'm아이템 2', active: true, check: false} , 
+                        {value: 'm아이템 3', active: true, check: false} ,
+                        {value: 'm아이템 4', active: true, check: false} ,
+                        {value: 'm아이템 5', active: true, check: false} ],
+                lun: [  {value: 'l아이템 1', active: true, check: false} ,
+                        {value: 'l아이템 2', active: true, check: false} ,
+                        {value: 'l아이템 3', active: true, check: false} ,
+                        {value: 'l아이템 4', active: true, check: false} ,
+                        {value: 'l아이템 5', active: true, check: false} ],
+                din: [  {value: 'd아이템 1', active: true, check: false} ,
+                        {value: 'd아이템 2', active: true, check: false} ,
+                        {value: 'd아이템 3', active: true, check: false} ,
+                        {value: 'd아이템 4', active: true, check: false} , 
+                        {value: 'd아이템 5', active: true, check: false} ]
         },
         }
     },
@@ -121,7 +145,6 @@ export default {
     methods: {
         setCurrentDate() {
             const today = new Date();
-            console.log(today);
             const month = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
             const day = today.getDate();
             this.currentDate = `${month}월 ${day}일`;

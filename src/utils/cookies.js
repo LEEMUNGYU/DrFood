@@ -38,6 +38,4 @@ export {
   getAuthFromCookie,
   getUserFromCookie,
   deleteCookie,
-  //setRecordCookie,
-  //getRecordCookie,
 };

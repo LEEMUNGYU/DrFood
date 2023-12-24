@@ -22,6 +22,9 @@ const store = createStore({
     FoodsNutri:[],
     TodayList:'',
     todayOccasion:'',
+    MealItems:[],
+    showSituation:[],
+    visibleSituation:[],    
     }
   },
   getters: {
@@ -68,6 +71,9 @@ const store = createStore({
           DietList:[],
           FoodsNutri:'',
           TodayList:'',
+          MealItems:[],
+          showSituation:[],
+          visibleSituation:[],    
         };
       };
       Object.assign(state, getDefaultState());
@@ -105,7 +111,17 @@ const store = createStore({
     },
     setTodayOccasion(state, occ){
       state.todayOccasion = occ;
+    },
+    updateMyMealItems(state, MealItems){
+      state.MealItems = MealItems;
+    },
+    updateShowSituation(state, showSituation){
+      state.showSituation = showSituation;
+    },
+    updateVisibleSituation(state, visibleSituation){
+      state.visibleSituation = visibleSituation;
     }
+
   },
   actions: {
     updateUserData({ commit }, data) {
