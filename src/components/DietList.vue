@@ -37,7 +37,7 @@
                     <div id="notice">*식품을 누르면 각 식품별 영양성분을 확인하실 수 있습니다.</div>
                     <div id="two_btn">
                         <div id="reason"><img src="../style/img/otherBTN/reasonBTN.svg" id="reCON">구성이유</div>
-                        <div id="reroll"><img src="../style/img/otherBTN/rerollBTN.svg" id="reCON">식단 재추천</div>
+                        <div id="reroll" @click="callDiffrentList1()"><img src="../style/img/otherBTN/rerollBTN.svg" id="reCON">식단 재추천</div>
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                     <div id="notice1">*식품을 누르면 각 식품별 영양성분을 확인하실 수 있습니다.</div>
                     <div id="two_btn1">
                         <div id="reason1"><img src="../style/img/otherBTN/reasonBTN.svg" id="reCON1">구성이유</div>
-                        <div id="reroll1"><img src="../style/img/otherBTN/rerollBTN.svg" id="reCON1">식단 재추천</div>
+                        <div id="reroll1" @click="callDiffrentList2()"><img src="../style/img/otherBTN/rerollBTN.svg" id="reCON1">식단 재추천</div>
                     </div>
                 </div>
             </div>
@@ -113,7 +113,7 @@
                     <div id="notice2">*식품을 누르면 각 식품별 영양성분을 확인하실 수 있습니다.</div>
                     <div id="two_btn2">
                         <div id="reason2"><img src="../style/img/otherBTN/reasonBTN.svg" id="reCON2">구성이유</div>
-                        <div id="reroll2"><img src="../style/img/otherBTN/rerollBTN.svg" id="reCON2">식단 재추천</div>
+                        <div id="reroll2" @click="callDiffrentList3()"><img src="../style/img/otherBTN/rerollBTN.svg" id="reCON2">식단 재추천</div>
                     </div>
                 </div>
             </div>
@@ -193,9 +193,33 @@ export default {
             selectedItem: '아침 아이템 1',
             selectedItem1: '아침 아이템 1',
             selectedItem2: '아침 아이템 1',
+            nowTimes:'',
+            nextDay:'',
+            dayAfterNext:'',
         };
     },
     methods: {
+        getCurrentDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            this.nowTimes = `${year}-${month}-${day}`;
+            // 다음날 계산
+            const nextDay = new Date(today);
+            nextDay.setDate(today.getDate() + 1);
+            const nextYear = nextDay.getFullYear();
+            const nextMonth = String(nextDay.getMonth() + 1).padStart(2, '0');
+            const nextDayOfMonth = String(nextDay.getDate()).padStart(2, '0');
+            this.nextDay = `${nextYear}-${nextMonth}-${nextDayOfMonth}`;
+            // 다다음날 계산
+            const dayAfterNext = new Date(today);
+            dayAfterNext.setDate(today.getDate() + 2);
+            const dayAfterNextYear = dayAfterNext.getFullYear();
+            const dayAfterNextMonth = String(dayAfterNext.getMonth() + 1).padStart(2, '0');
+            const dayAfterNextDayOfMonth = String(dayAfterNext.getDate()).padStart(2, '0');
+            this.dayAfterNext = `${dayAfterNextYear}-${dayAfterNextMonth}-${dayAfterNextDayOfMonth}`;
+        },
         pullDietList(){
             const email = this.user_id;
             const pwd = this.user_pw;
@@ -220,6 +244,102 @@ export default {
                       this.$store.commit('setNutri', result.user_idx);
             break;
           default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
+            break;
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
+        },
+        callDiffrentList1(){
+            const userIdx = this.user_id;
+            const date = this.nowTimes;
+            const occasion = (this.selectedMeal === 'mor' ? '아침' : this.selectedMeal === 'lun' ? '점심' : '저녁');
+        axios({
+        method: 'get',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/foodBuild/obtainRerolledMeal?',
+        params: {
+          userIdx,
+          date,
+          occasion,
+        }
+        })
+        .then((res) => {
+        const result = res.data;
+
+        switch(result.rst_cd){
+          case '-1': console.log(result, '조회된 식단이 없습니다');
+            break;
+          case '-2': console.log(result, '입력값이 잘못 되었습니다');
+            break;
+          case '200': console.log(result, '식단 재생성 성공!');
+            break;
+          default:  console.log(result);
+            break;
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
+        },
+        callDiffrentList2(){
+            const userIdx = this.user_id;
+            const date = this.nextDay;
+            const occasion = (this.selectedMeal1 === 'mor' ? '아침' : this.selectedMeal1 === 'lun' ? '점심' : '저녁');
+        axios({
+        method: 'get',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/foodBuild/obtainRerolledMeal?',
+        params: {
+          userIdx,
+          date,
+          occasion,
+        }
+        })
+        .then((res) => {
+        const result = res.data;
+
+        switch(result.rst_cd){
+          case '-1': console.log(result, '조회된 식단이 없습니다');
+            break;
+          case '-2': console.log(result, '입력값이 잘못 되었습니다');
+            break;
+          case '200': console.log(result, '식단 재생성 성공!');
+            break;
+          default:  console.log(result);
+            break;
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
+        },
+        callDiffrentList3(){
+            const userIdx = this.user_id;
+            const date = this.dayAfterNext;
+            const occasion = (this.selectedMeal2 === 'mor' ? '아침' : this.selectedMeal2 === 'lun' ? '점심' : '저녁');
+        axios({
+        method: 'get',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/foodBuild/obtainRerolledMeal?',
+        params: {
+          userIdx,
+          date,
+          occasion,
+        }
+        })
+        .then((res) => {
+        const result = res.data;
+
+        switch(result.rst_cd){
+          case '-1': console.log(result, '조회된 식단이 없습니다');
+            break;
+          case '-2': console.log(result, '입력값이 잘못 되었습니다');
+            break;
+          case '200': console.log(result, '식단 재생성 성공!');
+            break;
+          default:  console.log(result);
             break;
             }
             })

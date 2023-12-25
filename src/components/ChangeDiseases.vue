@@ -28,7 +28,7 @@ export default {
         userIdx: this.$store.state.userId,
         selectedDiseases: [],
         diseasesSelected: false,
-        codeDise: this.$store.state.codeDise,
+        selectedDiseaseCodes: [],
         }   
     },
     methods:{
@@ -55,14 +55,34 @@ export default {
                 }
             this.updateSelectedDiseases();
             }
-        },
+      //질환에 대한 코드를 추가
+      let diseaseCode = '';
+      switch (disease) {
+        case '비만':
+          diseaseCode = 'obse';
+          break;
+        case '고혈압':
+          diseaseCode = 'hibp';
+          break;
+        case '당뇨':
+          diseaseCode = 'diab';
+          break;
+        case '위염':
+          diseaseCode = 'gast';
+          break;
+        default:
+          break;
+      }
+      // 질환 코드를 새로운 배열에 추가
+      this.selectedDiseaseCodes.push(diseaseCode);
+    },
     pushChangeDise(){
-      const userIdx = this.userIdx;
-      const code = '#'+ this.selectedDiseases.join(' #');
+        const userIdx = this.userIdx;
+        const code = this.selectedDiseaseCodes.join('#');
       
       axios({
         method: 'post',
-        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/diseasechange',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/diseasechange?',
         params: {
           userIdx,
           code,

@@ -50,6 +50,7 @@ export default {
         selectedAllergies: [],
         allergiesSelected: false,
         codeAlle: this.$store.state.codeAlle,
+        selectedAllergieCodes:[],
         }
     },
     methods:{
@@ -75,15 +76,89 @@ export default {
                         }
                     }
                 this.updateSelectedAllergies();
-                }   
+                }
+      //질환에 대한 코드를 추가
+      let AllergieCode = '';
+      switch (Allergies) {
+        case '달걀':
+            AllergieCode = 'egg';
+          break;
+        case '유제품':
+            AllergieCode = 'dairy';
+          break;
+        case '콩':
+            AllergieCode = 'bean';
+          break;
+        case '메밀':
+            AllergieCode = 'buck';
+          break;
+        case '밀':
+            AllergieCode = 'flour';
+          break;
+        case '새우':
+            AllergieCode = 'shrimp';
+          break;
+        case '게':
+            AllergieCode = 'crab';
+          break;
+        case '땅콩':
+            AllergieCode = 'peanut';
+          break;
+        case '호두':
+            AllergieCode = 'walnut';
+          break;
+        case '잣':
+            AllergieCode = 'pinnut';
+          break;
+        case '고등어':
+            AllergieCode = 'macke';
+          break;
+        case '생선':
+            AllergieCode = 'fish';
+          break;
+        case '전복':
+            AllergieCode = 'abal';
+          break;
+        case '굴':
+            AllergieCode = 'oyster';
+          break;
+        case '조개':
+            AllergieCode = 'clam';
+          break;
+        case '닭':
+            AllergieCode = 'chick';
+          break;
+        case '돼지':
+            AllergieCode = 'pork';
+          break;
+        case '소':
+            AllergieCode = 'beef';
+          break;
+        case '낙지':
+            AllergieCode = 'kocto';
+          break;
+        case '문어':
+            AllergieCode = 'octo';
+          break;
+        case '오징어':
+            AllergieCode = 'squid';
+          break;
+        case '깨':
+            AllergieCode = 'sesame';
+          break;
+        default:
+          break;
+      }
+      // 질환 코드를 새로운 배열에 추가
+      this.selectedAllergieCodes.push(AllergieCode);   
         },
         pushChangeAllergy(){
             const userIdx = this.userIdx;
-            const code = '#'+ this.selectedAllergies.join(' #');
+            const code = this.selectedAllergieCodes.join('#');
       
             axios({
                 method: 'post',
-                url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/allergiechange',
+                url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/allergiechange?',
                 params: {
                     userIdx,
                     code,

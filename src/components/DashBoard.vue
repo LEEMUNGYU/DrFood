@@ -51,6 +51,8 @@ export default {
       this.updateMealTime(); // 1초마다 갱신
     }, 1000);
     this.callTodayList();
+    console.log(this.$store.state.diseaseNm);
+    //this.createListWeek();
     },
     methods: {
     getCurrentDate() {
@@ -83,17 +85,16 @@ export default {
       console.log(login.params.nickNm);
     },
     callTodayList(){
-      const email = this.email;
+      /*const email = this.email;
       const date = this.nowTimes;
-      const occasion = this.mealTime;
+      const occasion = this.mealTime;*/
+      const userIdx = this.$store.state.userId;
       
       axios({
         method: 'get',
-        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/searchRmdMeal',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/recommended?',
         params: {
-          email,
-          date,
-          occasion,
+          userIdx,
         }
         })
         .then((res) => {
@@ -101,7 +102,6 @@ export default {
             switch(result.rst_cd){
               case '200': console.log(result);
                           this.$store.commit('setTodayList', result.foodList);
-                          this.$store.commit('setTodayOccasion', this.occasion);
                           break;
               default: console.log(result);
                         break;
@@ -111,7 +111,18 @@ export default {
             console.log('에러!!!');
             console.log(err);
         })
-      }
+      },
+      /*createListWeek(){
+        const userIdx = this.$store.state.userId;
+      
+      axios({
+        method: 'get',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/foodBuild/getWeeklyMeals?',
+        params: {
+          userIdx,
+        }
+        })
+      },*/
     },
     props: {
         msg: String,

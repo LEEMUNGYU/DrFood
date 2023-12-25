@@ -34,11 +34,16 @@ export default {
     components:{
         FoodyHeader,
     },
+    mounted(){
+        this.switchingCode();
+        console.log(this.$store.state.Diseco);
+        console.log(this.$store.state.Allco);
+    },
     methods:{
         switchingCode(){
             const dieseCode = [
-                {name: '비만', code: 'obse'},
-                {name: '고혈압', code: 'hybp'},
+                {name: '비만', code: 'obes'},
+                {name: '고혈압', code: 'hibp'},
                 {name: '당뇨', code: 'diab'},
                 {name: '위염', code: 'gast'},
                 ];
@@ -49,30 +54,30 @@ export default {
                     }
                 }
             }
-            this.setDiseco(this.diseco.toString());
+            this.$store.commit( 'setDiseco', this.diseco.join('#'));
 
 
             const allergyCode = [
                 {name: '달걀', code: 'egg'},
-                {name: '유제품', code: 'milk'},
+                {name: '유제품', code: 'dairy'},
                 {name: '콩', code: 'bean'},
-                {name: '메밀', code: 'buckwheat'},
-                {name: '밀', code: 'wheat'},
+                {name: '메밀', code: 'buck'},
+                {name: '밀', code: 'flour'},
                 {name: '새우', code: 'shrimp'},
                 {name: '게', code: 'crab'},
                 {name: '땅콩', code: 'peanut'},
                 {name: '호두', code: 'walnut'},
-                {name: '잣', code: 'pinenut'},
-                {name: '고등어', code: 'mackerel'},
+                {name: '잣', code: 'pinnut'},
+                {name: '고등어', code: 'macke'},
                 {name: '그&nbsp외&nbsp생선', code: 'fish'},
-                {name: '전복', code: 'abalone'},
+                {name: '전복', code: 'abal'},
                 {name: '굴', code: 'oyster'},
                 {name: '조개', code: 'clam'},
-                {name: '닭고기', code: 'chicken'},
-                {name: '돼지고기', code: 'pig'},
-                {name: '쇠고기', code: 'cow'},
-                {name: '낙지', code: 'smalloctopus'},
-                {name: '문어', code: 'octopus'},
+                {name: '닭고기', code: 'chick'},
+                {name: '돼지고기', code: 'pork'},
+                {name: '쇠고기', code: 'beef'},
+                {name: '낙지', code: 'kocto'},
+                {name: '문어', code: 'octo'},
                 {name: '오징어', code: 'squid'},
                 {name: '깨', code: 'sesame'},
                 ];
@@ -83,7 +88,7 @@ export default {
                     }
                 }
             }
-            this.setAllco(this.allco.toString());
+            this.$store.commit( 'setAllco', this.allco.join('#'));
         },
         SignComp(){
             const email = this.$store.state.email;
@@ -91,8 +96,8 @@ export default {
             const nickNm = this.$store.state.nickNm;
             const pwdq = this.$store.state.pwdq;
             const pwda = this.$store.state.pwda;
-            const codeDise = this.$store.state.Allco;
-            const codeAlle = this.$store.state.Diseco;
+            const codeDise = this.$store.state.Diseco;
+            const codeAlle = this.$store.state.Allco;
             
         // 서버로 데이터 전송
             axios.post('https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/join?email='+email+'&pwd='+pwd
