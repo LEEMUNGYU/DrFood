@@ -62,6 +62,8 @@ export default {
         selectedAllergies: [],
         allergiesSelected: false,
         completeBtn2Clicked: false,
+        selectedDiseaseCodes:[],
+        selectedAllergieCodes:[],
         }
     },
     components:{

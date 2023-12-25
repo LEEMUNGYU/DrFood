@@ -93,16 +93,26 @@ export default {
         SignComp(){
             const email = this.$store.state.email;
             const pwd = this.$store.state.pwd;
-            const nickNm = this.$store.state.nickNm;
+            const nickname = this.$store.state.nickNm;
             const pwdq = this.$store.state.pwdq;
             const pwda = this.$store.state.pwda;
             const codeDise = this.$store.state.Diseco;
             const codeAlle = this.$store.state.Allco;
             
         // 서버로 데이터 전송
-            axios.post('https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/join?email='+email+'&pwd='+pwd
-                        +'&nickname='+nickNm+'&pwdq='+pwdq+'&pwda='+pwda+'&codeDise='+codeDise+'&codeAlle='+codeAlle)
-            .then(res => {
+            axios({
+                method: 'post',
+                url:'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/join?',
+                params: {
+                email,
+                pwd,
+                nickname,
+                pwdq,
+                pwda,
+                codeDise,
+                codeAlle,
+                }})
+            .then((res) => {
                 const result = res.data;
                 const goToDrFoody = this.$router.push({ name: 'SignInComp', path:'/SignInComp'});
             // 성공 시 작업
@@ -117,8 +127,8 @@ export default {
             .catch(err => {
                 console.log('에러!!!');
                 console.log(err);
-            });
-        }
+            })
+        },
     },
 }
 </script>

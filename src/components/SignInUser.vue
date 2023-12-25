@@ -15,9 +15,9 @@
     <div>
         <select v-model="userQuestion" class="form-select" id="inputGroupSelect02">
             <option value="" selected>비밀번호 확인 질문</option>
-            <option value="1" :class="{ 'selected-color': userQuestion === '1' }">본인의 어린시절 별명은?</option><!--인증질문 1-->
-            <option value="2" :class="{ 'selected-color': userQuestion === '2' }">본인의 어린시절 장래 희망은?</option><!--인증질문 2-->
-            <option value="3" :class="{ 'selected-color': userQuestion === '3' }">본인의 어린 시절에 존경 했던 인물은?</option><!--인증질문 3-->
+            <option value="본인의 어린시절 별명은?" :class="{ 'selected-color': userQuestion === '1' }">본인의 어린시절 별명은?</option><!--인증질문 1-->
+            <option value="본인의 어린시절 장래 희망은?" :class="{ 'selected-color': userQuestion === '2' }">본인의 어린시절 장래 희망은?</option><!--인증질문 2-->
+            <option value="본인의 어린 시절에 존경 했던 인물은?" :class="{ 'selected-color': userQuestion === '3' }">본인의 어린 시절에 존경 했던 인물은?</option><!--인증질문 3-->
             <!--추가 질문은 여기부터 추가하여 사용-->
         </select>
     </div>
