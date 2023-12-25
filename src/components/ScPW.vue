@@ -16,7 +16,6 @@
         <div>
           <input class="answer" placeholder="질문에 대한 답변" aria-label="기존 비밀번호" v-model="pw_answer">
         </div>
-        <div class="changeForm">
         <div>
           <input type="password1" class="form-control" placeholder="변경할 비밀번호" aria-label="변경할 비밀번호"
             aria-describedby="basic-addon1" v-model="change_pw">
@@ -25,7 +24,6 @@
         <div>
           <input type="password" class="form-control" placeholder="변경할 비밀번호 확인" aria-label="비밀번호 확인"
             aria-describedby="basic-addon1" v-model="pw_check">
-        </div>
         </div>
       </form>
     </div>
@@ -52,21 +50,74 @@
       msg: String,
     },
     components:{ FoodyHeader, },
-    method:{
-      PWchange(){
-        const idx = this.pw_question;
-        const pwda = this.pw_answer;
-        const newPwd = this.change_pw;
-        axios({
-          method: 'put',
-          url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/pwdchange',
-          params: {
-            idx,
-            pwda,
-            newPwd,
-          }
-        })
-      }
+  updated(){
+    this.QAcheck();
+  },
+  methods:{
+    QAcheck(){
+      const email = this.email;
+      const pwdq = this.pw_question;
+      const pwda = this.pw_answer;
+
+      axios({
+        method: 'post',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/checkpwdqa?',
+        params: {
+          email,
+          pwdq,
+          pwda,
+        }
+      })
+        .then((res) => {
+        const result = res.data;
+
+        switch(result.rst_cd){
+          case '-1': console.log(result);//"계정이 존재하지 않습니다."
+            break;
+          case '200': console.log(result);
+              this.checkCode = true;
+            break;
+          default:  console.log(result);
+            break;
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
+    },
+    PWchange(){
+      if(this.checkCode === true){
+      const email = this.email;
+      const pwd = this.change_pw;
+      const returnTO = () => this.$router.push({path : '/'});
+      axios({
+        method: 'put',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/replacepwd?',
+        params: {
+          email,
+          pwd,
+        }})
+        .then((res) => {
+        const result = res.data;
+
+        switch(result.rst_cd){
+          case '-3': console.log(result);
+            break;
+          case '200': console.log(result);
+                      returnTO();
+            break;
+          default:  console.log(result);
+            break;
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
+    }else{
+      //입력한 정보를 확인해 주세요 popup(그냥 띄워주고 확인버튼만 있으면 될 듯)//
+    }},
     },
   }
   </script>
@@ -97,10 +148,7 @@
     flex-direction: column;
     align-items: center;
   }
-  
-  .changeForm{
-    visibility:hidden;
-  }
+
   
   #notice{
     width: 70vw;
@@ -141,7 +189,6 @@
       margin-inline: auto;
       margin: 0.6rem;
   }
-  
   
   input[type="password"] {
       /*비밀번호*/

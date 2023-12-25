@@ -4,10 +4,10 @@
     <h3>비밀번호 변경</h3><hr id="first_line">
     <form>
       <div><select v-model="pw_question">
-            <option selected>질문 유형 선택</option>
-            <option>본인의 어린시절 별명은?</option><!--인증질문 1-->
-            <option>본인의 어린시절 장래 희망은?</option><!--인증질문 2-->
-            <option>본인의 어린 시절에 존경 했던 인물은?</option><!--인증질문 3-->
+            <option value="" disabled selected>질문 유형 선택</option>
+            <option value="본인의 어린시절 별명은?">본인의 어린시절 별명은?</option><!--인증질문 1-->
+            <option value="2">본인의 어린시절 장래 희망은?</option><!--인증질문 2-->
+            <option value="본인의 어린 시절에 존경 했던 인물은?">본인의 어린 시절에 존경 했던 인물은?</option><!--인증질문 3-->
             <!--추가 질문은 여기부터 추가하여 사용-->
       </select></div>
       <div>
@@ -42,7 +42,7 @@ export default {
       pw_answer: '',
       change_pw:'',
       pw_check:'',
-
+      checkCode:false,
     }
   },
     props: {
@@ -60,12 +60,13 @@ export default {
 
       axios({
         method: 'post',
-        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/user/checkpwdqa',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/checkpwdqa?',
         params: {
           email,
           pwdq,
           pwda,
         }
+      })
         .then((res) => {
         const result = res.data;
 
@@ -73,7 +74,7 @@ export default {
           case '-1': console.log(result);//"계정이 존재하지 않습니다."
             break;
           case '200': console.log(result);
-                    document.getElementsByClassName('changeForm').style.visibility = 'visible';
+              this.checkCode = true;
             break;
           default:  console.log(result);
             break;
@@ -83,19 +84,19 @@ export default {
               console.log('에러!!!');
               console.log(err);
             })
-      })
     },
     PWchange(){
+      if(this.checkCode === true){
       const email = this.email;
       const pwd = this.change_pw;
       const returnTO = () => this.$router.push({path : '/change'});
       axios({
         method: 'put',
-        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/replacepwd',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/replacepwd?',
         params: {
           email,
           pwd,
-        }
+        }})
         .then((res) => {
         const result = res.data;
 
@@ -113,8 +114,9 @@ export default {
               console.log('에러!!!');
               console.log(err);
             })
-      })
-    }
+    }else{
+      //입력한 정보를 확인해 주세요 popup(그냥 띄워주고 확인버튼만 있으면 될 듯)//
+    }},
   },
 }
 </script>
@@ -147,7 +149,7 @@ form{
 }
 
 .changeForm{
-  visibility:visible;
+  visibility: visible;
 }
 
 #notice{
