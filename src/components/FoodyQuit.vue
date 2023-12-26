@@ -49,17 +49,23 @@ export default {
             this.openModal =true;
         },
         GoodByeMyF(){
-            const userId = parseInt(this.$store.state.userId, 10);
+            const userIdx = this.$store.state.userId;
             const confirmed = this.goodbye;
             const goodbyeMyFriend = () => this.$router.push({path: '/QuitComp', name:'QuitComp'});
 
             if(confirmed !==false){
         // 서버로 데이터 전송
-            axios.delete('https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/resign?idx='+userId)
+            axios({
+                methods:'delete',
+                url:'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/resign?',
+                params:{
+                    userIdx,
+                }
+            })
             .then(res => {
                 const result = res.data;
             // 성공 시 작업
-            if(result==='200'){
+            if(result.rst_cd ==='200'){
                 console.log(res.data);
                 goodbyeMyFriend();
             }

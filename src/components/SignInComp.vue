@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'SignInComp',
   data() {
@@ -21,7 +23,42 @@ export default {
   },
   methods: {
     fnGoList(){
-      this.$router.replace({path:'/dietlist'});
+        const email = this.$store.state.email;
+        const pwd = this.$store.state.pwd;
+
+        axios({
+        method: 'get',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/login?',
+        params: {
+          email,
+          pwd
+        }
+      })
+      .then((res) => {
+      const goList = () => this.$router.replace({path:'/dietlist'});
+      const result = res.data;
+        // 4. 로그인이 성공하면 다른 페이지로 이동한다.
+        switch(result.rst_cd){
+          case '-1': console.log(result);//"계정이 존재하지 않습니다."
+            break;
+          case '-2': console.log(result);//"비밀번호가 틀렸습니다."
+            break;
+          case '200': console.log(result);
+                      this.$store.commit('setUserEmail', email);
+                      this.$store.commit('setUserIdx', result.user_idx);
+                      this.$store.commit('setUserName', result.nickNm);
+                      this.$store.commit('setDiseaseNm', result.diseaseNm)
+                      this.$store.commit('setAllergieList', result.allergieList);
+                      goList();
+            break;
+          default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
+            break;
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
     }
 } } 
 
