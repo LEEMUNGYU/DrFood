@@ -6,7 +6,7 @@
       <div><select v-model="pw_question">
             <option value="" disabled selected>질문 유형 선택</option>
             <option value="본인의 어린시절 별명은?">본인의 어린시절 별명은?</option><!--인증질문 1-->
-            <option value="2">본인의 어린시절 장래 희망은?</option><!--인증질문 2-->
+            <option value="본인의 어린시절 장래 희망은?">본인의 어린시절 장래 희망은?</option><!--인증질문 2-->
             <option value="본인의 어린 시절에 존경 했던 인물은?">본인의 어린 시절에 존경 했던 인물은?</option><!--인증질문 3-->
             <!--추가 질문은 여기부터 추가하여 사용-->
       </select></div>
@@ -49,9 +49,9 @@ export default {
     msg: String,
   },
   components:{ FoodyHeader, },
-  updated(){
+  /*updated(){
     this.QAcheck();
-  },
+  },확인버튼으로 교체*/
   methods:{
     QAcheck(){
       const email = this.email;

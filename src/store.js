@@ -48,6 +48,10 @@ const store = createStore({
     setDiseaseNm(state, diseaseNm){
       state.diseaseNm = '#' + diseaseNm.replace(/#/g, ' #');
     },
+    setAllergie(state, Allergie){
+      state.allergieList = '#' + Allergie.replace(/#/g, ' #');
+    3\733777
+    },
     setToken(state, token){
       state.token = token;
     },

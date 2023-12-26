@@ -57,7 +57,7 @@ export default {
         url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/login?',
         params: {
           email,
-          pwd
+          pwd,
         }
       })
       .then((res) => {

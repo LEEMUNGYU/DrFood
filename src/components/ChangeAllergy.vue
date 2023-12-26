@@ -180,7 +180,36 @@ export default {
                     console.log(err);
                 })
         },
+    getNewAllergie(){
+        const idx = this.userIdx;
+      axios({
+        method: 'get',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/showmedicalstats?',
+        params: {
+          idx,
+        }
+        })
+        .then((res) => {
+            const result = res.data;
+            switch(result.rst_cd){
+              case '200': console.log(result);
+                          this.$store.commit('setAllergie', result.allergie);
+                          this.$router.push({path: '/change', name:'ChangeInfo'});
+                          break;
+              default: console.log(result);
+                        break;
+             }
+        }) 
+        .catch(err => {
+            console.log('에러!!!');
+            console.log(err);
+        })
+
     }
+    },
+    distroyed(){
+        this.getNewAllergie();
+    },
 }
 </script>
 
