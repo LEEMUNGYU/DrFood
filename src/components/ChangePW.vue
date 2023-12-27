@@ -13,6 +13,9 @@
       <div>
         <input class="answer" placeholder="질문에 대한 답변" aria-label="기존 비밀번호" v-model="pw_answer">
       </div>
+      <div v-if="checkCode===false" @click="QAcheck()" id="checkQnA">확인</div>
+      <checkQAPopUp  v-if="this.openModal == true" @closePopup="closeModalView" />
+      <div v-if="checkCode===true" id="noticeCheck">본인확인이 완료 되었습니다.</div>
     <div class="changeForm">
       <div>
         <input type="password1" class="form-control" placeholder="변경할 비밀번호" aria-label="변경할 비밀번호"
@@ -32,6 +35,7 @@
 <script>
 import axios from 'axios';
 import FoodyHeader from '@/layout/FoodyHeader.vue';
+import checkQAPopUp from './checkQAPopUp.vue';
 
 export default {
   name:"changePW",
@@ -43,12 +47,13 @@ export default {
       change_pw:'',
       pw_check:'',
       checkCode:false,
+      openModal:false,
     }
   },
     props: {
     msg: String,
   },
-  components:{ FoodyHeader, },
+  components:{ FoodyHeader, checkQAPopUp, },
   /*updated(){
     this.QAcheck();
   },확인버튼으로 교체*/
@@ -72,6 +77,7 @@ export default {
 
         switch(result.rst_cd){
           case '-1': console.log(result);//"계정이 존재하지 않습니다."
+                  this.openModal = true;
             break;
           case '200': console.log(result);
               this.checkCode = true;
@@ -117,6 +123,9 @@ export default {
     }else{
       //입력한 정보를 확인해 주세요 popup(그냥 띄워주고 확인버튼만 있으면 될 듯)//
     }},
+    closeModalView(data){
+            this.openModal = data;
+    },
   },
 }
 </script>
@@ -160,6 +169,15 @@ form{
   margin-top: 0.4rem;
   margin-right: -0.6rem;
 }
+#noticeCheck{
+  width: 70vw;
+  color: red;
+  text-align: right;
+  font-size: 0.8rem;
+  margin-right: -0.6rem;
+  margin-bottom: 0.8rem;
+
+}
 select{
     box-sizing:border-box;
     width: 70vw;
@@ -181,6 +199,19 @@ select{
     margin: 0.6rem;
 }
 
+#checkQnA{
+      width: 15vw;
+      height: 4vh;
+      line-height: 4vh;
+      font-size: 1rem;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      background: #3f72af;
+      margin-bottom:3%;
+      margin-left: auto;
+      margin-right: 15%;
+}
 
 input[type="password"] {
     /*비밀번호*/

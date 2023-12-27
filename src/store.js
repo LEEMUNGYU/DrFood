@@ -50,7 +50,6 @@ const store = createStore({
     },
     setAllergie(state, Allergie){
       state.allergieList = '#' + Allergie.replace(/#/g, ' #');
-    3\733777
     },
     setToken(state, token){
       state.token = token;

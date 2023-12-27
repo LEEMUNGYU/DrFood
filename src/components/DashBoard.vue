@@ -41,7 +41,7 @@ export default {
           nickNm: '',
           allergieNm: '',
           nowTimes: '',
-          food: this.$store.state.TodayList,
+          food: [],
         }
     },
     mounted() {
@@ -50,8 +50,8 @@ export default {
     setInterval(() => {
       this.updateMealTime(); // 1초마다 갱신
     }, 1000);
-    this.callTodayList();
     console.log(this.$store.state.diseaseNm);
+    this.callTodayList();
     //this.createListWeek();
     },
     methods: {
@@ -85,16 +85,13 @@ export default {
       console.log(login.params.nickNm);
     },
     callTodayList(){
-      /*const email = this.email;
-      const date = this.nowTimes;
-      const occasion = this.mealTime;*/
-      const userIdx = this.$store.state.userId;
+      const idx = this.$store.state.userId;
       
       axios({
         method: 'get',
         url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/recommended?',
         params: {
-          userIdx,
+          idx,
         }
         })
         .then((res) => {
@@ -102,6 +99,13 @@ export default {
             switch(result.rst_cd){
               case '200': console.log(result);
                           this.$store.commit('setTodayList', result.foodList);
+                          this.food = this.$store.state.TodayList;
+                          break;
+              case '-1': console.log(result);
+                        console.log('실패');
+                          break;
+              case '-5': console.log(result);
+                        console.log('기기오류');
                           break;
               default: console.log(result);
                         break;

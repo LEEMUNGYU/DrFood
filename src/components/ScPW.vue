@@ -8,14 +8,17 @@
         </div>
         <div><select v-model="pw_question">
               <option selected>질문 유형 선택</option>
-              <option value="1">본인의 어린시절 별명은?</option><!--인증질문 1-->
-              <option value="2">본인의 어린시절 장래 희망은?</option><!--인증질문 2-->
-              <option value="3">본인의 어린 시절에 존경 했던 인물은?</option><!--인증질문 3-->
+              <option value="본인의 어린시절 별명은?">본인의 어린시절 별명은?</option><!--인증질문 1-->
+              <option value="본인의 어린시절 장래 희망은?">본인의 어린시절 장래 희망은?</option><!--인증질문 2-->
+              <option value="본인의 어린 시절에 존경 했던 인물은?">본인의 어린 시절에 존경 했던 인물은?</option><!--인증질문 3-->
               <!--추가 질문은 여기부터 추가하여 사용-->
         </select></div>
         <div>
           <input class="answer" placeholder="질문에 대한 답변" aria-label="기존 비밀번호" v-model="pw_answer">
         </div>
+        <div v-if="checkCode===false" @click="QAcheck()" id="checkQnA">확인</div>
+        <checkQAPopUp  v-if="this.openModal == true" @closePopup="closeModalView" />
+        <div v-if="checkCode===true" id="noticeCheck">본인확인이 완료 되었습니다.</div>
         <div>
           <input type="password1" class="form-control" placeholder="변경할 비밀번호" aria-label="변경할 비밀번호"
             aria-describedby="basic-addon1" v-model="change_pw">
@@ -26,6 +29,7 @@
             aria-describedby="basic-addon1" v-model="pw_check">
         </div>
       </form>
+      <compleatePW v-if="openModal2==true" @Good='good()' />
     </div>
   <button type="submit" class="btn" id="pwChangeGo" v-on:click="PWchange()">비밀번호 변경</button>
   </template>
@@ -33,6 +37,8 @@
   <script>
   import axios from 'axios';
   import FoodyHeader from '@/layout/FoodyHeader.vue';
+  import checkQAPopUp from './checkQAPopUp.vue';
+  import compleatePW from './compleatePW.vue';
   
   export default {
     name:"scPW",
@@ -43,16 +49,16 @@
         pw_answer: '',
         change_pw:'',
         pw_check:'',
+        checkCode:false,
+        openModal:false,
+        openModal2:false,
   
       }
     },
       props: {
       msg: String,
     },
-    components:{ FoodyHeader, },
-  updated(){
-    this.QAcheck();
-  },
+    components:{ FoodyHeader,checkQAPopUp,compleatePW, },
   methods:{
     QAcheck(){
       const email = this.email;
@@ -73,6 +79,7 @@
 
         switch(result.rst_cd){
           case '-1': console.log(result);//"계정이 존재하지 않습니다."
+                  this.openModal = true;
             break;
           case '200': console.log(result);
               this.checkCode = true;
@@ -90,7 +97,6 @@
       if(this.checkCode === true){
       const email = this.email;
       const pwd = this.change_pw;
-      const returnTO = () => this.$router.push({path : '/'});
       axios({
         method: 'put',
         url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/replacepwd?',
@@ -105,7 +111,7 @@
           case '-3': console.log(result);
             break;
           case '200': console.log(result);
-                      returnTO();
+              this.openModal2 = true;
             break;
           default:  console.log(result);
             break;
@@ -118,6 +124,12 @@
     }else{
       //입력한 정보를 확인해 주세요 popup(그냥 띄워주고 확인버튼만 있으면 될 듯)//
     }},
+    closeModalView(data){
+            this.openModal = data;
+    },
+    good(){
+      this.$router.push({path : '/'});
+    }
     },
   }
   </script>
@@ -158,6 +170,14 @@
     margin-top: 0.4rem;
     margin-right: -0.6rem;
   }
+  #noticeCheck{
+  width: 70vw;
+  color: red;
+  text-align: right;
+  font-size: 0.8rem;
+  margin-right: -0.6rem;
+  margin-bottom: 0.8rem;
+  }
   select{
       box-sizing:border-box;
       width: 70vw;
@@ -190,6 +210,19 @@
       margin: 0.6rem;
   }
   
+#checkQnA{
+      width: 15vw;
+      height: 4vh;
+      line-height: 4vh;
+      font-size: 1rem;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      background: #3f72af;
+      margin-bottom:3%;
+      margin-left: auto;
+      margin-right: 15%;
+}
   input[type="password"] {
       /*비밀번호*/
       box-sizing:border-box;
