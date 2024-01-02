@@ -13,7 +13,7 @@
             </div>
             <div class="list_bd">
                 <div class="list_el">
-                    <div  v-for="(item, index) in selectedMealItems" :key="index" id="el"  @click="selectItem(item)" :class="{ 'selected': selectedItem === item }">{{ item }}</div>
+                    <div  v-for="(item, index) in selectedMealItems" :key="index" id="el"  @click="selectItem(item)" :class="{ 'selected': selectedItem === item }">{{ item.name.length > 4 ? item.substring(0, 4) + '..' : item.name }}</div>
                 </div>
                 <div>
                     <div id="tot_zip" v-show="!selectedItem">
@@ -51,7 +51,7 @@
             </div>
             <div class="list_bd1">
                 <div class="list_el1">
-                    <div  v-for="(item, index) in selectedMealItems1" :key="index" id="el1"  @click="selectItem1(item)" :class="{ 'selected': selectedItem1 === item }">{{ item }}</div>
+                    <div  v-for="(item, index) in selectedMealItems1" :key="index" id="el1"  @click="selectItem1(item)" :class="{ 'selected': selectedItem1 === item }">{{ item.name.length > 4 ? item.substring(0, 4) + '..' : item.name }}</div>
                 </div>
                 <div>
                     <div id="tot_zip1" v-show="!selectedItem1">
@@ -89,7 +89,7 @@
             </div>
             <div class="list_bd2">
                 <div class="list_el2">
-                    <div  v-for="(item, index) in selectedMealItems2" :key="index" id="el2"  @click="selectItem2(item)" :class="{ 'selected': selectedItem2 === item }">{{ item }}</div>
+                    <div  v-for="(item, index) in selectedMealItems2" :key="index" id="el2"  @click="selectItem2(item)" :class="{ 'selected': selectedItem2 === item }">{{ item.name.length > 4 ? item.substring(0, 4) + '..' : item.name }}</div>
                 </div>
                 <div>
                     <div id="tot_zip2" v-show="!selectedItem2">
@@ -152,27 +152,26 @@ export default {
             selectedMeal1: 'mor',
             selectedMeal2: 'mor',
             mealItems: {
-                mor: this.$store.state.DietList[0],
-                lun: this.$store.state.DietList[1],
-                din: this.$store.state.DietList[2]
+                mor: [],
+                lun: [],
+                din: [],
             },
             mealItems1: {
-                mor: this.$store.state.DietList[3],
-                lun: this.$store.state.DietList[4],
-                din: this.$store.state.DietList[5]
+                mor: [],
+                lun: [],
+                din: []
             },
             mealItems2: {
-                mor: this.$store.state.DietList[6],
-                lun: this.$store.state.DietList[7],
-                din: this.$store.state.DietList[8]
+                mor: [],
+                lun: [],
+                din: []
             },
             itemNutrition: {
-                'm아이템 1': { '열량': { unit: 'kcal', amount: '100' }, '탄수화물': { unit: 'g', amount: '20' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-                'm아이템 2': { '열량': { unit: 'kcal', amount: '150' }, '탄수화물': { unit: 'g', amount: '25' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-                'm아이템 3': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '22' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-                'm아이템 4': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '23' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-                'm아이템 5': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '22' }, '단백질': { unit: 'g', amount: '21' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-                // 이하 각 아이템에 대한 영양 성분을 추가하십시오.
+                'm아이템 1': { '열량': { unit: 'kcal', amount: '' }, '탄수화물': { unit: 'g', amount: '' }, '단백질': { unit: 'g', amount: '' } , '지방': { unit: 'g', amount: '' }, '콜레스테롤': { unit: 'mg', amount: '' }, '나트륨': { unit: 'mg', amount: '' } },
+                'm아이템 2': { '열량': { unit: 'kcal', amount: '' }, '탄수화물': { unit: 'g', amount: '' }, '단백질': { unit: 'g', amount: '' } , '지방': { unit: 'g', amount: '' }, '콜레스테롤': { unit: 'mg', amount: '' }, '나트륨': { unit: 'mg', amount: '' } },
+                'm아이템 3': { '열량': { unit: 'kcal', amount: '' }, '탄수화물': { unit: 'g', amount: '' }, '단백질': { unit: 'g', amount: '' } , '지방': { unit: 'g', amount: '' }, '콜레스테롤': { unit: 'mg', amount: '' }, '나트륨': { unit: 'mg', amount: '' } },
+                'm아이템 4': { '열량': { unit: 'kcal', amount: '' }, '탄수화물': { unit: 'g', amount: '' }, '단백질': { unit: 'g', amount: '' } , '지방': { unit: 'g', amount: '' }, '콜레스테롤': { unit: 'mg', amount: '' }, '나트륨': { unit: 'mg', amount: '' } },
+                'm아이템 5': { '열량': { unit: 'kcal', amount: '' }, '탄수화물': { unit: 'g', amount: '' }, '단백질': { unit: 'g', amount: '' } , '지방': { unit: 'g', amount: '' }, '콜레스테롤': { unit: 'mg', amount: '' }, '나트륨': { unit: 'mg', amount: '' } },
             },
             itemNutrition1: {
                 'm아이템 1': { '열량': { unit: 'kcal', amount: '100' }, '탄수화물': { unit: 'g', amount: '20' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
@@ -180,7 +179,6 @@ export default {
                 'm아이템 3': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '22' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
                 'm아이템 4': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '23' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
                 'm아이템 5': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '22' }, '단백질': { unit: 'g', amount: '21' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-                // 이하 각 아이템에 대한 영양 성분을 추가하십시오.
             },
             itemNutrition2: {
                 'm아이템 1': { '열량': { unit: 'kcal', amount: '100' }, '탄수화물': { unit: 'g', amount: '20' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
@@ -188,7 +186,6 @@ export default {
                 'm아이템 3': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '22' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
                 'm아이템 4': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '23' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
                 'm아이템 5': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '22' }, '단백질': { unit: 'g', amount: '21' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-                // 이하 각 아이템에 대한 영양 성분을 추가하십시오.
             },
             selectedItem: '아침 아이템 1',
             selectedItem1: '아침 아이템 1',
@@ -196,6 +193,7 @@ export default {
             nowTimes:'',
             nextDay:'',
             dayAfterNext:'',
+            user_id: this.$store.state.userId,
         };
     },
     methods: {
@@ -221,14 +219,16 @@ export default {
             this.dayAfterNext = `${dayAfterNextYear}-${dayAfterNextMonth}-${dayAfterNextDayOfMonth}`;
         },
         pullDietList(){
-            const email = this.user_id;
-            const pwd = this.user_pw;
+            const idx = this.user_id;
+            const date = this.nowTimes;
+            const occasion =  (this.selectedMeal === 'mor' ? '아침' : this.selectedMeal === 'lun' ? '점심' : '저녁');
         axios({
         method: 'get',
-        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/login?',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/searchRmdMeal?',
         params: {
-          email,
-          pwd
+          idx,
+          date,
+          occasion,
         }
         })
         .then((res) => {
@@ -237,13 +237,103 @@ export default {
         switch(result.rst_cd){
           case '-1': console.log(result);//"계정이 존재하지 않습니다."
             break;
-          case '-2': console.log(result);//"비밀번호가 틀렸습니다."
-            break;
           case '200': console.log(result);
-                      this.$store.commit('setDietList', result.user_idx);
-                      this.$store.commit('setNutri', result.user_idx);
+                      this.mealItems[this.selectedMeal] = result.foodList;
             break;
           default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
+            break;
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
+        },
+        callNutrition(){
+            const selectedMealItems = this.mealItems[this.selectedMeal];
+            for(let i=0; i<=selectedMealItems.length; i++){
+                const foodIdx = selectedMealItems[i].foodIdx;
+            axios({
+            method: 'get',
+            url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/searchRmdMeal?',
+            params: {
+                foodIdx,
+            }
+            })
+            .then((res) => {
+            const result = res.data;
+
+            switch(result.rst_cd){
+            case '-1': console.log(result);
+                break;
+            case '200': console.log(result);
+                      this.itemNutrition[i] = { '열량': { unit: 'kcal', amount: result.kcal }, '탄수화물': { unit: 'g', amount: result.carbo }, '단백질': { unit: 'g', amount: result.protein } , '지방': { unit: 'g', amount: result.fat }, '콜레스테롤': { unit: 'mg', amount: result.chole }, '나트륨': { unit: 'mg', amount: result.salt } };
+                break;
+            default:  console.log(result);
+                break;
+                }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
+            }
+            this.totalNutrition();
+        },
+        pullDietList1(){
+            const idx = this.user_id;
+            const date = this.nextDay;
+            const occasion =  (this.selectedMeal1 === 'mor' ? '아침' : this.selectedMeal1 === 'lun' ? '점심' : '저녁');
+        axios({
+        method: 'get',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/searchRmdMeal?',
+        params: {
+          idx,
+          date,
+          occasion,
+        }
+        })
+        .then((res) => {
+        const result = res.data;
+
+        switch(result.rst_cd){
+          case '-1': console.log(result);
+            break;
+          case '200': console.log(result);
+                      this.mealItems1[this.selectedMeal1] = result.foodList;
+            break;
+          default:  console.log(result);
+            break;
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
+        },
+        pullDietList2(){
+            const idx = this.user_id;
+            const date = this.nowTimes;
+            const occasion =  (this.selectedMeal2 === 'mor' ? '아침' : this.selectedMeal2 === 'lun' ? '점심' : '저녁');
+        axios({
+        method: 'get',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/searchRmdMeal?',
+        params: {
+          idx,
+          date,
+          occasion,
+        }
+        })
+        .then((res) => {
+        const result = res.data;
+
+        switch(result.rst_cd){
+          case '-1': console.log(result);
+            break;
+          case '200': console.log(result);
+                      this.mealItems2[this.selectedMeal2] = result.foodList;
+            break;
+          default:  console.log(result);
             break;
             }
             })
@@ -434,10 +524,33 @@ export default {
             return total;
         },
     },
+    watch:{
+        selectedMeal(newVal, oldVal){
+            if(newVal != oldVal){
+                this.pullDietList();
+                this.callNutrition();
+            }
+        },
+        selectedMeal1(newVal, oldVal){
+            if(newVal != oldVal){
+                this.pullDietList1();
+            }
+        },
+        selectedMeal2(newVal, oldVal){
+            if(newVal != oldVal){
+                this.pullDietList2();
+            }
+        },
+    },
     created() {
         // 페이지 진입 시 초기 선택 설정
         this.selectedMeal = 'mor'; // 기본값은 '아침'
         this.selectedItem = null; // 선택된 아이템 초기화
+        this.getCurrentDate();
+        this.pullDietList();
+        this.pullDietList1();
+        this.pullDietList2();
+        this.callNutrition();
     },
     props: {
         msg: String
@@ -523,6 +636,7 @@ h3{
     font-size:0.65rem;
     width: 13.6vw;
     height: 2.5vh;
+    overflow: hidden;
     background: #001335;
     border-radius: 4px;
     color: #FFFFFF;
@@ -655,6 +769,7 @@ h3{
     font-size:0.65rem;
     width: 13.6vw;
     height: 2.5vh;
+    overflow: hidden;
     background: #001335;
     border-radius: 4px;
     color: #FFFFFF;
@@ -787,6 +902,7 @@ h3{
     font-size:0.65rem;
     width: 13.6vw;
     height: 2.5vh;
+    overflow: hidden;
     background: #001335;
     border-radius: 4px;
     color: #FFFFFF;

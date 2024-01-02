@@ -12,7 +12,7 @@
         </div>
     </div>
         <!--버튼 기능 활성화 해야 됨.-->
-    
+    <div>{{ this.mealItems }}</div>
     <div class="container">
         <div v-for="(meal, index) in meals"
                 :key="index" 
@@ -42,7 +42,10 @@
             <div class="writeListItems">
                     <div class="writeListEle">
                         <div v-for="(item, index) in selectedMealItems" :key="index"  class="inputWrapper">
-                            <input v-model="selectedMealItems[index].value" :placeholder="getPlaceholderText(index)" :disabled="selectedMealItems[index].disabled"><div class="puls" @click="decisionList(index, true)">+</div><div class="minus" @click="decisionList(index, false)">-</div>
+                            <input v-model="selectedMealItems[index].value" :placeholder="getPlaceholderText(index)" :disabled="selectedMealItems[index].disabled">
+                                    <div class="puls" @click="decisionList(index, true)">+</div>
+                                    <div class="eliminate" @click="removeLastItem(index, true)">x</div>
+                                    <div class="minus" @click="decisionList(index, false)">-</div>
                         </div>
                     </div>
                 <div class="compNcan">
@@ -55,7 +58,7 @@
         <div class="main">
             <div class="word">식단 추천</div>
             <div class="writeListItems">
-                <div  v-for="(item, index) in selectedMealItemsRecord" :key="index" id="item" class="item1">{{ item.value }}</div>
+                <div  v-for="(item, index) in selectedMealItemsRecord" :key="index" id="item" class="item1">{{ item }}</div>
             </div>
         </div>
     </div>
@@ -67,7 +70,7 @@
 import RecordPopUp from '@/components/RecordPopUp.vue';
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import FoodyNav from '@/layout/FoodyNav.vue';
-//import axios from 'axios';
+import axios from 'axios';
 
 export default {
     name: 'DietManage',
@@ -95,39 +98,17 @@ export default {
         ],
         selectedMeal: 'mor',
         mealItems: {
-                mor: [  {value: 'm아이템 1', active: true, check: false, disabled: false} ,
-                        {value: 'm아이템 2', active: true, check: false, disabled: false} ,
-                        {value: 'm아이템 3', active: true, check: false, disabled: false} ,
-                        {value: 'm아이템 4', active: true, check: false, disabled: false} ,
-                        {value: 'm아이템 5', active: true, check: false, disabled: false} ], 
-                lun: [  {value: 'l아이템 1', active: true, check: false, disabled: false} ,
-                        {value: 'l아이템 2', active: true, check: false, disabled: false} ,
-                        {value: 'l아이템 3', active: true, check: false, disabled: false} ,
-                        {value: 'l아이템 4', active: true, check: false, disabled: false} ,
-                        {value: 'l아이템 5', active: true, check: false, disabled: false} ],
-                din: [  {value: 'd아이템 1', active: true, check: false, disabled: false} ,
-                        {value: 'd아이템 2', active: true, check: false, disabled: false} ,
-                        {value: 'd아이템 3', active: true, check: false, disabled: false} ,
-                        {value: 'd아이템 4', active: true, check: false, disabled: false} ,
-                        {value: 'd아이템 5', active: true, check: false, disabled: false} ]
+                mor: [], 
+                lun: [],
+                din: []
         },
         mealItemsRecord: {
-                mor: [  {value: 'm아이템 1', active: true, check: false} ,
-                        {value: 'm아이템 2', active: true, check: false} , 
-                        {value: 'm아이템 3', active: true, check: false} ,
-                        {value: 'm아이템 4', active: true, check: false} ,
-                        {value: 'm아이템 5', active: true, check: false} ],
-                lun: [  {value: 'l아이템 1', active: true, check: false} ,
-                        {value: 'l아이템 2', active: true, check: false} ,
-                        {value: 'l아이템 3', active: true, check: false} ,
-                        {value: 'l아이템 4', active: true, check: false} ,
-                        {value: 'l아이템 5', active: true, check: false} ],
-                din: [  {value: 'd아이템 1', active: true, check: false} ,
-                        {value: 'd아이템 2', active: true, check: false} ,
-                        {value: 'd아이템 3', active: true, check: false} ,
-                        {value: 'd아이템 4', active: true, check: false} , 
-                        {value: 'd아이템 5', active: true, check: false} ]
+                mor: [],
+                lun: [],
+                din: []
         },
+        lookTimes: '',
+        user_id: this.$store.state.userId,
         }
     },
     mounted() {
@@ -147,17 +128,23 @@ export default {
             const today = new Date();
             const month = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
             const day = today.getDate();
+            const year = today.getFullYear();
             this.currentDate = `${month}월 ${day}일`;
+            this.lookTimes = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         },
         moveDay(offset) {
-            const currentDate = new Date(this.currentDate.replace(/월|일/g, '').replace(/\s/g, '/'));
+            const currentDate = new Date(this.lookTimes);
             const newDate = new Date(currentDate.setDate(currentDate.getDate() + offset));
 
             const month = (newDate.getMonth() + 1);
             const day = newDate.getDate();
+            const year = newDate.getFullYear();
+
             this.currentDate = `${month}월 ${day}일`;
+            this.lookTimes = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         },
         writeRecord(){
+            this.setRecordListMealItems();
             this.showWriteRecord = true;
         },
         selectMealTime(mealId) {
@@ -183,7 +170,7 @@ export default {
             this.selectedMealItems.splice(newIndex, 0, {value:'', active:true, check:false}); // 빈 문자열로 새로운 항목 추가
         },
         recordCancel(){
-            this.mealItems[this.selectedMeal] = this.mealItemsRecord[this.selectedMeal].map(item => ({ ...item }));
+            this.setRecordListMealItems();
             this.showWriteRecord= false;
             this.isSaveVisible = true;
         },
@@ -192,33 +179,45 @@ export default {
         },
         decisionList(index, hide){
             const plusIcons = document.querySelectorAll('.puls');
+            const eliIcons = document.querySelectorAll('.eliminate');
             const minusIcons = document.querySelectorAll('.minus');
+            if (index >= 0 && index < this.selectedMealItems.length) {
             if (hide) {
             // 선택된 input의 상태를 저장하고 + 아이콘을 숨김
                 this.selectedMealItems[index] = { value: this.selectedMealItems[index].value, disabled: true};
                 // 해당하는 plus 아이콘을 숨김
                 plusIcons[index].style.display = 'none';
+                eliIcons[index].style.display = 'none';
                 minusIcons[index].style.display = 'block';
             } else {
             // + 아이콘을 다시 visible 상태로 변경하고 input을 다시 활성화
                 this.selectedMealItems[index] = { value: this.selectedMealItems[index].value, disabled: false};
                 plusIcons[index].style.display = 'block';
+                eliIcons[index].style.display = 'block';
                 minusIcons[index].style.display = 'none';
             }
+        }
         },
         setSaveRecord(){
             const plusIcons = document.querySelectorAll('.puls');
+            const eliIcons = document.querySelectorAll('.eliminate');
             const minusIcons = document.querySelectorAll('.minus');
             const comp =  document.querySelectorAll('.comp');
             const can =  document.querySelectorAll('.can');
             const del = document.querySelectorAll('.del');
+
+            if (this.selectedMealItems.length > 0) {
             this.selectedMealItems.forEach((item, index) => {
                 const plusIcon = plusIcons[index];
+                const eliIcon = eliIcons[index];
                 const minusIcon = minusIcons[index];
 
                 plusIcon.style.display = 'none';
+                eliIcon.style.display = 'none';
                 minusIcon.style.display = 'none';
-            });
+                });
+            }
+
             comp.forEach(button => (button.style.display = 'none'));
             can.forEach(button => (button.style.display = 'none'));
             del.forEach(button => (button.style.display = 'block'));
@@ -239,14 +238,17 @@ export default {
         },
         setChangeRecord() {
             const plusIcons = document.querySelectorAll('.puls');
+            const eliIcons = document.querySelectorAll('.eliminate');
             const minusIcons = document.querySelectorAll('.minus');
             const comp =  document.querySelectorAll('.comp');
             const can =  document.querySelectorAll('.can');
             const del = document.querySelectorAll('.del');
             this.selectedMealItems.forEach((item, index) => {
                 const minusIcon = minusIcons[index];
+                const eliIcon = eliIcons[index];
                 const plusIcon = plusIcons[index];
                 minusIcon.style.display = 'none';
+                eliIcon.style.display = 'block';
                 plusIcon.style.display = 'block';
             });
             comp.forEach(button => (button.style.display = 'block'));
@@ -270,6 +272,43 @@ export default {
         saveRecord(){
             this.setSaveRecord();
             this.mealItems[this.selectedMeal].forEach(item => {item.disabled = true, item.check = true;});
+
+            const userIdx = this.user_Id;
+            const date = this.currentDate;
+            const occation = (this.selectedMeal === 'mor' ? '아침' : this.selectedMeal === 'lun' ? '점심' : '저녁');
+            const morValues = this.mealItems.mor.map(item => item.value);
+            const lunValues = this.mealItems.lun.map(item => item.value);
+            const dinValues = this.mealItems.din.map(item => item.value);
+            const writeValues =  (this.selectedMeal === 'mor' ? morValues : this.selectedMeal === 'lun' ? lunValues : dinValues);
+            const foodRecord = writeValues.join(', ');
+            
+            axios({
+                method: 'post',
+                url:'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderMeal/writeMealRecords?',
+                params: {
+                    userIdx,
+                    date,
+                    occation,
+                    foodRecord,
+                }})
+            .then((res) => {
+                const result = res.data;
+            // 성공 시 작업
+            switch(result){
+                case '200': console.log(res.data);
+                            break;
+                case '-2': console.log(res.data);
+                            break;
+                case '-3': console.log(res.data);
+                            break;
+                default : console.log(res.data);
+                            break;
+            }
+            })
+            .catch(err => {
+                console.log('에러!!!');
+                console.log(err);
+            })
         },
         ChangeRecord() {
             this.setChangeRecord();
@@ -280,6 +319,54 @@ export default {
         },
         closeModalView(data){
             this.openModal = data;
+        },
+        removeLastItem(index) {
+            if (index >= 0 && index < this.selectedMealItems.length) {
+            this.selectedMealItems.splice(index, 1);
+            }
+        },
+       callRecordList(){
+            const userIdx = this.user_id;
+            const date = String(this.lookTimes);
+            const occasion =  (this.selectedMeal === 'mor' ? '아침' : this.selectedMeal === 'lun' ? '점심' : '저녁');
+        axios({
+        method: 'get',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/searchRmdMeal?',
+        params: {
+          userIdx,
+          date,
+          occasion
+        }
+        })
+        .then((res) => {
+        const result = res.data;
+
+        switch(result.rst_cd){
+          case '-1': console.log(result);//"계정이 존재하지 않습니다."
+            break;
+          case '200': console.log(result);
+                      this.mealItemsRecord[this.selectedMeal] = result.foodList;
+            break;
+          default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
+            break;
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
+        },
+        setRecordListMealItems(){
+            for(let i=0; i<this.mealItemsRecord[this.selectedMeal].length; i++){
+                this.mealItems[this.selectedMeal][i] = {value:this.mealItemsRecord[this.selectedMeal][i], active: true, disabled: false, check: false};
+            }
+        },
+        settingFirst(){
+        this.originalMealItems = { ...this.mealItems };
+        const allChecksFalse = Object.values(this.mealItems).every(items => items.every(item => !item.check));
+        if (allChecksFalse) {
+            this.showWriteRecord = false;
+        }
         },
     },
     watch: {
@@ -294,13 +381,18 @@ export default {
                 this.Reco = false;
             }
         },
+        selectedMeal(newVal, oldVal){
+            if(newVal != oldVal){
+                this.callRecordList();
+            }
+        },
     },
     created() {
-        this.originalMealItems = { ...this.mealItems };
-        const allChecksFalse = Object.values(this.mealItems).every(items => items.every(item => !item.check));
-        if (allChecksFalse) {
-            this.showWriteRecord = false;
-        }
+        this.setCurrentDate();
+        this.selectedMeal = 'mor';
+        this.settingFirst();
+        this.callRecordList();
+        this.setRecordListMealItems();
     },
 }
 </script>
@@ -568,7 +660,17 @@ input:disabled {
     margin-left: 6%;
     margin-top:3%;
 }
-
+.eliminate{
+    color:#FF5454;
+    font-size: 1.2rem;
+    width: 12vw;
+    height: 4.5vh;
+    background: #FFFFFF;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    margin-left: 6%;
+    margin-top:3%;
+}
 .minus{
     display:none;
     color:#FF5454;
