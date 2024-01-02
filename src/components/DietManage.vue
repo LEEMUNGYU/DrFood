@@ -12,7 +12,6 @@
         </div>
     </div>
         <!--버튼 기능 활성화 해야 됨.-->
-    <div>{{ this.mealItems }}</div>
     <div class="container">
         <div v-for="(meal, index) in meals"
                 :key="index" 
@@ -270,12 +269,9 @@ export default {
             this.isSaveVisible = this.hasSavedRecord(this.selectedMeal);
         },
         saveRecord(){
-            this.setSaveRecord();
-            this.mealItems[this.selectedMeal].forEach(item => {item.disabled = true, item.check = true;});
-
-            const userIdx = this.user_Id;
-            const date = this.currentDate;
-            const occation = (this.selectedMeal === 'mor' ? '아침' : this.selectedMeal === 'lun' ? '점심' : '저녁');
+            const userIdx = this.$store.state.userId;
+            const date = this.lookTimes;
+            const occasion = (this.selectedMeal === 'mor' ? '아침' : this.selectedMeal === 'lun' ? '점심' : '저녁');
             const morValues = this.mealItems.mor.map(item => item.value);
             const lunValues = this.mealItems.lun.map(item => item.value);
             const dinValues = this.mealItems.din.map(item => item.value);
@@ -288,7 +284,7 @@ export default {
                 params: {
                     userIdx,
                     date,
-                    occation,
+                    occasion,
                     foodRecord,
                 }})
             .then((res) => {
@@ -309,6 +305,10 @@ export default {
                 console.log('에러!!!');
                 console.log(err);
             })
+            
+            this.setSaveRecord();
+            this.mealItems[this.selectedMeal].forEach(item => {item.disabled = true, item.check = true;});
+
         },
         ChangeRecord() {
             this.setChangeRecord();
@@ -345,7 +345,7 @@ export default {
           case '-1': console.log(result);//"계정이 존재하지 않습니다."
             break;
           case '200': console.log(result);
-                      this.mealItemsRecord[this.selectedMeal] = result.foodList;
+                      this.mealItemsRecord[this.selectedMeal] = result.foodList.map(item => item.name);
             break;
           default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
             break;

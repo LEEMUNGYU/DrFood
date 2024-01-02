@@ -255,7 +255,7 @@ export default {
                 const foodIdx = selectedMealItems[i].foodIdx;
             axios({
             method: 'get',
-            url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/searchRmdMeal?',
+            url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/foodnutri/getNutrition?',
             params: {
                 foodIdx,
             }
@@ -483,7 +483,6 @@ export default {
             }
             return total;
         },
-        
         selectedMealItems1() {
             return this.mealItems1[this.selectedMeal1];
         },
@@ -502,8 +501,7 @@ export default {
                 }
             }
             return total;
-        },
-        
+        },        
         selectedMealItems2() {
             return this.mealItems2[this.selectedMeal2];
         },
