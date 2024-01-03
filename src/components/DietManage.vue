@@ -141,6 +141,7 @@ export default {
 
             this.currentDate = `${month}월 ${day}일`;
             this.lookTimes = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            this.callRecordList();
         },
         writeRecord(){
             this.setRecordListMealItems();
