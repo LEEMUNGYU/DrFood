@@ -11,9 +11,12 @@
                 @click="selectMealTime(meal.id)"
                 :class="{ 'mealTime': true, 'selected': selectedMeal === meal.id }">{{ meal.name }}</div>
             </div>
+            <div v-if="mealItems.mor && mealItems.mor[1]">{{ mealItems.mor[1].foodIdx }}</div>
+            <div>{{ this.foodCode }}</div>
+            <div>{{ this.itemNutrition }}</div>
             <div class="list_bd">
                 <div class="list_el">
-                    <div  v-for="(item, index) in selectedMealItems" :key="index" id="el"  @click="selectItem(item)" :class="{ 'selected': selectedItem === item }">{{ item.name.length > 4 ? item.substring(0, 4) + '..' : item.name }}</div>
+                    <div  v-for="(item, index) in selectedMealItems" :key="index" id="el"  @click="selectItem(item)" :class="{ 'selected': selectedItem === item.name }">{{ item.name.length > 4 ? item.name.substring(0, 4) + '..' : item.name }}</div>
                 </div>
                 <div>
                     <div id="tot_zip" v-show="!selectedItem">
@@ -51,7 +54,7 @@
             </div>
             <div class="list_bd1">
                 <div class="list_el1">
-                    <div  v-for="(item, index) in selectedMealItems1" :key="index" id="el1"  @click="selectItem1(item)" :class="{ 'selected': selectedItem1 === item }">{{ item.name.length > 4 ? item.substring(0, 4) + '..' : item.name }}</div>
+                    <div  v-for="(item, index) in selectedMealItems1" :key="index" id="el1"  @click="selectItem1(item)" :class="{ 'selected': selectedItem1 === item.name }">{{ item.name.length > 4 ? item.name.substring(0, 4) + '..' : item.name }}</div>
                 </div>
                 <div>
                     <div id="tot_zip1" v-show="!selectedItem1">
@@ -89,7 +92,7 @@
             </div>
             <div class="list_bd2">
                 <div class="list_el2">
-                    <div  v-for="(item, index) in selectedMealItems2" :key="index" id="el2"  @click="selectItem2(item)" :class="{ 'selected': selectedItem2 === item }">{{ item.name.length > 4 ? item.substring(0, 4) + '..' : item.name }}</div>
+                    <div  v-for="(item, index) in selectedMealItems2" :key="index" id="el2"  @click="selectItem2(item)" :class="{ 'selected': selectedItem2 === item.name }">{{ item.name.length > 4 ? item.name.substring(0, 4) + '..' : item.name }}</div>
                 </div>
                 <div>
                     <div id="tot_zip2" v-show="!selectedItem2">
@@ -166,13 +169,10 @@ export default {
                 lun: [],
                 din: []
             },
-            itemNutrition: {
-                'm아이템 1': { '열량': { unit: 'kcal', amount: '' }, '탄수화물': { unit: 'g', amount: '' }, '단백질': { unit: 'g', amount: '' } , '지방': { unit: 'g', amount: '' }, '콜레스테롤': { unit: 'mg', amount: '' }, '나트륨': { unit: 'mg', amount: '' } },
-                'm아이템 2': { '열량': { unit: 'kcal', amount: '' }, '탄수화물': { unit: 'g', amount: '' }, '단백질': { unit: 'g', amount: '' } , '지방': { unit: 'g', amount: '' }, '콜레스테롤': { unit: 'mg', amount: '' }, '나트륨': { unit: 'mg', amount: '' } },
-                'm아이템 3': { '열량': { unit: 'kcal', amount: '' }, '탄수화물': { unit: 'g', amount: '' }, '단백질': { unit: 'g', amount: '' } , '지방': { unit: 'g', amount: '' }, '콜레스테롤': { unit: 'mg', amount: '' }, '나트륨': { unit: 'mg', amount: '' } },
-                'm아이템 4': { '열량': { unit: 'kcal', amount: '' }, '탄수화물': { unit: 'g', amount: '' }, '단백질': { unit: 'g', amount: '' } , '지방': { unit: 'g', amount: '' }, '콜레스테롤': { unit: 'mg', amount: '' }, '나트륨': { unit: 'mg', amount: '' } },
-                'm아이템 5': { '열량': { unit: 'kcal', amount: '' }, '탄수화물': { unit: 'g', amount: '' }, '단백질': { unit: 'g', amount: '' } , '지방': { unit: 'g', amount: '' }, '콜레스테롤': { unit: 'mg', amount: '' }, '나트륨': { unit: 'mg', amount: '' } },
+            foodCode:{
+
             },
+            itemNutrition: {},
             itemNutrition1: {
                 'm아이템 1': { '열량': { unit: 'kcal', amount: '100' }, '탄수화물': { unit: 'g', amount: '20' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
                 'm아이템 2': { '열량': { unit: 'kcal', amount: '150' }, '탄수화물': { unit: 'g', amount: '25' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
@@ -187,9 +187,9 @@ export default {
                 'm아이템 4': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '23' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
                 'm아이템 5': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '22' }, '단백질': { unit: 'g', amount: '21' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
             },
-            selectedItem: '아침 아이템 1',
-            selectedItem1: '아침 아이템 1',
-            selectedItem2: '아침 아이템 1',
+            selectedItem: '',
+            selectedItem1: '',
+            selectedItem2: '',
             nowTimes:'',
             nextDay:'',
             dayAfterNext:'',
@@ -239,6 +239,7 @@ export default {
             break;
           case '200': console.log(result);
                       this.mealItems[this.selectedMeal] = result.foodList;
+                      this.foodCoded();
             break;
           default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
             break;
@@ -249,10 +250,15 @@ export default {
               console.log(err);
             })
         },
+        foodCoded(){
+            this.foodCode = this.mealItems[this.selectedMeal].map(item => item.foodIdx);
+        },
         callNutrition(){
-            const selectedMealItems = this.mealItems[this.selectedMeal];
-            for(let i=0; i<=selectedMealItems.length; i++){
-                const foodIdx = selectedMealItems[i].foodIdx;
+            //오류수정중
+},
+        /*callNutrition(){
+            for(let i=0; i<this.foodCode.length; i++){
+            const foodIdx = this.foodCode[i];
             axios({
             method: 'get',
             url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/foodnutri/getNutrition?',
@@ -267,7 +273,14 @@ export default {
             case '-1': console.log(result);
                 break;
             case '200': console.log(result);
-                      this.itemNutrition[i] = { '열량': { unit: 'kcal', amount: result.kcal }, '탄수화물': { unit: 'g', amount: result.carbo }, '단백질': { unit: 'g', amount: result.protein } , '지방': { unit: 'g', amount: result.fat }, '콜레스테롤': { unit: 'mg', amount: result.chole }, '나트륨': { unit: 'mg', amount: result.salt } };
+                        this.itemNutrition ={
+                            '열량': { unit: 'kcal', amount: result.kcal },
+                            '탄수화물': { unit: 'g', amount: result.carbo },
+                            '단백질': { unit: 'g', amount: result.protein } ,
+                            '지방': { unit: 'g', amount: result.fat },
+                            '콜레스테롤': { unit: 'mg', amount: result.chole },
+                            '나트륨': { unit: 'mg', amount: result.salt }
+                        };
                 break;
             default:  console.log(result);
                 break;
@@ -276,10 +289,47 @@ export default {
             .catch(err => {
               console.log('에러!!!');
               console.log(err);
-            })
+            });}
+        },*/
+        totalNutrition() {
+            const total = {};
+            for (const item in this.selectedMealItems) {
+                const nutrition = this.itemNutrition[this.selectedMealItems[item]];
+                for (const nutrient in nutrition) {
+                    if (!total[nutrient]) {
+                        total[nutrient] = { unit: nutrition[nutrient].unit, amount: 0 };
+                    }
+                    total[nutrient].amount += parseInt(nutrition[nutrient].amount);
+                }
             }
-            this.totalNutrition();
+            return total;
         },
+        totalNutrition1() {
+            const total = {};
+            for (const item in this.selectedMealItems1) {
+                const nutrition = this.itemNutrition1[this.selectedMealItems1[item]];
+                for (const nutrient in nutrition) {
+                    if (!total[nutrient]) {
+                        total[nutrient] = { unit: nutrition[nutrient].unit, amount: 0 };
+                    }
+                    total[nutrient].amount += parseInt(nutrition[nutrient].amount);
+                }
+            }
+            return total;
+        },   
+        totalNutrition2() {
+            const total = {};
+            for (const item in this.selectedMealItems2) {
+                const nutrition = this.itemNutrition2[this.selectedMealItems2[item]];
+                for (const nutrient in nutrition) {
+                    if (!total[nutrient]) {
+                        total[nutrient] = { unit: nutrition[nutrient].unit, amount: 0 };
+                    }
+                    total[nutrient].amount += parseInt(nutrition[nutrient].amount);
+                }
+            }
+            return total;
+        },     
         pullDietList1(){
             const idx = this.user_id;
             const date = this.nextDay;
@@ -444,7 +494,7 @@ export default {
                 this.selectedItem = null;
             },
         selectItem(item) {
-                this.selectedItem = item;
+                this.selectedItem = item.name;
             },    // ... (기존 메서드 내용 유지)
         selectMealTime1(mealId) {
                 this.selectedMeal1 = mealId;
@@ -452,7 +502,7 @@ export default {
                 this.selectedItem1 = null;
             },
         selectItem1(item) {
-                this.selectedItem1 = item;
+                this.selectedItem1 = item.name;
             },    // ... (기존 메서드 내용 유지)
         selectMealTime2(mealId) {
                 this.selectedMeal2 = mealId;
@@ -460,7 +510,7 @@ export default {
                 this.selectedItem2 = null;
             },
         selectItem2(item) {
-                this.selectedItem2 = item;
+                this.selectedItem2 = item.name;
             },    // ... (기존 메서드 내용 유지)
     },
     computed: {
@@ -470,56 +520,17 @@ export default {
         selectedNutrition() {
             return this.itemNutrition[this.selectedItem];
         },
-        totalNutrition() {
-            const total = {};
-            for (const item in this.selectedMealItems) {
-                const nutrition = this.itemNutrition[this.selectedMealItems[item]];
-                for (const nutrient in nutrition) {
-                    if (!total[nutrient]) {
-                        total[nutrient] = { unit: nutrition[nutrient].unit, amount: 0 };
-                    }
-                    total[nutrient].amount += parseInt(nutrition[nutrient].amount);
-                }
-            }
-            return total;
-        },
         selectedMealItems1() {
             return this.mealItems1[this.selectedMeal1];
         },
         selectedNutrition1() {
             return this.itemNutrition1[this.selectedItem1];
         },
-        totalNutrition1() {
-            const total = {};
-            for (const item in this.selectedMealItems1) {
-                const nutrition = this.itemNutrition1[this.selectedMealItems1[item]];
-                for (const nutrient in nutrition) {
-                    if (!total[nutrient]) {
-                        total[nutrient] = { unit: nutrition[nutrient].unit, amount: 0 };
-                    }
-                    total[nutrient].amount += parseInt(nutrition[nutrient].amount);
-                }
-            }
-            return total;
-        },        
         selectedMealItems2() {
             return this.mealItems2[this.selectedMeal2];
         },
         selectedNutrition2() {
             return this.itemNutrition2[this.selectedItem2];
-        },
-        totalNutrition2() {
-            const total = {};
-            for (const item in this.selectedMealItems2) {
-                const nutrition = this.itemNutrition2[this.selectedMealItems2[item]];
-                for (const nutrient in nutrition) {
-                    if (!total[nutrient]) {
-                        total[nutrient] = { unit: nutrition[nutrient].unit, amount: 0 };
-                    }
-                    total[nutrient].amount += parseInt(nutrition[nutrient].amount);
-                }
-            }
-            return total;
         },
     },
     watch:{
@@ -548,6 +559,8 @@ export default {
         this.pullDietList();
         this.pullDietList1();
         this.pullDietList2();
+    },
+    mounted(){
         this.callNutrition();
     },
     props: {
