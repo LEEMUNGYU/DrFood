@@ -11,9 +11,6 @@
                 @click="selectMealTime(meal.id)"
                 :class="{ 'mealTime': true, 'selected': selectedMeal === meal.id }">{{ meal.name }}</div>
             </div>
-            <div v-if="mealItems.mor && mealItems.mor[1]">{{ mealItems.mor[1].foodIdx }}</div>
-            <div>{{ this.foodCode }}</div>
-            <div>{{ this.itemNutrition }}</div>
             <div class="list_bd">
                 <div class="list_el">
                     <div  v-for="(item, index) in selectedMealItems" :key="index" id="el"  @click="selectItem(item)" :class="{ 'selected': selectedItem === item.name }">{{ item.name.length > 4 ? item.name.substring(0, 4) + '..' : item.name }}</div>
@@ -169,22 +166,13 @@ export default {
                 lun: [],
                 din: []
             },
-            foodCode:{
-
-            },
+            foodCode:[],
+            foodCode1:[],
+            foodCode2:[],
             itemNutrition: {},
-            itemNutrition1: {
-                'm아이템 1': { '열량': { unit: 'kcal', amount: '100' }, '탄수화물': { unit: 'g', amount: '20' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-                'm아이템 2': { '열량': { unit: 'kcal', amount: '150' }, '탄수화물': { unit: 'g', amount: '25' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-                'm아이템 3': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '22' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-                'm아이템 4': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '23' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-                'm아이템 5': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '22' }, '단백질': { unit: 'g', amount: '21' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-            },
-            itemNutrition2: {
-                'm아이템 1': { '열량': { unit: 'kcal', amount: '100' }, '탄수화물': { unit: 'g', amount: '20' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-                'm아이템 2': { '열량': { unit: 'kcal', amount: '150' }, '탄수화물': { unit: 'g', amount: '25' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-                'm아이템 3': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '22' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-                'm아이템 4': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '23' }, '단백질': { unit: 'g', amount: '20' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
+            itemNutrition1: {},
+            itemNutrition2: {},
+            sampleNutrition: {
                 'm아이템 5': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '22' }, '단백질': { unit: 'g', amount: '21' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
             },
             selectedItem: '',
@@ -240,6 +228,7 @@ export default {
           case '200': console.log(result);
                       this.mealItems[this.selectedMeal] = result.foodList;
                       this.foodCoded();
+                      this.callNutrition();
             break;
           default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
             break;
@@ -253,44 +242,45 @@ export default {
         foodCoded(){
             this.foodCode = this.mealItems[this.selectedMeal].map(item => item.foodIdx);
         },
-        callNutrition(){
-            //오류수정중
-},
-        /*callNutrition(){
-            for(let i=0; i<this.foodCode.length; i++){
-            const foodIdx = this.foodCode[i];
-            axios({
-            method: 'get',
-            url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/foodnutri/getNutrition?',
-            params: {
-                foodIdx,
-            }
-            })
-            .then((res) => {
-            const result = res.data;
+        foodCoded1(){
+            this.foodCode1 = this.mealItems1[this.selectedMeal1].map(item => item.foodIdx);
+        },
+        foodCoded2(){
+            this.foodCode2 = this.mealItems2[this.selectedMeal2].map(item => item.foodIdx);
+        },
+        async callNutrition(){
+            const params = this.foodCode;
+            const resArray = [];
 
-            switch(result.rst_cd){
-            case '-1': console.log(result);
-                break;
-            case '200': console.log(result);
-                        this.itemNutrition ={
-                            '열량': { unit: 'kcal', amount: result.kcal },
-                            '탄수화물': { unit: 'g', amount: result.carbo },
-                            '단백질': { unit: 'g', amount: result.protein } ,
-                            '지방': { unit: 'g', amount: result.fat },
-                            '콜레스테롤': { unit: 'mg', amount: result.chole },
-                            '나트륨': { unit: 'mg', amount: result.salt }
-                        };
-                break;
-            default:  console.log(result);
-                break;
-                }
-            })
-            .catch(err => {
-              console.log('에러!!!');
-              console.log(err);
-            });}
-        },*/
+            for (const param of params) {
+            const res = await axios.get(`https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/foodnutri/getNutrition?foodIdx=${param}`);
+            resArray.push({ '열량': { unit: 'kcal', amount: res.data.kcal }, '탄수화물': { unit: 'g', amount: res.data.carbo }, '단백질': { unit: 'g', amount: res.data.protein } , '지방': { unit: 'g', amount: res.data.fat }, '콜레스테롤': { unit: 'mg', amount: res.data.chole }, '나트륨': { unit: 'mg', amount: res.data.salt }});
+            }
+            console.log(resArray);
+            this.itemNutrition = resArray;
+        },
+        async callNutrition1(){
+            const params = this.foodCode1;
+            const resArray = [];
+
+            for (const param of params) {
+            const res = await axios.get(`https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/foodnutri/getNutrition?foodIdx=${param}`);
+            resArray.push({ '열량': { unit: 'kcal', amount: res.data.kcal }, '탄수화물': { unit: 'g', amount: res.data.carbo }, '단백질': { unit: 'g', amount: res.data.protein } , '지방': { unit: 'g', amount: res.data.fat }, '콜레스테롤': { unit: 'mg', amount: res.data.chole }, '나트륨': { unit: 'mg', amount: res.data.salt }});
+            }
+            console.log(resArray);
+            this.itemNutrition1 = resArray;
+        },
+        async callNutrition2(){
+            const params = this.foodCode2;
+            const resArray = [];
+
+            for (const param of params) {
+            const res = await axios.get(`https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/foodnutri/getNutrition?foodIdx=${param}`);
+            resArray.push({ '열량': { unit: 'kcal', amount: res.data.kcal }, '탄수화물': { unit: 'g', amount: res.data.carbo }, '단백질': { unit: 'g', amount: res.data.protein } , '지방': { unit: 'g', amount: res.data.fat }, '콜레스테롤': { unit: 'mg', amount: res.data.chole }, '나트륨': { unit: 'mg', amount: res.data.salt }});
+            }
+            console.log(resArray);
+            this.itemNutrition2 = resArray;
+        },
         totalNutrition() {
             const total = {};
             for (const item in this.selectedMealItems) {
@@ -303,8 +293,8 @@ export default {
                 }
             }
             return total;
-        },
-        totalNutrition1() {
+        },     
+        totalNutrition1(){
             const total = {};
             for (const item in this.selectedMealItems1) {
                 const nutrition = this.itemNutrition1[this.selectedMealItems1[item]];
@@ -351,6 +341,9 @@ export default {
             break;
           case '200': console.log(result);
                       this.mealItems1[this.selectedMeal1] = result.foodList;
+                      this.foodCoded1();
+                      this.callNutrition1();
+                      this.totalNutrition1();
             break;
           default:  console.log(result);
             break;
@@ -382,6 +375,9 @@ export default {
             break;
           case '200': console.log(result);
                       this.mealItems2[this.selectedMeal2] = result.foodList;
+                      this.foodCoded2();
+                      this.callNutrition2();
+                      this.totalNutrition2();
             break;
           default:  console.log(result);
             break;
@@ -518,26 +514,52 @@ export default {
             return this.mealItems[this.selectedMeal];
         },
         selectedNutrition() {
-            return this.itemNutrition[this.selectedItem];
+            const targetValue = this.selectedItem;
+            const searchLib = this.mealItems[this.selectedMeal];
+            let targetIndex = -1;
+            for (let i = 0; i < searchLib.length; i++) {
+                if (searchLib[i].name === targetValue) {
+                        targetIndex = i;
+                    break;
+                }
+            }
+            return this.itemNutrition[targetIndex];
         },
         selectedMealItems1() {
             return this.mealItems1[this.selectedMeal1];
         },
         selectedNutrition1() {
-            return this.itemNutrition1[this.selectedItem1];
+            const targetValue = this.selectedItem1;
+            const searchLib = this.mealItems1[this.selectedMeal1];
+            let targetIndex = -1;
+            for (let i = 0; i < searchLib.length; i++) {
+                if (searchLib[i].name === targetValue) {
+                        targetIndex = i;
+                    break;
+                }
+            }
+            return this.itemNutrition1[targetIndex];
         },
         selectedMealItems2() {
             return this.mealItems2[this.selectedMeal2];
         },
         selectedNutrition2() {
-            return this.itemNutrition2[this.selectedItem2];
+            const targetValue = this.selectedItem2;
+            const searchLib = this.mealItems2[this.selectedMeal2];
+            let targetIndex = -1;
+            for (let i = 0; i < searchLib.length; i++) {
+                if (searchLib[i].name === targetValue) {
+                        targetIndex = i;
+                    break;
+                }
+            }
+            return this.itemNutrition2[targetIndex];
         },
     },
     watch:{
         selectedMeal(newVal, oldVal){
             if(newVal != oldVal){
                 this.pullDietList();
-                this.callNutrition();
             }
         },
         selectedMeal1(newVal, oldVal){
@@ -559,9 +581,6 @@ export default {
         this.pullDietList();
         this.pullDietList1();
         this.pullDietList2();
-    },
-    mounted(){
-        this.callNutrition();
     },
     props: {
         msg: String
