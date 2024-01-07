@@ -145,18 +145,19 @@ export default {
         },
         writeRecord(){
             this.setRecordListMealItems();
-            this.showWriteRecord = true;
+            this.showWriteRecord[this.selectedMeal] = true;
         },
         selectMealTime(mealId) {
                 this.selectedMeal = mealId;
-                this.selectedItem = this.mealItems[mealId][0];
-                this.showWriteRecord = this.hasSavedRecord(mealId);
-                if(this.hasSavedRecord(mealId)){
+                this.selectedItem = this.mealItems[mealId];
+                const mealArchive = this.mealItems[mealId].every(item => item.check);
+                if(mealArchive){
                     this.$nextTick(() => {
                         this.setSaveRecord();
                     });
-                } else {
-                    this.isSaveVisible = true;
+                }else{
+                    this.showWriteRecord = false;
+                    this.isSaveVisible = false;
                 }
         },
         hasSavedRecord(mealType) {// 각 시간에 대한 저장 기록이 있는지 확인하는 함수
@@ -171,8 +172,8 @@ export default {
         },
         recordCancel(){
             this.setRecordListMealItems();
-            this.showWriteRecord= false;
-            this.isSaveVisible = true;
+            this.showWriteRecord[this.selectedMeal] = false;
+            this.isSaveVisible[this.selectedMeal]  = true;
         },
         getPlaceholderText(index){
             return 'Item ' + (1 + index);
@@ -233,8 +234,8 @@ export default {
             // 수정 버튼만 보이도록 설정
             const record = document.querySelectorAll('.record');
             record.forEach(element => (element.style.display = 'none'));
-            this.showWriteRecord = true;
-            this.isSaveVisible = false;
+            this.showWriteRecord  = true;
+            this.isSaveVisible  = false;
         },
         setChangeRecord() {
             const plusIcons = document.querySelectorAll('.puls');
@@ -343,12 +344,12 @@ export default {
         const result = res.data;
 
         switch(result.rst_cd){
-          case '-1': console.log(result);//"계정이 존재하지 않습니다."
+          case '-1': console.log(result);
             break;
           case '200': console.log(result);
                       this.mealItemsRecord[this.selectedMeal] = result.foodList.map(item => item.name);
             break;
-          default:  console.log(result);//"아이디와 비밀번호를 입력해주세요."
+          default:  console.log(result);
             break;
             }
             })
@@ -364,10 +365,43 @@ export default {
         },
         settingFirst(){
         this.originalMealItems = { ...this.mealItems };
-        const allChecksFalse = Object.values(this.mealItems).every(items => items.every(item => !item.check));
+        const allChecksFalse = Object.values(this.mealItems).every(items => items.length === 0 || items.every(item => !item.check));
         if (allChecksFalse) {
             this.showWriteRecord = false;
         }
+        },
+        getMealArchive(){
+            const userIdx = this.user_id;
+            const date = String(this.lookTimes);
+            const occasion =  (this.selectedMeal === 'mor' ? '아침' : this.selectedMeal === 'lun' ? '점심' : '저녁');
+        axios({
+        method: 'get',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderMeal/getMealNames?',
+        params: {
+          userIdx,
+          date,
+          occasion
+        }
+        })
+        .then((res) => {
+        const result = res.data;
+        switch(result.rst_cd){
+          case '-1': console.log(result);
+            break;
+          case '-2': console.log(result);
+            break;
+          case '200': console.log(result);
+                      console.log(result.mealNames);
+                      this.mealItems[this.selectedMeal] = result.mealNames.map(item => ({ value: item, active: true, disabled: true, check: true }));
+            break;
+          default:  console.log(result);
+            break;
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
         },
     },
     watch: {
@@ -385,6 +419,7 @@ export default {
         selectedMeal(newVal, oldVal){
             if(newVal != oldVal){
                 this.callRecordList();
+                this.getMealArchive();
             }
         },
     },
@@ -394,6 +429,7 @@ export default {
         this.settingFirst();
         this.callRecordList();
         this.setRecordListMealItems();
+        this.getMealArchive()
     },
 }
 </script>
