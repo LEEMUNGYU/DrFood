@@ -4,7 +4,7 @@
     <h3>회원탈퇴</h3>
     <hr id="first_line">
     <div id="sorry">
-        <popup-view v-if="this.openModal" @closePopup="closeModalView" @goodbye="goodbye"/>
+        <popup-view v-if="this.openModal" @closePopup="closeModalView" @goodBye="handleGoodBye"/>
         <p id="main_text"><span id="accent">죄송합니다</span><br>
         저희와 함께하신 시간동안 만족스러운<br>
         서비스를 드리지 못한 것 같아 죄송합니다<br><br>
@@ -33,7 +33,7 @@ export default {
         return{
         userInput: '',
         openModal: false,
-        goodbye: false,
+        byeData: false,
         }
     },
     methods:{
@@ -50,7 +50,7 @@ export default {
         },
         GoodByeMyF(){
             const userIdx = this.$store.state.userId;
-            const confirmed = this.goodbye;
+            const confirmed = this.byeData;
             const goodbyeMyFriend = () => this.$router.push({path: '/QuitComp', name:'QuitComp'});
 
             if(confirmed !==false){
@@ -78,7 +78,10 @@ export default {
         },
         closeModalView(data){
             this.openModal = data;
-        },    
+        },
+        handleGoodBye(data){
+            this.byeData = data;
+        }    
     },
     components: { PopupView, FoodyHeader, FoodyNav,},
 
