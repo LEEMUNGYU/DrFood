@@ -11,7 +11,7 @@
         <h4 id="UserDAT">보유 질환</h4>
         <router-link to="/changeDis" style="text-decoration: none;"><div id="UserDiseases">{{  $store.state.diseaseNm  }}</div></router-link>
         <h4 id="UserDAT">보유 알레르기</h4>
-        <router-link to="/changeAle" style="text-decoration: none;"><div id="UserAllergy">{{  $store.state.allergieList.join('')  }}</div></router-link>
+        <router-link to="/changeAle" style="text-decoration: none;"><div id="UserAllergy">{{  $store.state.allergieList.join('') }}</div></router-link>
     </div>
 </div>
 <foody-nav />
@@ -20,12 +20,55 @@
 <script>
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import FoodyNav from '@/layout/FoodyNav.vue';
+import axios from 'axios';
 
 export default {
   name:'ChangeInfo',
   components: { FoodyHeader, FoodyNav,},
+  data(){
+        return {
+        userId: this.$store.state.userId,
+        allregie: [],
+    }
+    },
+  mounted(){
+    this.renewalInfo();
+  },
+  methods: {
+    renewalInfo(){
+        const idx = this.userId;
+        axios({
+        method: 'get',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/showmedicalstats?',
+        params: {
+          idx,
+        }
+        })
+        .then((res) => {
+        const result = res.data;
 
+        switch(result.rst_cd){
+          case '-1': console.log(result);
+            break;
+          case '200': console.log(result);
+                      this.$store.commit('setDiseaseNm', result.disease);
+                      this.allergie = result.allergie.split('#');
+                      this.$store.commit('setAllergieList2', this.allergie);
+
+            break;
+          default:  console.log(result);
+            break;
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
+
+    }
+  },
 }
+
 </script>
 
 <style scoped>

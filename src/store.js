@@ -11,6 +11,7 @@ const store = createStore({
     cookiePWD: (getUserFromCookie() ||  ''),
     diseaseNm:[],
     allergieList:[],
+    spareAllergie:'',
     pwd: '',
     pwdq: '',
     pwda: '',
@@ -63,6 +64,7 @@ const store = createStore({
           nickNm: '',
           diseaseNm:'',
           allergieList:[],
+          spareAllergie:'',
           pwd: '',
           pwdq: '',
           pwda: '',
@@ -83,6 +85,12 @@ const store = createStore({
     },
     setAllergieList(state, allergieList){
         state.allergieList = allergieList.map(item => ' #' + item.name);
+    },
+    setAllergieList2(state, allergieList){
+        state.allergieList = allergieList.map(item => ' #' + item);
+    },
+    setSpearAllergie(state, allergie){
+      state.spareAllergie = '#'+ allergie;
     },
     setCreateUserData(state, data) {
       state.email = data.email;

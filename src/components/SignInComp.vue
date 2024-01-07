@@ -47,7 +47,7 @@ export default {
                       this.$store.commit('setUserEmail', email);
                       this.$store.commit('setUserIdx', result.user_idx);
                       this.$store.commit('setUserName', result.nickNm);
-                      this.$store.commit('setDiseaseNm', result.diseaseNm)
+                      this.$store.commit('setDiseaseNm', result.diseaseNm);
                       this.$store.commit('setAllergieList', result.allergieList);
                       goList();
             break;

@@ -52,7 +52,7 @@ export default {
     }, 1000);
     console.log(this.$store.state.diseaseNm);
     this.callTodayList();
-    //this.createListWeek();
+    this.createListWeek();
     },
     methods: {
     getCurrentDate() {
@@ -116,9 +116,12 @@ export default {
             console.log(err);
         })
       },
-      /*createListWeek(){
+      createListWeek(){
+        const thisDate = new Date();
+        const week = thisDate.toDateString();
         const userIdx = this.$store.state.userId;
-      
+        console.log(week);
+      if(week.includes('Mon')){
       axios({
         method: 'get',
         url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/foodBuild/getWeeklyMeals?',
@@ -126,7 +129,8 @@ export default {
           userIdx,
         }
         })
-      },*/
+      }
+      },
     },
     props: {
         msg: String,
