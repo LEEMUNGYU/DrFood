@@ -49,15 +49,15 @@ export default {
             this.openModal =true;
         },
         GoodByeMyF(){
-            const userIdx = this.$store.state.userId;
+            const idx = this.$store.state.userId;
             const goodbyeMyFriend = () => this.$router.push({path: '/QuitComp', name:'QuitComp'});
 
         // 서버로 데이터 전송
             axios({
-                methods:'delete',
+                method:'DELETE',
                 url:'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/user/resign?',
                 params:{
-                    userIdx,
+                    idx,
                 }
             })
             .then(res => {

@@ -6,7 +6,7 @@
     <hr id="frist_line">
         <div class="diet_list_box"><!-- vue를 최대한 활용 시킨 코드-->
             <div id="mealtime_box">
-        <resonPopup v-if="openModal === true" @closePopup="close()" />
+        <resonPopUp v-if="openModal === true" @closePopup="close()" style="z-index:999;"/>
                 <div v-for="(meal, index) in meals"
                 :key="index" 
                 @click="selectMealTime(meal.id)"
@@ -128,7 +128,7 @@
 import axios from 'axios';
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import FoodyNav from '@/layout/FoodyNav.vue';
-import resonPopup from './resonPopUp.vue';
+import resonPopUp from './resonPopUp.vue';
 
 
 export default {
@@ -210,14 +210,14 @@ export default {
             this.dayAfterNext = `${dayAfterNextYear}-${dayAfterNextMonth}-${dayAfterNextDayOfMonth}`;
         },
         pullDietList(){
-            const idx = this.user_id;
+            const userIdx = this.user_id;
             const date = this.nowTimes;
             const occasion =  (this.selectedMeal === 'mor' ? '아침' : this.selectedMeal === 'lun' ? '점심' : '저녁');
         axios({
         method: 'get',
         url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/searchRmdMeal?',
         params: {
-          idx,
+          userIdx,
           date,
           occasion,
         }
@@ -229,6 +229,7 @@ export default {
           case '-1': console.log(result);//"계정이 존재하지 않습니다."
             break;
           case '200': console.log(result);
+                      this.mealItems[this.selectedMeal] = [];
                       this.mealItems[this.selectedMeal] = result.foodList;
                       this.foodCoded();
                       this.callNutrition();
@@ -333,14 +334,14 @@ export default {
             this.totalNutrition2 = totalArray;
         },   
         pullDietList1(){
-            const idx = this.user_id;
+            const userIdx = this.user_id;
             const date = this.nextDay;
             const occasion =  (this.selectedMeal1 === 'mor' ? '아침' : this.selectedMeal1 === 'lun' ? '점심' : '저녁');
         axios({
         method: 'get',
         url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/searchRmdMeal?',
         params: {
-          idx,
+          userIdx,
           date,
           occasion,
         }
@@ -352,6 +353,7 @@ export default {
           case '-1': console.log(result);
             break;
           case '200': console.log(result);
+                      this.mealItems1[this.selectedMeal1] = [];
                       this.mealItems1[this.selectedMeal1] = result.foodList;
                       this.foodCoded1();
                       this.callNutrition1();
@@ -366,14 +368,14 @@ export default {
             })
         },
         pullDietList2(){
-            const idx = this.user_id;
-            const date = this.nowTimes;
+            const userIdx = this.user_id;
+            const date = this.dayAfterNext;
             const occasion =  (this.selectedMeal2 === 'mor' ? '아침' : this.selectedMeal2 === 'lun' ? '점심' : '저녁');
         axios({
         method: 'get',
         url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderRecommend/searchRmdMeal?',
         params: {
-          idx,
+          userIdx,
           date,
           occasion,
         }
@@ -385,6 +387,7 @@ export default {
           case '-1': console.log(result);
             break;
           case '200': console.log(result);
+                      this.mealItems2[this.selectedMeal2] = [];
                       this.mealItems2[this.selectedMeal2] = result.foodList;
                       this.foodCoded2();
                       this.callNutrition2();
@@ -420,6 +423,7 @@ export default {
           case '-2': console.log(result, '입력값이 잘못 되었습니다');
             break;
           case '200': console.log(result, '식단 재생성 성공!');
+                    this.pullDietList();
             break;
           default:  console.log(result);
             break;
@@ -452,6 +456,7 @@ export default {
           case '-2': console.log(result, '입력값이 잘못 되었습니다');
             break;
           case '200': console.log(result, '식단 재생성 성공!');
+                    this.pullDietList1();
             break;
           default:  console.log(result);
             break;
@@ -484,6 +489,7 @@ export default {
           case '-2': console.log(result, '입력값이 잘못 되었습니다');
             break;
           case '200': console.log(result, '식단 재생성 성공!');
+                    this.pullDietList2();
             break;
           default:  console.log(result);
             break;
@@ -601,7 +607,7 @@ export default {
     props: {
         msg: String
     },
-    components: { FoodyHeader, FoodyNav, resonPopup, },
+    components: { FoodyHeader, FoodyNav, resonPopUp, },
 
 }
 </script>
