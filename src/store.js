@@ -25,7 +25,8 @@ const store = createStore({
     todayOccasion:'',
     MealItems:[],
     showSituation:[],
-    visibleSituation:[],    
+    visibleSituation:[],
+    callRecord : '',    
     }
   },
   getters: {
@@ -54,6 +55,9 @@ const store = createStore({
     },
     setToken(state, token){
       state.token = token;
+    },
+    callRecord(state, count){
+      state.callRecord = count;
     },
     resetState(state) {
       const getDefaultState =() => {

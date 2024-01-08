@@ -23,7 +23,7 @@
     </div>
     <input v-model="userAnswer" type="AnsWer" class="inputBox" placeholder="비밀번호 확인 질문 답변" required>
     <div id="personalInfoCheck">
-        <h4>개인정보활용동의</h4><a href="#" id="detail">자세히</a><!--#에 개인정보처리방침 삽입-->
+        <h4>개인정보활용동의</h4><a @click="detailRule()" id="detail">자세히</a><!--#에 개인정보처리방침 삽입-->
     </div>
     <div id="checkBox">
         <input type="checkbox" name="consent" value="yes" ref="consent"><label for="consent">동의함</label>
@@ -31,16 +31,18 @@
     <div><p id="checkYES">*개인정보처리방침에 동의해주세요</p></div>
 </div>
 </form>
+    <rulesPopUp v-if="openModal === true" @closePopup="closePopup" />
 </div>
 <div @click="nextPage()" class="btn" id="nextPage">다음</div>
 </template>
 
 <script>
 import FoodyHeader from '@/layout/FoodyHeader.vue';
+import rulesPopUp from './rulesPopUp.vue';
 
 export default {
     name:'SignInUser',
-    components:{ FoodyHeader, },
+    components:{ FoodyHeader, rulesPopUp },
     data() {
         return {
             NewEmail: '',
@@ -49,6 +51,7 @@ export default {
             userQuestion: '',
             userAnswer: '',
             NewNickName: '',
+            openModal:false,
         };
     },
     methods:{
@@ -84,6 +87,12 @@ export default {
                 document.getElementById("checkYES").style.display = 'flex';
             }
         }
+        },
+        detailRule(){
+            this.openModal = true;
+        },
+        closePopup() {
+            this.openModal = false;
         },
     },
 }

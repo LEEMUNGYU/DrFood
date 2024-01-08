@@ -121,16 +121,21 @@ export default {
         const week = thisDate.toDateString();
         const userIdx = this.$store.state.userId;
         console.log(week);
-      if(week.includes('Mon')){
-      axios({
-        method: 'get',
-        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/foodBuild/getWeeklyMeals?',
-        params: {
-          userIdx,
+      if(this.$store.state.callRecord < 0){
+        if(week.includes('Mon')){
+        axios({
+          method: 'get',
+          url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/foodBuild/getWeeklyMeals?',
+          params: {
+            userIdx,
+          }
+          })
         }
-        })
+        this.$store.commit('callRecord', 1);
+      }else{
+        this.$store.commit('callRecord', 0);
       }
-      },
+    },
     },
     props: {
         msg: String,
