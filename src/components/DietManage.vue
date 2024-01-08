@@ -19,7 +19,7 @@
                 :class="{ 'mealTime': true, 'selected': selectedMeal === meal.id }">{{ meal.name }}</div>
     </div>
     <div class="writeList">
-        <div class="record" v-if="!showWriteRecord[this.selectedMeal]">
+        <div class="record" v-if="!showWriteRecord">
             <div class="noticeRecord">식사 기록이 없습니다</div>
             <div class="r-b">기록하기</div>
             <div class="write_BTN" @click="writeRecord()">
@@ -34,7 +34,7 @@
                     <img src="../style/img/otherBTN/saveBTN.svg" id="saveBTN" alt="저장">
                     <img src="../style/img/otherBTN/PenBTN.svg" id="changeBTN" alt="수정">
                 </div>
-                <div class="saveText" v-if="isSaveVisible[this.selectedMeal]" @click="saveRecord()">저장</div>
+                <div class="saveText" v-if="isSaveVisible" @click="saveRecord()">저장</div>
                 <div class="changeText" @click="ChangeRecord()">수정</div>
                 </div>
             </div>
@@ -145,7 +145,7 @@ export default {
         },
         writeRecord(){
             this.setRecordListMealItems();
-            this.showWriteRecord[this.selectedMeal] = true;
+            this.showWriteRecord = true;
         },
         selectMealTime(mealId) {
                 this.selectedMeal = mealId;
@@ -172,8 +172,8 @@ export default {
         },
         recordCancel(){
             this.setRecordListMealItems();
-            this.showWriteRecord[this.selectedMeal] = false;
-            this.isSaveVisible[this.selectedMeal]  = true;
+            this.showWriteRecord = false;
+            this.isSaveVisible  = true;
         },
         getPlaceholderText(index){
             return 'Item ' + (1 + index);

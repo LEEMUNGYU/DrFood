@@ -128,7 +128,7 @@
 import axios from 'axios';
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import FoodyNav from '@/layout/FoodyNav.vue';
-import resonPopup from './resonPopUp.vue';
+import ResonPopUp from '@/components/ResonPopUp.vue';
 
 
 export default {
@@ -607,7 +607,7 @@ export default {
     props: {
         msg: String
     },
-    components: { FoodyHeader, FoodyNav, resonPopup, },
+    components: { FoodyHeader, FoodyNav, ResonPopUp, },
 
 }
 </script>
