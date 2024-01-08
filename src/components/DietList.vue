@@ -6,7 +6,7 @@
     <hr id="frist_line">
         <div class="diet_list_box"><!-- vue를 최대한 활용 시킨 코드-->
             <div id="mealtime_box">
-        <resonPopUp v-if="openModal === true" @closePopup="close()" style="z-index:999;"/>
+        <ResonPopUp v-if="openModal === true" @closePopup="close()" style="z-index:999;"/>
                 <div v-for="(meal, index) in meals"
                 :key="index" 
                 @click="selectMealTime(meal.id)"
@@ -128,7 +128,7 @@
 import axios from 'axios';
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import FoodyNav from '@/layout/FoodyNav.vue';
-import resonPopUp from './resonPopUp.vue';
+import ResonPopUp from '@/components/ResonPopUp.vue';
 
 
 export default {
@@ -607,7 +607,7 @@ export default {
     props: {
         msg: String
     },
-    components: { FoodyHeader, FoodyNav, resonPopUp, },
+    components: { FoodyHeader, FoodyNav, ResonPopUp, },
 
 }
 </script>

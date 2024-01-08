@@ -13,7 +13,7 @@
   
   <script>
   export default {
-      name:'resonPopUp',
+      name:'ResonPopUp',
       methods:{
       },
   }
