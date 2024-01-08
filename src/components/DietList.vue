@@ -6,6 +6,7 @@
     <hr id="frist_line">
         <div class="diet_list_box"><!-- vue를 최대한 활용 시킨 코드-->
             <div id="mealtime_box">
+        <resonPopup v-if="openModal === true" @closePopup="close()" />
                 <div v-for="(meal, index) in meals"
                 :key="index" 
                 @click="selectMealTime(meal.id)"
@@ -36,7 +37,7 @@
                     </div>
                     <div id="notice">*식품을 누르면 각 식품별 영양성분을 확인하실 수 있습니다.</div>
                     <div id="two_btn">
-                        <div id="reason"><img src="../style/img/otherBTN/reasonBTN.svg" id="reCON">구성이유</div>
+                        <div id="reason" @click="openReson()"><img src="../style/img/otherBTN/reasonBTN.svg" id="reCON">구성이유</div>
                         <div id="reroll" @click="callDiffrentList1()"><img src="../style/img/otherBTN/rerollBTN.svg" id="reCON">식단 재추천</div>
                     </div>
                 </div>
@@ -74,7 +75,7 @@
                     </div>
                     <div id="notice1">*식품을 누르면 각 식품별 영양성분을 확인하실 수 있습니다.</div>
                     <div id="two_btn1">
-                        <div id="reason1"><img src="../style/img/otherBTN/reasonBTN.svg" id="reCON1">구성이유</div>
+                        <div id="reason1" @click="openReson()"><img src="../style/img/otherBTN/reasonBTN.svg" id="reCON1">구성이유</div>
                         <div id="reroll1" @click="callDiffrentList2()"><img src="../style/img/otherBTN/rerollBTN.svg" id="reCON1">식단 재추천</div>
                     </div>
                 </div>
@@ -112,7 +113,7 @@
                     </div>
                     <div id="notice2">*식품을 누르면 각 식품별 영양성분을 확인하실 수 있습니다.</div>
                     <div id="two_btn2">
-                        <div id="reason2"><img src="../style/img/otherBTN/reasonBTN.svg" id="reCON2">구성이유</div>
+                        <div id="reason2" @click="openReson()"><img src="../style/img/otherBTN/reasonBTN.svg" id="reCON2">구성이유</div>
                         <div id="reroll2" @click="callDiffrentList3()"><img src="../style/img/otherBTN/rerollBTN.svg" id="reCON2">식단 재추천</div>
                     </div>
                 </div>
@@ -127,12 +128,14 @@
 import axios from 'axios';
 import FoodyHeader from '@/layout/FoodyHeader.vue';
 import FoodyNav from '@/layout/FoodyNav.vue';
+import resonPopup from './resonPopUp.vue';
 
 
 export default {
     name: 'DietList',
     data() {
         return {
+            openModal:false,
             meals: [
                 { id: 'mor', name: '아침' },
                 { id: 'lun', name: '점심' },
@@ -175,9 +178,6 @@ export default {
             totalNutrition:{},
             totalNutrition1:{},
             totalNutrition2:{},
-            sampleNutrition: {
-                'm아이템 5': { '열량': { unit: 'kcal', amount: '120' }, '탄수화물': { unit: 'g', amount: '22' }, '단백질': { unit: 'g', amount: '21' } , '지방': { unit: 'g', amount: '20' }, '콜레스테롤': { unit: 'mg', amount: '20' }, '나트륨': { unit: 'mg', amount: '20' } },
-            },
             selectedItem: '',
             selectedItem1: '',
             selectedItem2: '',
@@ -518,6 +518,12 @@ export default {
         selectItem2(item) {
                 this.selectedItem2 = item.name;
             },    // ... (기존 메서드 내용 유지)
+        openReson(){
+            this.openModal = true;
+        },
+        close(){
+            this.openModal = false;
+        }
     },
     computed: {
         selectedMealItems() {
@@ -595,7 +601,7 @@ export default {
     props: {
         msg: String
     },
-    components: { FoodyHeader, FoodyNav, },
+    components: { FoodyHeader, FoodyNav, resonPopup, },
 
 }
 </script>
