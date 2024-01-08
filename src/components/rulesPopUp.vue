@@ -31,7 +31,7 @@
         <li> 고객의 알레르기 및 질환에 따른 식단 추천 필터링</li>
       </ul>
       <div id="btn_zip">
-            <button @click="closePopup()" id="QTcomp">확인</button>
+            <button @click="$emit('closeModalView', false)" id="QTcomp">확인</button>
           </div>
 </div>
           
@@ -43,9 +43,9 @@
   export default {
       name:'rulesPopUp',
       methods:{
-        closePopup(){
+        /*closePopup(){
           this.$emit('closeModalView', false);
-        }
+        }*/
       },
   }
   </script>

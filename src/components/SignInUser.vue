@@ -31,7 +31,7 @@
     <div><p id="checkYES">*개인정보처리방침에 동의해주세요</p></div>
 </div>
 </form>
-    <rulesPopUp v-if="openModal === true" @closePopup="closePopup" />
+    <rulesPopUp v-if="openModal === true" @closeModalView="closePopup()" />
 </div>
 <div @click="nextPage()" class="btn" id="nextPage">다음</div>
 </template>
