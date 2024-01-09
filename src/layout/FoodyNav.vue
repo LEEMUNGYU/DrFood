@@ -1,7 +1,7 @@
 <template>
   <div class="nav">  
     <router-link to="/dietlist" id="s_effect1"><div>식단추천</div><img src="../style/img/Menu/ListOffBTN.svg" id="icon1"></router-link>
-    <router-link to="/manage" id="s_effect2"><div>식단관리</div><img src="../style/img/Menu/ManageOffBTN.svg" id="icon2"></router-link>
+    <router-link to="/manage2" id="s_effect2"><div>식단관리</div><img src="../style/img/Menu/ManageOffBTN.svg" id="icon2"></router-link>
     <router-link to="/UserInfo" id="s_effect3"><div>회원정보</div><img src="../style/img/Menu/UserOffBTN.svg" id="icon3"></router-link>
     <router-link to="/" @click="resetState()" id="s_effect4"><div>로그아웃</div><img src="../style/img/Menu/ExitOffBTN.svg" id="icon4"></router-link>
 </div>
@@ -34,7 +34,7 @@ export default{
       if(currentPath  === '/dietlist'){
               element1.style.color = '#fff';
               element1.style.backgroundColor = '#001335';
-          }else if(currentPath === '/manage'){
+          }else if(currentPath === '/manage2'){
               element2.style.color = '#fff';
               element2.style.backgroundColor = '#001335';
           }else if(currentPath === '/UserInfo' || currentPath === '/quit' || currentPath === '/change' || currentPath === '/changeDis' || currentPath === '/changeAle' || currentPath === '/rule'  ){
