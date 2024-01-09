@@ -19,14 +19,14 @@
                 :class="{ 'mealTime': true, 'selected': selectedMeal === meal.id }">{{ meal.name }}</div>
     </div>
     <div class="writeList">
-        <div class="record" v-if="showWriteRecord.mor">
+        <div class="record" v-if="!showWriteRecord">
             <div class="noticeRecord">식사 기록이 없습니다</div>
             <div class="r-b">기록하기</div>
-            <div class="write_BTN">
+            <div class="write_BTN" @click="writeRecord()">
                 <img src="../style/img/otherBTN/PenBTN.svg" id="penBTN" alt="기록">
             </div>
         </div>
-        <div class="writeRecord" v-if="isSaveVisible.mor===2">
+        <div class="writeRecord" v-if="showWriteRecord">
             <div class="titleNbtn">
                 <div class="write_word">식사기록</div>
                     <div class="Icons">
@@ -34,22 +34,22 @@
                         <img src="../style/img/otherBTN/saveBTN.svg" id="saveBTN" alt="저장">
                         <img src="../style/img/otherBTN/PenBTN.svg" id="changeBTN" alt="수정">
                     </div>
-                    <div class="saveText">저장</div>
-                    <div class="changeText">수정</div>
+                    <div class="saveText" v-if="isSaveVisible" @click="saveRecord()">저장</div>
+                    <div class="changeText" @click="ChangeRecord()">수정</div>
                 </div>
             </div>
             <div class="writeListItems">
                     <div class="writeListEle">
                         <div v-for="(item, index) in selectedMealItems" :key="index"  class="inputWrapper">
                             <input v-model="selectedMealItems[index].value" :placeholder="getPlaceholderText(index)" :disabled="selectedMealItems[index].disabled">
-                                    <div class="puls">+</div>
-                                    <div class="eliminate">x</div>
-                                    <div class="minus">-</div>
+                                    <div class="puls" @click="decisionList(index, true)">+</div>
+                                    <div class="eliminate" @click="removeLastItem(index, true)">x</div>
+                                    <div class="minus" @click="decisionList(index, false)">-</div>
                         </div>
                     </div>
                 <div class="compNcan">
-                    <div class="comp">추가 기록</div><div class="can">기록 취소</div>
-                    <div class="del">기록 삭제</div>
+                    <div class="comp" @click="addInput(index)">추가 기록</div><div class="can" @click="recordCancel()">기록 취소</div>
+                    <div class="del" @click="DelRecord()">기록 삭제</div>
                 </div>                
             </div>
         </div>
@@ -78,16 +78,9 @@ export default {
         return {
         openModal: false,
         Reco : false,
-        showWriteRecord: {
-            mor: true,
-            lun: false,
-            din: false
-        },
-        isSaveVisible: {
-            mor: 1,
-            lun: 1,
-            din: 1
-        },
+        showWriteRecord:false,
+        showCount: 0,
+        isSaveVisible: false,
         originalMealItems: {},
         currentDate: '',
         meals: [
@@ -146,27 +139,15 @@ export default {
         writeRecord(){
             this.setRecordListMealItems();
             this.showWriteRecord = true;
+            this.showCount = 1;
         },
         selectMealTime(mealId) {
-                this.showWriteRecord = {};
                 this.selectedMeal = mealId;
                 this.selectedItem = this.mealItems[mealId];
-                switch(this.selectedMeal){
-                    case 'mor': this.showWriteRecord.mor = true;
-                                this.showWriteRecord.lun = false;
-                                this.showWriteRecord.din = false;
-                                break;
-                    case 'lun': this.showWriteRecord.mor = false;
-                                this.showWriteRecord.lun = true;
-                                this.showWriteRecord.din = false;
-                                break;
-                    case 'din': this.showWriteRecord.mor = false;
-                                this.showWriteRecord.lun = false;
-                                this.showWriteRecord.din = true;
-                                break;
-                    default: this.showWriteRecord.mor = true;
-                             this.showWriteRecord.lun = false;
-                             this.showWriteRecord.din = false;
+                if(this.showCount === 0){
+                    this.showWriteRecord = false;
+                }else{
+                    this.showWriteRecord = true;
                 }
         },
         hasSavedRecord(mealType) {// 각 시간에 대한 저장 기록이 있는지 확인하는 함수
@@ -379,6 +360,40 @@ export default {
             this.showWriteRecord = false;
         }
         },
+        setHaveArchive(){
+            const plusIcons = document.querySelectorAll('.puls');
+            const eliIcons = document.querySelectorAll('.eliminate');
+            const minusIcons = document.querySelectorAll('.minus');
+            const comp =  document.querySelectorAll('.comp');
+            const can =  document.querySelectorAll('.can');
+            const del = document.querySelectorAll('.del');
+            
+            this.selectedMealItems.forEach((item, index) => {
+                const minusIcon = minusIcons[index];
+                const eliIcon = eliIcons[index];
+                const plusIcon = plusIcons[index];
+                minusIcon.style.display = 'none';
+                eliIcon.style.display = 'none';
+                if (plusIcons.length > 0) {
+                plusIcon.style.display = 'none';
+                }
+            });
+            comp.forEach(button => (button.style.display = 'none'));
+            can.forEach(button => (button.style.display = 'none'));
+            del.forEach(button => (button.style.display = 'block'));
+
+            const changeBTN = document.querySelectorAll('#changeBTN');
+            changeBTN.forEach(button => (button.style.display = 'block'));
+            const saveBTN = document.querySelectorAll('#saveBTN');
+            saveBTN.forEach(button => (button.style.display = 'none'));
+            const changeText = document.querySelectorAll('.changeText');
+            changeText.forEach(element => (element.style.display = 'block'));
+            const saveText = document.querySelectorAll('.saveText');
+            saveText.forEach(element => (element.style.display = 'none'));
+            // 수정 버튼만 보이도록 설정
+            const record = document.querySelectorAll('.record');
+            record.forEach(element => (element.style.display = 'block'));
+        },
         getMealArchive(){
             const userIdx = this.user_id;
             const date = String(this.lookTimes);
@@ -398,9 +413,15 @@ export default {
           case '-1': console.log(result);
             break;
           case '-2': console.log(result);
+                     this.showWriteRecord = false;
+                     this.showCount = 0;
             break;
           case '200': console.log(result);
                       console.log(result.mealNames);
+                      this.showCount =1;
+                      this.showWriteRecord = true;
+                      this.isSaveVisible = false;
+                      this.setHaveArchive();
                       this.mealItems[this.selectedMeal] = result.mealNames.map(item => ({ value: item, active: true, disabled: true, check: true }));
             break;
           default:  console.log(result);
@@ -420,7 +441,7 @@ export default {
             if(confirmed != false){
                 this.mealItems[this.selectedMeal] = this.mealItemsRecord[this.selectedMeal].map(item => ({ ...item }));
                 this.showWriteRecord.mor= true;
-                this.isSaveVisible.mor = 1;
+                this.isSaveVisible = false;
                 this.openModal =false;
                 this.Reco = false;
             }
