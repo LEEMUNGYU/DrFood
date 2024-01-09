@@ -414,12 +414,37 @@ export default {
         Reco(newVal) {
             const confirmed = newVal;
 
-            if(confirmed != false){
-                this.mealItems[this.selectedMeal] = this.mealItemsRecord[this.selectedMeal].map(item => ({ ...item }));
-                this.showWriteRecord= true;
-                this.isSaveVisible = false;
-                this.openModal =false;
-                this.Reco = false;
+        if(confirmed != false){
+            const userIdx = this.user_id;
+            const date = String(this.lookTimes);
+            const occasion =  (this.selectedMeal === 'mor' ? '아침' : this.selectedMeal === 'lun' ? '점심' : '저녁');
+        axios({
+        method: 'delete',
+        url: 'https://port-0-food-bag-jvpb2alnlhtxnz.sel5.cloudtype.app/calenderMeal/removeMealRecords?',
+        params: {
+          userIdx,
+          date,
+          occasion
+        }
+        })
+        .then((res) => {
+        const result = res.data;
+        switch(result.rst_cd){
+          case '200': console.log(result);
+                      this.showCount =0;
+                      this.showWriteRecord= false;
+                      this.isSaveVisible = false;
+                      this.openModal =false;
+                      this.Reco = false;
+            break;
+          default:  console.log(result);
+            break;
+            }
+            })
+            .catch(err => {
+              console.log('에러!!!');
+              console.log(err);
+            })
             }
         },
         selectedMeal(newVal, oldVal){
