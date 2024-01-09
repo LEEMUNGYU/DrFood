@@ -97,6 +97,11 @@ path: "/manage",
 name: 'DietManage',
 component: () => import('../components/DietManage.vue'),
 },
+{
+path: "/manage2",
+name: 'DietManage2',
+component: () => import('../components/DietManage2.vue'),
+},
 ];
 
 const router = createRouter({
