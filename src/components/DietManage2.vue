@@ -29,27 +29,27 @@
         <div class="writeRecord" v-if="showWriteRecord">
             <div class="titleNbtn">
                 <div class="write_word">식사기록</div>
-                    <div class="Icons">
+                <div class="Icons">
                     <div class="saveNchange_BTN">
-                        <img src="../style/img/otherBTN/saveBTN.svg" id="saveBTN" alt="저장">
-                        <img src="../style/img/otherBTN/PenBTN.svg" id="changeBTN" alt="수정">
+                        <img src="../style/img/otherBTN/saveBTN.svg" v-if="showCount===1"  @click="saveRecord()" id="saveBTN" alt="저장">
+                        <img src="../style/img/otherBTN/PenBTN.svg" v-if="showCount===2"  @click="ChangeRecord()" id="changeBTN" alt="수정">
                     </div>
-                    <div class="saveText" v-if="isSaveVisible" @click="saveRecord()">저장</div>
-                    <div class="changeText" @click="ChangeRecord()">수정</div>
+                    <div class="saveText"  v-if="showCount===1"  @click="saveRecord()">저장</div>
+                    <div class="changeText" v-if="showCount===2"  @click="ChangeRecord()">수정</div>
                 </div>
             </div>
             <div class="writeListItems">
                     <div class="writeListEle">
                         <div v-for="(item, index) in selectedMealItems" :key="index"  class="inputWrapper">
                             <input v-model="selectedMealItems[index].value" :placeholder="getPlaceholderText(index)" :disabled="selectedMealItems[index].disabled">
-                                    <div class="puls" @click="decisionList(index, true)">+</div>
-                                    <div class="eliminate" @click="removeLastItem(index, true)">x</div>
-                                    <div class="minus" @click="decisionList(index, false)">-</div>
+                                    <div v-if="showCount===1" class="puls" @click="decisionList(index, true)">+</div>
+                                    <div v-if="showCount===1" class="eliminate" @click="removeLastItem(index, true)">x</div>
+                                    <div v-if="showCount===1" class="minus" @click="decisionList(index, false)">-</div>
                         </div>
                     </div>
                 <div class="compNcan">
-                    <div class="comp" @click="addInput(index)">추가 기록</div><div class="can" @click="recordCancel()">기록 취소</div>
-                    <div class="del" @click="DelRecord()">기록 삭제</div>
+                    <div class="comp" v-if="showCount===1" @click="addInput(index)">추가 기록</div><div v-if="showCount===1" class="can" @click="recordCancel()">기록 취소</div>
+                    <div class="del" v-if="showCount===2"  @click="DelRecord()">기록 삭제</div>
                 </div>                
             </div>
         </div>
@@ -146,8 +146,10 @@ export default {
                 this.selectedItem = this.mealItems[mealId];
                 if(this.showCount === 0){
                     this.showWriteRecord = false;
+                    this.isSaveVisible = true;
                 }else{
                     this.showWriteRecord = true;
+                    this.isSaveVisible = false;
                 }
         },
         hasSavedRecord(mealType) {// 각 시간에 대한 저장 기록이 있는지 확인하는 함수
@@ -164,6 +166,7 @@ export default {
             this.setRecordListMealItems();
             this.showWriteRecord = false;
             this.isSaveVisible  = true;
+            this.showCount = 0;
         },
         getPlaceholderText(index){
             return 'Item ' + (1 + index);
@@ -226,6 +229,7 @@ export default {
             record.forEach(element => (element.style.display = 'none'));
             this.showWriteRecord  = true;
             this.isSaveVisible  = false;
+            this.showCount = 2;
         },
         setChangeRecord() {
             const plusIcons = document.querySelectorAll('.puls');
@@ -259,6 +263,7 @@ export default {
             record.forEach(element => (element.style.display = 'block'));
             this.showWriteRecord = this.hasSavedRecord(this.selectedMeal);
             this.isSaveVisible = this.hasSavedRecord(this.selectedMeal);
+            this.showCount = 1;
         },
         saveRecord(){
             const userIdx = this.$store.state.userId;
@@ -284,6 +289,8 @@ export default {
             // 성공 시 작업
             switch(result){
                 case '200': console.log(res.data);
+                            this.showWriteRecord = true;
+                            this.isSaveVisible = false;
                             break;
                 case '-2': console.log(res.data);
                             break;
@@ -300,11 +307,12 @@ export default {
             
             this.setSaveRecord();
             this.mealItems[this.selectedMeal].forEach(item => {item.disabled = true, item.check = true;});
+            this.showCount=2;
 
         },
         ChangeRecord() {
-            this.setChangeRecord();
             this.mealItems[this.selectedMeal].forEach(item => { item.disabled = false, item.check = false; });
+            this.showCount = 1;
         },
         DelRecord(){
             this.openModal =true;
@@ -358,41 +366,9 @@ export default {
         const allChecksFalse = Object.values(this.mealItems).every(items => items.length === 0 || items.every(item => !item.check));
         if (allChecksFalse) {
             this.showWriteRecord = false;
+            this.isSaveVisible = true;
+            this.showCount = 0;
         }
-        },
-        setHaveArchive(){
-            const plusIcons = document.querySelectorAll('.puls');
-            const eliIcons = document.querySelectorAll('.eliminate');
-            const minusIcons = document.querySelectorAll('.minus');
-            const comp =  document.querySelectorAll('.comp');
-            const can =  document.querySelectorAll('.can');
-            const del = document.querySelectorAll('.del');
-            
-            this.selectedMealItems.forEach((item, index) => {
-                const minusIcon = minusIcons[index];
-                const eliIcon = eliIcons[index];
-                const plusIcon = plusIcons[index];
-                minusIcon.style.display = 'none';
-                eliIcon.style.display = 'none';
-                if (plusIcons.length > 0) {
-                plusIcon.style.display = 'none';
-                }
-            });
-            comp.forEach(button => (button.style.display = 'none'));
-            can.forEach(button => (button.style.display = 'none'));
-            del.forEach(button => (button.style.display = 'block'));
-
-            const changeBTN = document.querySelectorAll('#changeBTN');
-            changeBTN.forEach(button => (button.style.display = 'block'));
-            const saveBTN = document.querySelectorAll('#saveBTN');
-            saveBTN.forEach(button => (button.style.display = 'none'));
-            const changeText = document.querySelectorAll('.changeText');
-            changeText.forEach(element => (element.style.display = 'block'));
-            const saveText = document.querySelectorAll('.saveText');
-            saveText.forEach(element => (element.style.display = 'none'));
-            // 수정 버튼만 보이도록 설정
-            const record = document.querySelectorAll('.record');
-            record.forEach(element => (element.style.display = 'block'));
         },
         getMealArchive(){
             const userIdx = this.user_id;
@@ -418,13 +394,13 @@ export default {
             break;
           case '200': console.log(result);
                       console.log(result.mealNames);
-                      this.showCount =1;
+                      this.showCount =2;
                       this.showWriteRecord = true;
                       this.isSaveVisible = false;
-                      this.setHaveArchive();
                       this.mealItems[this.selectedMeal] = result.mealNames.map(item => ({ value: item, active: true, disabled: true, check: true }));
             break;
           default:  console.log(result);
+                    this.showCount = 0;
             break;
             }
             })
@@ -440,7 +416,7 @@ export default {
 
             if(confirmed != false){
                 this.mealItems[this.selectedMeal] = this.mealItemsRecord[this.selectedMeal].map(item => ({ ...item }));
-                this.showWriteRecord.mor= true;
+                this.showWriteRecord= true;
                 this.isSaveVisible = false;
                 this.openModal =false;
                 this.Reco = false;
@@ -615,7 +591,7 @@ h3{
     height:80%;
 }
 #changeBTN{
-    display:none;
+    display:block;
     margin:auto;
     margin-top:5%;
     margin-bottom:5%;
@@ -629,7 +605,7 @@ h3{
     font-weight:bold;
 }
 .changeText{
-    display:none;
+    display:block;
     font-size: 1rem;
     color: #3f72af;
     font-weight:bold;
@@ -780,7 +756,7 @@ input:disabled {
 }
 
 .del{
-    display:none;
+    display:block;
     width:30vw;
     height: 4vh;
     background: #FFFFFF;
