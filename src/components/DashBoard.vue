@@ -109,7 +109,7 @@ export default {
                           break;
               case '-1': console.log(result);
                         this.$store.commit('callTLCount', 1);
-                        this.router.go(0);
+                        this.$router.go(0);
                         console.log('실패');
                           break;
               case '-5': console.log(result);
