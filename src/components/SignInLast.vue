@@ -16,7 +16,7 @@
         <div id="UserAllergy">{{ $store.state.codeAlle.map(item => '#' + item).join(' ') }}</div>
     </div>
 </div>
-    <div @click="SignComp()"  id="SignComp-btn" class="SignComp-btn">확인</div>
+    <div @click="SingInComp()"  id="SignComp-btn" class="SignComp-btn">확인</div>
 </template>
 
 <script>
@@ -29,6 +29,7 @@ export default {
         return {
             allco:[],
             diseco:[],
+            signInCount: this.$store.state.signInCount,
         };
     },
     components:{
@@ -90,6 +91,12 @@ export default {
             }
             this.$store.commit( 'setAllco', this.allco.join('#'));
         },
+        SingInComp(){
+            if(this.signInCount === 1){
+                this.$store.commit('setSignInCount', 0);
+                this.SignComp();
+            }
+        },
         SignComp(){
             const email = this.$store.state.email;
             const pwd = this.$store.state.pwd;
@@ -119,6 +126,9 @@ export default {
             switch(result){
                 case '200': console.log(res.data);
                             goToDrFoody;
+                            break;
+                case '-1': console.log(res.data);
+                            this.$store.commit('setSignInCount', 1);
                             break;
                 default : console.log(res.data);
                             break;

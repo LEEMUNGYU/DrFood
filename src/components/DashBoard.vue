@@ -51,7 +51,7 @@ export default {
       this.updateMealTime(); // 1초마다 갱신
     }, 1000);
     console.log(this.$store.state.diseaseNm);
-    this.callTodayList();
+    this.callTL();
     this.createListWeek();
     },
     methods: {
@@ -84,6 +84,12 @@ export default {
     getUser(){ 
       console.log(login.params.nickNm);
     },
+    callTL(){
+      if(this.$store.state.callTLCount === 1){
+        this.$store.commit('callTLCount', 0);
+        this.callTodayList();
+      }
+    },
     callTodayList(){
       const idx = this.$store.state.userId;
       
@@ -102,9 +108,12 @@ export default {
                           this.food = this.$store.state.TodayList;
                           break;
               case '-1': console.log(result);
+                        this.$store.commit('callTLCount', 1);
+                        this.router.go(0);
                         console.log('실패');
                           break;
               case '-5': console.log(result);
+                        this.$store.commit('callTLCount', 1);
                         console.log('기기오류');
                           break;
               default: console.log(result);
@@ -121,7 +130,7 @@ export default {
         const week = thisDate.toDateString();
         const userIdx = this.$store.state.userId;
         console.log(week);
-      if(this.$store.state.callRecord < 0){
+      if(this.$store.state.callRecord <= 0){
         if(week.includes('Mon')){
         axios({
           method: 'get',

@@ -2,9 +2,10 @@
     <div  class="popup-view" >
       <div class="hat"></div>
         <div id="Q_PopUp">
-          <p>선택된 질문에 대한<br>답변이 틀립니다</p>
+          <p>{{ $store.state.diseaseNm }}에 적절한<br>
+          저염식단을 추천드렸습니다.</p>
           <div id="btn_zip">
-            <button @click="closePopup()" id="QTcomp">확인</button>
+            <button @click="$emit('closePopup', false)" id="close">확인</button>
           </div>
       </div>
     </div>
@@ -12,11 +13,8 @@
   
   <script>
   export default {
-      name:'QuitPopUp',
+      name:'ResonPopUp',
       methods:{
-        closePopup(){
-          this.$emit('closeModalView', false );
-        }
       },
   }
   </script>
@@ -43,6 +41,8 @@
       justify-content: center;
       justify-items: center;
       font-weight: bold;
+      font-size: 0.8rem;
+      line-height: 0.95rem;
       border: 1px solid rgba(55,55,55,0.25);
       border-radius: 0px 0px 5px 5px;
       background: #fff;

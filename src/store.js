@@ -27,6 +27,8 @@ const store = createStore({
     showSituation:[],
     visibleSituation:[],
     callRecord : '',    
+    signInCount : 1,
+    callTLCount : 1,
     }
   },
   getters: {
@@ -38,6 +40,12 @@ const store = createStore({
     },
   },
   mutations:{
+    setSignCount(state, count){
+      state.signInCount = count;
+    },
+    callTLCount(state, count){
+      state.callTLCount = count;
+    },
     setUserEmail(state, userEmail){
         state.email = userEmail;
     },
@@ -82,7 +90,10 @@ const store = createStore({
           TodayList:'',
           MealItems:[],
           showSituation:[],
-          visibleSituation:[],    
+          visibleSituation:[], 
+          callRecord : '',    
+          signInCount : 1,
+          callTLCount : 1,  
         };
       };
       Object.assign(state, getDefaultState());

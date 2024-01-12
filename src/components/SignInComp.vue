@@ -5,7 +5,7 @@
   <div class="Welcome">
     <img><br>
     <p>Dr.Foody 가입을<br>
-  이용해주셔서 감사합니다</p>
+  축하합니다</p>
   </div>
   <button class="btn"  v-on:click="fnGoList()">추천식단<br>보러가기</button>
   <footer></footer>
@@ -35,7 +35,7 @@ export default {
         }
       })
       .then((res) => {
-      const goList = () => this.$router.replace({path:'/dietlist'});
+      const goList = () => this.$router.replace({path:'/board'});
       const result = res.data;
         // 4. 로그인이 성공하면 다른 페이지로 이동한다.
         switch(result.rst_cd){
